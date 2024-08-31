@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 컨텐츠 높이와 상관없이 footer 하단 고정 */
+.custom-footer-height {
+  min-height: calc(100vh - 250px);
+}
