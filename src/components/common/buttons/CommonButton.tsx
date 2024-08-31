@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { ComponentPropsWithoutRef } from 'react';
 import { match } from 'ts-pattern';
 
@@ -5,6 +6,7 @@ type buttonMode = 'default' | 'submit' | 'link';
 
 interface CommonButtonProps extends ComponentPropsWithoutRef<'button'> {
   mode: buttonMode;
+  href?: string;
 }
 
 type TsButtonMode = { type: 'default' } | { type: 'submit' } | { type: 'link' };
@@ -14,6 +16,7 @@ export const CommonButton = ({
   children,
   className,
   onClick,
+  href,
   ...rest
 }: CommonButtonProps) => {
   const defaultButtonClassName =
@@ -31,7 +34,11 @@ export const CommonButton = ({
         {children}
       </button>
     ))
-    .with({ type: 'link' }, () => <></>)
+    .with({ type: 'link' }, () => (
+      <Link href={href ?? ''} className={className}>
+        {children}
+      </Link>
+    ))
     .exhaustive();
   return <>{CButton}</>;
 };
