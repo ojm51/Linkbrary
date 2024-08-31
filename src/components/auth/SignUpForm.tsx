@@ -4,7 +4,7 @@ import { FieldValues, useForm } from 'react-hook-form';
 import { usePasswordVisuality } from '@/lib';
 import { CommonButton, CommonInputWithError } from '../common';
 
-const SignUpForm = () => {
+export const SignUpForm = () => {
   const {
     visible: passwordVisible,
     visibleIcon: passwordVisibleIcon,
@@ -26,7 +26,8 @@ const SignUpForm = () => {
     console.log(values);
   };
 
-  const formClassName = 'flex flex-col items-start gap-[12px]';
+  const formClassName =
+    'w-full flex flex-col justify-center items-start gap-[12px]';
   const iconClassName = 'absolute top-6 right-4';
   return (
     <form className={formClassName} onSubmit={handleSubmit(onSubmit)}>
@@ -47,7 +48,7 @@ const SignUpForm = () => {
       </CommonInputWithError>
 
       <CommonInputWithError
-        placeholder="********"
+        placeholder="대/소문자, 숫자, 특수문자(!@#$%^&*) 포함 8자 이상"
         errorMessage={`${errors.password?.message}`}
         type={passwordVisible ? 'text' : 'password'}
         errorMessageVisible={!!errors.password}
@@ -106,5 +107,3 @@ const SignUpForm = () => {
     </form>
   );
 };
-
-export default SignUpForm;
