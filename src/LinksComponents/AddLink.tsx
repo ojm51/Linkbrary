@@ -7,7 +7,7 @@ const AddLink = () => {
       <div className="w-full flex justify-center items-center gap-3">
         <Image src={linkIcon} alt="링크 아이콘" width={20} height={20} />
         <input
-          className="w-full focus:outline-none placeholder-[#9fa6b2]"
+          className="w-full focus:outline-none placeholder-gray-60"
           type="text"
           placeholder="링크를 추가해 보세요"
         />

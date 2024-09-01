@@ -8,8 +8,8 @@ const FolderList = () => {
   return (
     <div className="flex justify-between items-center">
       <ul className="flex justify-start items-center gap-2">
-        {folderList.map((folderName) => (
-          <li>
+        {folderList.map((folderName, index) => (
+          <li key={index}>
             <Folder folderName={folderName} />
           </li>
         ))}

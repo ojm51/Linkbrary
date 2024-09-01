@@ -1,6 +1,7 @@
 import AddLink from '@/LinksComponents/AddLink';
 import SearchBar from '@/LinksComponents/SearchBar';
 import FolderList from '@/LinksComponents/FolderList/FolderList';
+import FolderMenuList from '@/LinksComponents/FolderMenuList/FolderMenuList';
 
 function links() {
   return (
@@ -10,6 +11,7 @@ function links() {
       </div>
       <SearchBar />
       <FolderList />
+      <FolderMenuList />
     </>
   );
 }
