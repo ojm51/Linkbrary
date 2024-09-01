@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import linkIcon from '@/LinksComponents/images/link.png';
+import linkIcon from '@/assets/icons/ic_link.svg';
 
 export const AddLink = () => {
   return (

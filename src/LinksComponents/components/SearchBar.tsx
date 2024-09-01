@@ -1,6 +1,6 @@
 import Image from 'next/image';
-import searchIcon from '@/LinksComponents/images/search.png';
-import closeIcon from '@/LinksComponents/images/close.png';
+import searchIcon from '@/assets/icons/ic_search.svg';
+import closeIcon from '@/assets/images/close.png';
 
 export const SearchBar = () => {
   return (
