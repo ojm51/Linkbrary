@@ -33,21 +33,25 @@ const CommonInput = ({
     </div>
   );
 };
-interface CommonInputWithLabelProps extends CommonInputProps {}
+
+interface WithLabelProps extends CommonInputProps {
+  htmlfor?: string;
+}
 
 const withLabel = (WrappedCompoents: ComponentType) => {
   const defaultFont =
     'text-[14px] font-[Pretendard] not-italic leading-[normal]';
-  return ({ children, ...rest }: CommonInputWithLabelProps) => (
+  return ({ children, htmlfor, ...rest }: WithLabelProps) => (
     <>
-      <label className={`${defaultFont}`}>{children}</label>
+      <label htmlFor={htmlfor} className={defaultFont}>
+        {children}
+      </label>
       <WrappedCompoents {...rest} />
     </>
   );
 };
 
-interface CommonInputWithLabelWithErrorMessageProps
-  extends CommonInputWithLabelProps {
+interface CommonInputWithLabelWithErrorMessageProps extends WithLabelProps {
   errorMessage?: string;
   errorMessageVisible?: boolean;
 }
@@ -60,7 +64,7 @@ const withErrorMessage = (WrappedComponents: ComponentType) => {
     const defaultFont =
       'text-[14px] font-[Pretendard] not-italic leading-normal text-red';
     const defaultLayout = `${errorMessageVisible ? 'visible' : 'invisible'}`;
-    rest['isError'] = errorMessageVisible;
+    rest.isError = errorMessageVisible;
     return (
       <>
         <WrappedComponents {...rest} />

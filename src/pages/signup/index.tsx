@@ -1,4 +1,5 @@
-import { AuthHeader, SignUpForm } from '@/components';
+import AuthHeader from '@/components/auth/AuthHeader';
+import SignUpForm from '@/components/auth/SignUpForm';
 
 const SignUp = () => {
   return (

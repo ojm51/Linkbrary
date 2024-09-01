@@ -2,16 +2,16 @@ import Link from 'next/link';
 import { ComponentPropsWithoutRef } from 'react';
 import { match } from 'ts-pattern';
 
-type buttonMode = 'default' | 'submit' | 'link';
+type ButtonMode = 'default' | 'submit' | 'link';
 
 interface CommonButtonProps extends ComponentPropsWithoutRef<'button'> {
-  mode: buttonMode;
+  mode: ButtonMode;
   href?: string;
 }
 
 type TsButtonMode = { type: 'default' } | { type: 'submit' } | { type: 'link' };
 
-export const CommonButton = ({
+const CommonButton = ({
   mode,
   children,
   className,
@@ -49,5 +49,7 @@ export const CommonButton = ({
       </Link>
     ))
     .exhaustive();
-  return <>{CButton}</>;
+  return CButton;
 };
+
+export default CommonButton;
