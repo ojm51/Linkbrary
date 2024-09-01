@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import linkIcon from '@/assets/icons/ic_link.svg';
 
-export const AddLink = () => {
+const AddLink = () => {
   return (
     <div className="m-auto max-w-[800px] h-auto px-5 py-4 flex justify-between items-center rounded-[15px] bg-white border border-solid border-primary">
       <div className="w-full flex justify-center items-center gap-3">
@@ -21,3 +21,5 @@ export const AddLink = () => {
     </div>
   );
 };
+
+export default AddLink;
