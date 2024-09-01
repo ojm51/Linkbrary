@@ -11,7 +11,10 @@ function links() {
       </div>
       <SearchBar />
       <FolderList />
-      <FolderMenuList />
+      <div className="flex justify-between items-center">
+        <h3 className="font-semibold text-2xl text-black">title</h3>
+        <FolderMenuList />
+      </div>
     </>
   );
 }
