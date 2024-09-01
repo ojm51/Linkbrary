@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, ComponentType, forwardRef } from 'react';
+import { ComponentPropsWithoutRef, ComponentType } from 'react';
 import { UseFormRegisterReturn } from 'react-hook-form';
 
 interface CommonInputProps extends ComponentPropsWithoutRef<'input'> {
@@ -52,27 +52,22 @@ interface CommonInputWithLabelWithErrorMessageProps
   errorMessageVisible?: boolean;
 }
 const withErrorMessage = (WrappedComponents: ComponentType) => {
-  return forwardRef(
-    (
-      {
-        errorMessage,
-        errorMessageVisible,
-        ...rest
-      }: CommonInputWithLabelWithErrorMessageProps,
-      _,
-    ) => {
-      const defaultFont =
-        'text-[14px] font-[Pretendard] not-italic leading-normal text-red';
-      const defaultLayout = `${errorMessageVisible ? 'visible' : 'invisible'}`;
-      rest['isError'] = errorMessageVisible;
-      return (
-        <>
-          <WrappedComponents {...rest} />
-          <p className={`${defaultFont} ${defaultLayout}`}>{errorMessage}</p>
-        </>
-      );
-    },
-  );
+  return ({
+    errorMessage,
+    errorMessageVisible,
+    ...rest
+  }: CommonInputWithLabelWithErrorMessageProps) => {
+    const defaultFont =
+      'text-[14px] font-[Pretendard] not-italic leading-normal text-red';
+    const defaultLayout = `${errorMessageVisible ? 'visible' : 'invisible'}`;
+    rest['isError'] = errorMessageVisible;
+    return (
+      <>
+        <WrappedComponents {...rest} />
+        <p className={`${defaultFont} ${defaultLayout}`}>{errorMessage}</p>
+      </>
+    );
+  };
 };
 
 const CommonInputWithLabel = withLabel(CommonInput);
