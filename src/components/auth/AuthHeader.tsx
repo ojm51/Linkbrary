@@ -7,7 +7,7 @@ import Logo from '@/assets/images/logo/logo@2x.png';
 export const AuthHeader = () => {
   return (
     <header className="flex flex-col justify-center items-center gap-4">
-      <CommonButton mode="link" href="/">
+      <CommonButton mode="link" href="/" className="">
         <Image
           src={Logo}
           alt="로고"
