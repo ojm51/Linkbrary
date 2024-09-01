@@ -21,7 +21,9 @@ const FolderList = () => {
       </ul>
 
       <button className="flex justify-center items-center gap-1 font-medium text-primary text-base">
-        <p>폴더 추가</p>
+        <p className="font-[Pretendard] not-italic leading-[normal]">
+          폴더 추가
+        </p>
         <Image src={plusIcon} alt="플러스 아이콘" width={16} height={16} />
       </button>
     </div>

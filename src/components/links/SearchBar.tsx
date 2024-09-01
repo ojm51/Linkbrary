@@ -8,7 +8,7 @@ const SearchBar = () => {
       <div className="w-full flex justify-center items-center gap-3">
         <Image src={searchIcon} alt="검색 아이콘" width={16} height={16} />
         <input
-          className="w-full focus:outline-none bg-[#f5f5f5] placeholder-[#666666]"
+          className="w-full focus:outline-none bg-[#f5f5f5] placeholder-[#666666] font-[Pretendard] not-italic leading-[24px]"
           type="text"
           placeholder="링크를 검색해 보세요"
         />
