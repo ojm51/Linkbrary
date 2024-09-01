@@ -28,7 +28,7 @@ export const SignUpForm = () => {
 
   const formClassName =
     'w-full flex flex-col justify-center items-start gap-[12px]';
-  const iconClassName = 'absolute top-6 right-4';
+  const iconClassName = 'absolute top-6 right-4 cursor-pointer';
   return (
     <form className={formClassName} onSubmit={handleSubmit(onSubmit)}>
       <CommonInputWithError
