@@ -5,14 +5,17 @@ import FolderMenu from './FolderMenu';
 
 const menuList = [
   {
+    id: 1,
     src: shareIcon,
     text: '공유',
   },
   {
+    id: 2,
     src: penIcon,
     text: '이름 변경',
   },
   {
+    id: 3,
     src: trashIcon,
     text: '삭제',
   },
@@ -21,8 +24,8 @@ const menuList = [
 const FolderMenuList = () => {
   return (
     <ul className="flex justify-center items-center gap-3">
-      {menuList.map((menu, index) => (
-        <li key={index}>
+      {menuList.map((menu) => (
+        <li key={menu.id}>
           <FolderMenu src={menu.src} text={menu.text} />
         </li>
       ))}

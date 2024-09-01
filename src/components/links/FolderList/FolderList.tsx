@@ -1,16 +1,21 @@
 import Image from 'next/image';
-import Folder from './Folder';
 import plusIcon from '@/assets/icons/ic_plus.svg';
+import Folder from './Folder';
 
 const FolderList = () => {
-  const folderList = ['a', 'bb', 'ccc', 'dddd'];
+  const folderList = [
+    { id: 1, name: 'a' },
+    { id: 2, name: 'bb' },
+    { id: 3, name: 'ccc' },
+    { id: 4, name: 'dddd' },
+  ];
 
   return (
     <div className="flex justify-between items-center">
       <ul className="flex justify-start items-center gap-2">
-        {folderList.map((folderName, index) => (
-          <li key={index}>
-            <Folder folderName={folderName} />
+        {folderList.map((folderName) => (
+          <li key={folderName.id}>
+            <Folder folderName={folderName.name} />
           </li>
         ))}
       </ul>

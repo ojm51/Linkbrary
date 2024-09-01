@@ -16,11 +16,9 @@ const AddLink = () => {
           placeholder="링크를 추가해 보세요"
         />
       </div>
-      <AddLinkButton
-        mode="default"
-        className={addLinkButtonClassName}
-        children="추가하기"
-      />
+      <AddLinkButton mode="default" className={addLinkButtonClassName}>
+        추가하기{' '}
+      </AddLinkButton>
     </div>
   );
 };
