@@ -1,10 +1,11 @@
 import Image from 'next/image';
-import { FieldValues, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 
-import { usePasswordVisuality } from '@/lib';
-import { CommonButton, CommonInputWithError } from '../common';
+import usePasswordVisuality from '@/lib/hooks/auth/usePasswordVisuality';
+import { CommonInputWithError } from '@/components/common/input/CommonInput';
+import CommonButton from '@/components/common/buttons/CommonButton';
 
-export const SignUpForm = () => {
+const SignUpForm = () => {
   const {
     visible: passwordVisible,
     visibleIcon: passwordVisibleIcon,
@@ -22,8 +23,10 @@ export const SignUpForm = () => {
     watch,
   } = useForm({ mode: 'onBlur' });
 
-  const onSubmit = (values: FieldValues) => {
-    console.log(values);
+  const onSubmit = () => {
+    // const onSubmit = (values: FieldValues) => {
+    /* @TODO api 연결 */
+    // console.log(values);
   };
 
   const formClassName =
@@ -32,6 +35,7 @@ export const SignUpForm = () => {
   return (
     <form className={formClassName} onSubmit={handleSubmit(onSubmit)}>
       <CommonInputWithError
+        htmlfor="email"
         placeholder="link@brary.com"
         errorMessage={`${errors.email?.message}`}
         errorMessageVisible={!!errors.email}
@@ -48,6 +52,7 @@ export const SignUpForm = () => {
       </CommonInputWithError>
 
       <CommonInputWithError
+        htmlfor="password"
         placeholder="대/소문자, 숫자, 특수문자(!@#$%^&*) 포함 8자 이상"
         errorMessage={`${errors.password?.message}`}
         type={passwordVisible ? 'text' : 'password'}
@@ -77,6 +82,7 @@ export const SignUpForm = () => {
       </CommonInputWithError>
 
       <CommonInputWithError
+        htmlfor="passwordConfirm"
         placeholder="비밀번호를 다시 한 번 입력해주세요."
         errorMessage={`${errors.passwordConfirm?.message}`}
         type={passwordConfirmVisible ? 'text' : 'password'}
@@ -95,6 +101,7 @@ export const SignUpForm = () => {
             if (watch('password') !== passwordConfirm) {
               return '비밀번호가 일치하지 않습니다.';
             }
+            return true;
           },
         })}
       >
@@ -107,3 +114,5 @@ export const SignUpForm = () => {
     </form>
   );
 };
+
+export default SignUpForm;
