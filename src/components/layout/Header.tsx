@@ -36,7 +36,7 @@ const Header = () => {
           {/* 로그인 성공 했을 경우 */}
           {/* <Link
             href="/"
-            className="flex items-center justify-center w-[93px] h-[37px] border border-primary rounded-[4px] text-sm mr-[24px]"
+            className="flex items-center justify-center w-[93px] h-[37px] border border-solid border-primary rounded-[4px] text-sm mr-[24px]"
           >
             ⭐️ 즐겨찾기
           </Link>
