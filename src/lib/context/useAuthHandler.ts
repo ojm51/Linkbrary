@@ -40,7 +40,6 @@ export const useAuthHandler = () => {
           if (accessToken) {
             setAccessToken(accessToken);
           }
-          setIsLoggedin(true);
         },
         onError() {
           /** @Todo 에러 메세지 모달 처리 */
@@ -73,6 +72,7 @@ export const useAuthHandler = () => {
     if (data) {
       const newUserInfo = data.data;
       updateUserInfo({ ...newUserInfo, accessToken });
+      setIsLoggedin(true);
     }
   }, [data]);
 
