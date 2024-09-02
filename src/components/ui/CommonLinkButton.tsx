@@ -2,8 +2,8 @@ import React from 'react';
 import Link from 'next/link';
 
 type CommonLinkButtonProps = {
-  width: string;
-  height: string;
+  width: number;
+  height: number;
   href: string;
   children: string;
 };
@@ -17,8 +17,8 @@ const CommonLinkButton = ({
   return (
     <Link
       href={href}
-      type="button"
-      className={`bg-gradient-color flex items-center justify-center w-[${width}] h-[${height}] rounded-[8px] text-lg text-white`}
+      className="bg-gradient-color flex items-center justify-center rounded-[8px] text-lg text-white"
+      style={{ width: `${width}px`, height: `${height}px` }}
     >
       {children}
     </Link>
