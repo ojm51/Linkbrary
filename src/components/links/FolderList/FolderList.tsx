@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import plusIcon from '@/assets/icons/ic_plus.svg';
-import Folder from './Folder';
 import CommonModal from '@/components/common/modal/CommonModal';
 import { AddFolder } from '@/components/modals/ModalContents';
+import Folder from './Folder';
 
 const FolderList = () => {
   const folderList = [
