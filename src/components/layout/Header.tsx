@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
 import HeaderLogoImage from '../../assets/images/headerLogo.png';
 // import ProfileImage from '../../assets/images/profileImage.png';
 import CommonLinkButton from '../ui/CommonLinkButton';

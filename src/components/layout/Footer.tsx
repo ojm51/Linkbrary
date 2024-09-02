@@ -1,4 +1,3 @@
-import React from 'react';
 import Link from 'next/link';
 import FacebookIcon from '@/assets/icons/facebookIcon.svg';
 import TwitterIcon from '@/assets/icons/twitterIcon.svg';
