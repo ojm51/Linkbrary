@@ -5,7 +5,6 @@ import CardImage1_1 from '@/assets/images/landingCard1-1.png';
 import CardImage1_2 from '@/assets/images/landingCard1-2.png';
 import CardImage1_3 from '@/assets/images/landingCard1-3.png';
 import CardImage2 from '@/assets/images/landingCard2.png';
-// import CardImage3_1 from '@/assets/images/landingCard3-1.png';
 import CardImage3_2 from '@/assets/images/landingCard3-2.png';
 import CardImage4 from '@/assets/images/landingCard4.png';
 import DownloadIcon from '@/assets/icons/downloadIcon.svg';
@@ -119,7 +118,6 @@ const Home = () => {
             data-aos-duration="1500"
             data-aos-delay="500"
           >
-            {/* <ul className="flex justify-center items-center gap-[20px]"></ul> */}
             <Swiper
               slidesPerView={2}
               spaceBetween={20}
@@ -139,7 +137,6 @@ const Home = () => {
             >
               <SwiperSlide>
                 <Image
-                  // className="max-w-none"
                   width={244}
                   height={239}
                   src={CardImage1_1}
@@ -156,7 +153,6 @@ const Home = () => {
                   alt="다운로드 아이콘"
                 />
                 <Image
-                  // className="max-w-none"
                   width={244}
                   height={239}
                   src={CardImage1_2}
@@ -165,7 +161,6 @@ const Home = () => {
               </SwiperSlide>
               <SwiperSlide>
                 <Image
-                  // className="max-w-none"
                   width={244}
                   height={239}
                   src={CardImage1_3}
