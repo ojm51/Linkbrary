@@ -41,7 +41,6 @@ interface WithLabelProps extends CommonInputProps {
 const withLabel = (WrappedCompoents: ComponentType) => {
   const defaultFont =
     'text-[14px] font-[Pretendard] not-italic leading-[normal]';
-  /* eslint-disable react/function-component-definition */
   return ({ children, htmlfor, ...rest }: WithLabelProps) => (
     <>
       <label htmlFor={htmlfor} className={defaultFont}>
