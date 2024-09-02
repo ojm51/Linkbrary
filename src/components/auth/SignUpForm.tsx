@@ -40,7 +40,7 @@ const SignUpForm = () => {
         errorMessage={`${errors.email?.message}`}
         errorMessageVisible={!!errors.email}
         register={register('email', {
-          required: '필수 항목입니다.',
+          required: '이메일을 입력해주세요.',
           pattern: {
             value:
               /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i,
@@ -49,6 +49,22 @@ const SignUpForm = () => {
         })}
       >
         이메일
+      </CommonInputWithError>
+
+      <CommonInputWithError
+        htmlfor="nickname"
+        placeholder="닉네임을 입력해주세요"
+        errorMessage={`${errors.nickname?.message}`}
+        errorMessageVisible={!!errors.nickname}
+        register={register('nickname', {
+          required: '닉네임을 입력해주세요',
+          pattern: {
+            value: /^[가-힣a-zA-Z0-9]*$/i,
+            message: '한글, 영문, 숫자만 가능합니다.',
+          },
+        })}
+      >
+        이름
       </CommonInputWithError>
 
       <CommonInputWithError
@@ -72,9 +88,8 @@ const SignUpForm = () => {
             message: '8자 이상 입력해주세요.',
           },
           pattern: {
-            value:
-              /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#$%^&*]).{8,}$/i,
-            message: '영문(대/소), 숫자, 특수문자(!@#$%^&*) 필수입니다.',
+            value: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#$%^&*]).*$/i,
+            message: '영문(대/소), 숫자, 특수문자(!@#$%^&*)를 포함해주세요.',
           },
         })}
       >
