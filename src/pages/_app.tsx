@@ -1,4 +1,5 @@
 import '@/styles/globals.css';
+import '@/styles/landingEffect.css';
 import Header from '@/components/layout/Header';
 import type { AppProps } from 'next/app';
 import Footer from '@/components/layout/Footer';
