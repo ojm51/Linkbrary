@@ -55,10 +55,11 @@ export const SignUpForm = () => {
       <CommonInputWithError
         htmlfor="name"
         placeholder="닉네임을 입력해주세요"
-        errorMessage={`${errors.nickname?.message}`}
-        errorMessageVisible={!!errors.nickname}
+        errorMessage={`${errors.name?.message}`}
+        errorMessageVisible={!!errors.name}
         register={register('name', {
           required: '닉네임을 입력해주세요',
+          maxLength: { value: 10, message: '최대 10자까지 가능합니다.' },
           pattern: {
             value: /^[가-힣a-zA-Z0-9]*$/i,
             message: '한글, 영문, 숫자만 가능합니다.',
