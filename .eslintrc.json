@@ -46,7 +46,7 @@
     "no-unused-vars": "warn",
     "react/jsx-props-no-spreading": "off",
     "react/require-default-props": "off",
-
+    "import/prefer-default-export": "off",
     "react/jsx-no-useless-fragment": "warn",
     "@typescript-eslint/no-throw-literal": 0,
     "@typescript-eslint/only-throw-error": 1,
