@@ -2,15 +2,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import HeaderLogoImage from '../../assets/images/headerLogo.png';
-import ProfileImage from '../../assets/images/profileImage.png';
+// import ProfileImage from '../../assets/images/profileImage.png';
 import CommonLinkButton from '../ui/CommonLinkButton';
 
 const Header = () => {
   const LOGIN_STYLE = {
-    width: '128px',
-    height: '53px',
-    href: '/',
-    children: '로그인',
+    width: 128,
+    height: 53,
+    href: '/login',
   };
 
   return (
@@ -32,7 +31,7 @@ const Header = () => {
             height={LOGIN_STYLE.height}
             href={LOGIN_STYLE.href}
           >
-            {LOGIN_STYLE.children}
+            로그인
           </CommonLinkButton>
 
           {/* 로그인 성공 했을 경우 */}
