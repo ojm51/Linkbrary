@@ -1,11 +1,9 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import plusIcon from '@/assets/icons/ic_plus.svg';
-import CommonModal from '@/components/common/modal/CommonModal';
-import { AddFolder } from '@/components/modals/ModalContents';
-import Folder from './Folder';
+import { CommonModal, AddFolder, Folder } from '@/components';
 
-const FolderList = () => {
+export const FolderList = () => {
   const folderList = [
     { id: 1, name: 'a' },
     { id: 2, name: 'bb' },
@@ -41,5 +39,3 @@ const FolderList = () => {
     </div>
   );
 };
-
-export default FolderList;

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Image from 'next/image';
-import CommonModal from '@/components/common/modal/CommonModal';
+import { CommonModal } from '@/components';
 import {
   ShareFolder,
   ChangeFolderName,
@@ -13,7 +13,7 @@ interface FolderMenuProps {
   modalType: string;
 }
 
-const FolderMenu = ({ src, text, modalType }: FolderMenuProps) => {
+export const FolderMenu = ({ src, text, modalType }: FolderMenuProps) => {
   const [showModal, setShowModal] = useState<boolean>(false);
 
   const handleCloseModal = () => setShowModal((prev) => !prev);
@@ -49,5 +49,3 @@ const FolderMenu = ({ src, text, modalType }: FolderMenuProps) => {
     </>
   );
 };
-
-export default FolderMenu;

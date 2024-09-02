@@ -1,7 +1,7 @@
 import shareIcon from '@/assets/icons/ic_share.svg';
 import penIcon from '@/assets/icons/ic_pen.svg';
 import trashIcon from '@/assets/icons/ic_trash.svg';
-import FolderMenu from './FolderMenu';
+import { FolderMenu } from './FolderMenu';
 
 const menuList = [
   {
@@ -24,7 +24,7 @@ const menuList = [
   },
 ];
 
-const FolderMenuList = () => {
+export const FolderMenuList = () => {
   return (
     <ul className="flex justify-center items-center gap-3">
       {menuList.map((menu) => (
@@ -39,5 +39,3 @@ const FolderMenuList = () => {
     </ul>
   );
 };
-
-export default FolderMenuList;

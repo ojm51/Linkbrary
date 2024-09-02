@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import linkIcon from '@/assets/icons/ic_link.svg';
-import AddLinkButton from '@/components/common/buttons/CommonButton';
+import { CommonButton } from '@/components';
 
-const AddLink = () => {
+export const AddLink = () => {
   const addLinkButtonClassName =
     'shrink-0 px-4 py-[10px] rounded-lg bg-gradient-color text-[14px] font-semibold text-[#f5f5f5] font-[Pretendard] not-italic leading-[normal]';
 
@@ -16,11 +16,9 @@ const AddLink = () => {
           placeholder="링크를 추가해 보세요"
         />
       </div>
-      <AddLinkButton mode="default" className={addLinkButtonClassName}>
+      <CommonButton mode="default" className={addLinkButtonClassName}>
         추가하기{' '}
-      </AddLinkButton>
+      </CommonButton>
     </div>
   );
 };
-
-export default AddLink;

@@ -11,7 +11,7 @@ interface CommonButtonProps extends ComponentPropsWithoutRef<'button'> {
 
 type TsButtonMode = { type: 'default' } | { type: 'submit' } | { type: 'link' };
 
-const CommonButton = ({
+export const CommonButton = ({
   mode,
   children,
   className,
@@ -51,5 +51,3 @@ const CommonButton = ({
     .exhaustive();
   return CButton;
 };
-
-export default CommonButton;

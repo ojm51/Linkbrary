@@ -6,7 +6,7 @@ interface CommonModalProps extends ComponentPropsWithoutRef<'div'> {
   closeModal: () => void;
 }
 
-const CommonModal = ({ closeModal, children }: CommonModalProps) => {
+export const CommonModal = ({ closeModal, children }: CommonModalProps) => {
   return (
     <div
       className="fixed inset-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50 z-50"
@@ -28,5 +28,3 @@ const CommonModal = ({ closeModal, children }: CommonModalProps) => {
     </div>
   );
 };
-
-export default CommonModal;

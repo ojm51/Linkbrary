@@ -2,8 +2,7 @@ import Image from 'next/image';
 import kakaoIcon from '@/assets/images/kakaoTalk.png';
 import facebookIcon from '@/assets/images/facebook.png';
 import copyLinkIcon from '@/assets/images/copyLink.png';
-import { CommonInput } from '@/components/common/input/CommonInput';
-import CommonButton from '@/components/common/buttons/CommonButton';
+import { CommonInput, CommonButton } from '@/components';
 
 export const AddFolder = () => {
   return (
