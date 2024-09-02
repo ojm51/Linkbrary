@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import CommonButton from '@/components/common/buttons/CommonButton';
+import { CommonButton } from '@/components';
 
 import Logo from '@/assets/images/logo/logo@2x.png';
 

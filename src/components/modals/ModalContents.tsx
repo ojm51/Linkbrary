@@ -3,8 +3,33 @@ import kakaoIcon from '@/assets/images/kakaoTalk.png';
 import facebookIcon from '@/assets/images/facebook.png';
 import copyLinkIcon from '@/assets/images/copyLink.png';
 import { CommonInput, CommonButton } from '@/components';
+import { ModalType } from '@/lib/types';
+import { match } from 'ts-pattern';
 
-export const AddFolder = () => {
+interface ModalContentProps {
+  mode: ModalType;
+}
+
+type TsModalType =
+  | { type: 'add' }
+  | { type: 'share' }
+  | { type: 'changeName' }
+  | { type: 'delete' };
+
+export const ModalContent = ({ mode }: ModalContentProps) => {
+  const TContent: TsModalType = { type: mode };
+
+  const SelectedModalContent = match(TContent)
+    .with({ type: 'add' }, () => <AddFolder />)
+    .with({ type: 'share' }, () => <ShareFolder />)
+    .with({ type: 'changeName' }, () => <ChangeFolderName />)
+    .with({ type: 'delete' }, () => <DeleteFolder />)
+    .exhaustive();
+
+  return SelectedModalContent;
+};
+
+const AddFolder = () => {
   return (
     <div>
       <h3 className="text-xl font-bold text-[#373740] font-[Pretendard] not-italic leading-[normal] text-center">
@@ -18,7 +43,7 @@ export const AddFolder = () => {
   );
 };
 
-export const ShareFolder = () => {
+const ShareFolder = () => {
   const shareMethodList = [
     {
       id: 1,
@@ -69,7 +94,7 @@ export const ShareFolder = () => {
   );
 };
 
-export const ChangeFolderName = () => {
+const ChangeFolderName = () => {
   return (
     <div>
       <h3 className="text-xl font-bold text-[#373740] font-[Pretendard] not-italic leading-[normal] text-center">
@@ -83,7 +108,7 @@ export const ChangeFolderName = () => {
   );
 };
 
-export const DeleteFolder = () => {
+const DeleteFolder = () => {
   return (
     <div>
       <h3 className="text-xl font-bold text-[#373740] font-[Pretendard] not-italic leading-[normal] text-center">

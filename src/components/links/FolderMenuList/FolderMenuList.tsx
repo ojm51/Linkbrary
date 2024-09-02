@@ -8,19 +8,19 @@ const menuList = [
     id: 1,
     src: shareIcon,
     text: '공유',
-    modalType: 'share',
+    modalType: 'share' as const,
   },
   {
     id: 2,
     src: penIcon,
     text: '이름 변경',
-    modalType: 'changeName',
+    modalType: 'changeName' as const,
   },
   {
     id: 3,
     src: trashIcon,
     text: '삭제',
-    modalType: 'delete',
+    modalType: 'delete' as const,
   },
 ];
 

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import plusIcon from '@/assets/icons/ic_plus.svg';
-import { CommonModal, AddFolder, Folder } from '@/components';
+import { CommonModal, ModalContent, Folder } from '@/components';
 
 export const FolderList = () => {
   const folderList = [
@@ -33,7 +33,7 @@ export const FolderList = () => {
       </button>
       {showModal && (
         <CommonModal closeModal={handleCloseModal}>
-          <AddFolder />
+          <ModalContent mode="add" />
         </CommonModal>
       )}
     </div>

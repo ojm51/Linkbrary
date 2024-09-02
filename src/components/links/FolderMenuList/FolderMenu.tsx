@@ -1,16 +1,12 @@
 import { useState } from 'react';
 import Image from 'next/image';
-import { CommonModal } from '@/components';
-import {
-  ShareFolder,
-  ChangeFolderName,
-  DeleteFolder,
-} from '@/components/modals/ModalContents';
+import { CommonModal, ModalContent } from '@/components';
+import { ModalType } from '@/lib/types';
 
 interface FolderMenuProps {
   src: string;
   text: string;
-  modalType: string;
+  modalType: ModalType;
 }
 
 export const FolderMenu = ({ src, text, modalType }: FolderMenuProps) => {
@@ -28,23 +24,9 @@ export const FolderMenu = ({ src, text, modalType }: FolderMenuProps) => {
         {text}
       </button>
       {showModal && (
-        <div>
-          {modalType === 'share' && (
-            <CommonModal closeModal={handleCloseModal}>
-              <ShareFolder />
-            </CommonModal>
-          )}
-          {modalType === 'changeName' && (
-            <CommonModal closeModal={handleCloseModal}>
-              <ChangeFolderName />
-            </CommonModal>
-          )}
-          {modalType === 'delete' && (
-            <CommonModal closeModal={handleCloseModal}>
-              <DeleteFolder />
-            </CommonModal>
-          )}
-        </div>
+        <CommonModal closeModal={handleCloseModal}>
+          <ModalContent mode={modalType} />
+        </CommonModal>
       )}
     </>
   );
