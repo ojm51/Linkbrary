@@ -16,13 +16,13 @@ interface FolderMenuProps {
 const FolderMenu = ({ src, text, modalType }: FolderMenuProps) => {
   const [showModal, setShowModal] = useState<boolean>(false);
 
-  const handleClickModal = () => setShowModal((prev) => !prev);
+  const handleCloseModal = () => setShowModal((prev) => !prev);
 
   return (
     <>
       <button
         className="flex justify-center items-center gap-1 text-[14px] font-semibold text-secondary-60 font-[Pretendard] not-italic leading-[normal]"
-        onClick={handleClickModal}
+        onClick={handleCloseModal}
       >
         <Image src={src} alt={`${text} 아이콘`} width={18} height={18} />
         {text}
@@ -30,17 +30,17 @@ const FolderMenu = ({ src, text, modalType }: FolderMenuProps) => {
       {showModal && (
         <div>
           {modalType === 'share' && (
-            <CommonModal clickModal={handleClickModal} title="폴더 공유">
+            <CommonModal closeModal={handleCloseModal}>
               <ShareFolder />
             </CommonModal>
           )}
           {modalType === 'changeName' && (
-            <CommonModal clickModal={handleClickModal} title="폴더 이름 변경">
+            <CommonModal closeModal={handleCloseModal}>
               <ChangeFolderName />
             </CommonModal>
           )}
           {modalType === 'delete' && (
-            <CommonModal clickModal={handleClickModal} title="폴더 삭제">
+            <CommonModal closeModal={handleCloseModal}>
               <DeleteFolder />
             </CommonModal>
           )}

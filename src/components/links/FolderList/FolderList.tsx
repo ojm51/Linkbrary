@@ -14,7 +14,7 @@ const FolderList = () => {
   ];
   const [showModal, setShowModal] = useState<boolean>(false);
 
-  const handleClickModal = () => setShowModal((prev) => !prev);
+  const handleCloseModal = () => setShowModal((prev) => !prev);
 
   return (
     <div className="flex justify-between items-center">
@@ -28,13 +28,13 @@ const FolderList = () => {
 
       <button
         className="flex justify-center items-center gap-1 font-medium text-primary text-base font-[Pretendard] not-italic leading-[normal]"
-        onClick={handleClickModal}
+        onClick={handleCloseModal}
       >
         폴더 추가
         <Image src={plusIcon} alt="플러스 아이콘" width={16} height={16} />
       </button>
       {showModal && (
-        <CommonModal clickModal={handleClickModal} title="폴더 추가">
+        <CommonModal closeModal={handleCloseModal}>
           <AddFolder />
         </CommonModal>
       )}

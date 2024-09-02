@@ -8,6 +8,9 @@ import CommonButton from '@/components/common/buttons/CommonButton';
 export const AddFolder = () => {
   return (
     <div>
+      <h3 className="text-xl font-bold text-[#373740] font-[Pretendard] not-italic leading-[normal] text-center">
+        폴더 추가
+      </h3>
       <div className="mt-6 mb-[15px]">
         <CommonInput placeholder="내용 입력" />
       </div>
@@ -37,6 +40,9 @@ export const ShareFolder = () => {
 
   return (
     <div>
+      <h3 className="text-xl font-bold text-[#373740] font-[Pretendard] not-italic leading-[normal] text-center">
+        폴더 공유
+      </h3>
       <h4 className="mt-2 mb-6 text-center text-[14px] font-normal text-secondary-60 font-[Pretendard] not-italic leading-[22px]">
         폴더명
       </h4>
@@ -67,6 +73,9 @@ export const ShareFolder = () => {
 export const ChangeFolderName = () => {
   return (
     <div>
+      <h3 className="text-xl font-bold text-[#373740] font-[Pretendard] not-italic leading-[normal] text-center">
+        폴더 이름 변경
+      </h3>
       <div className="mt-6 mb-[15px]">
         <CommonInput placeholder="내용 입력" />
       </div>
@@ -78,6 +87,9 @@ export const ChangeFolderName = () => {
 export const DeleteFolder = () => {
   return (
     <div>
+      <h3 className="text-xl font-bold text-[#373740] font-[Pretendard] not-italic leading-[normal] text-center">
+        폴더 삭제
+      </h3>
       <h4 className="mt-2 mb-6 text-center text-[14px] text-secondary-60 font-[Pretendard] not-italic leading-[22px]">
         폴더명
       </h4>
