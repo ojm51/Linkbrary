@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const instance = axios.create({
+export const instance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
   timeout: 3000,
   headers: {
@@ -23,5 +23,3 @@ instance.interceptors.request.use(
     Promise.reject(error);
   },
 );
-
-export default instance;

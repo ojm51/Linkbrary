@@ -1,4 +1,4 @@
-const API_PATH = {
+export const API_PATH = {
   auth: {
     signUp: '/auth/sign-up',
     Login: '/auth/sign-in',
@@ -33,5 +33,3 @@ const API_PATH = {
     emailCheck: '/users/check-email',
   },
 };
-
-export default API_PATH;
