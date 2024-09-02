@@ -12,10 +12,10 @@ const Footer = () => {
       <div className="flex justify-between items-center w-full max-w-[1750px] px-[20px] mx-auto">
         <p className="w-full max-w-[120px] text-[#676767]">©codeit - 2023</p>
         <div className="flex justify-center items-center gap-[30px]">
-          <Link href="/" className="text-[#cfcfcf]">
+          <Link href="/privacy" className="text-[#cfcfcf]">
             Privacy Policy
           </Link>
-          <Link href="/" className="text-[#cfcfcf]">
+          <Link href="/faq" className="text-[#cfcfcf]">
             FAQ
           </Link>
         </div>
