@@ -5,6 +5,7 @@ import 'aos/dist/aos.css';
 import 'swiper/css';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
+import DownloadIcon from '@/assets/icons/downloadIcon.svg';
 import CommonLinkButton from '@/components/ui/CommonLinkButton';
 import KeyVisualImage from '@/assets/images/landingKeyvisual.png';
 import CardImage1_1 from '@/assets/images/landingCard1-1.png';
@@ -13,7 +14,6 @@ import CardImage1_3 from '@/assets/images/landingCard1-3.png';
 import CardImage2 from '@/assets/images/landingCard2.png';
 import CardImage3_2 from '@/assets/images/landingCard3-2.png';
 import CardImage4 from '@/assets/images/landingCard4.png';
-import DownloadIcon from '@/assets/icons/downloadIcon.svg';
 
 const Home = () => {
   useEffect(() => {
