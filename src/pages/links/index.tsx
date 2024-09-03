@@ -1,7 +1,4 @@
-import AddLink from '@/components/links/AddLink';
-import SearchBar from '@/components/links/SearchBar';
-import FolderList from '@/components/links/FolderList/FolderList';
-import FolderMenuList from '@/components/links/FolderMenuList/FolderMenuList';
+import { AddLink, SearchBar, FolderList, FolderMenuList } from '@/components';
 
 function links() {
   return (

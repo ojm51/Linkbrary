@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import CommonButton from '@/components/common/buttons/CommonButton';
+import { CommonButton } from '@/components';
 
 import Logo from '@/assets/images/logo/logo@2x.png';
 
@@ -9,7 +9,7 @@ interface AuthHeaderProps {
   href: string;
 }
 
-const AuthHeader = ({ children, href }: AuthHeaderProps) => {
+export const AuthHeader = ({ children, href }: AuthHeaderProps) => {
   return (
     <header className="flex flex-col justify-center items-center gap-4">
       <CommonButton mode="link" href="/" className="">
@@ -34,5 +34,3 @@ const AuthHeader = ({ children, href }: AuthHeaderProps) => {
     </header>
   );
 };
-
-export default AuthHeader;

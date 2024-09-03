@@ -1,17 +1,33 @@
+import { useState } from 'react';
 import Image from 'next/image';
+import { CommonModal, ModalContent } from '@/components';
+import { ModalType } from '@/lib/types';
 
 interface FolderMenuProps {
   src: string;
   text: string;
+  modalType: ModalType;
 }
 
-const FolderMenu = ({ src, text }: FolderMenuProps) => {
+export const FolderMenu = ({ src, text, modalType }: FolderMenuProps) => {
+  const [showModal, setShowModal] = useState<boolean>(false);
+
+  const handleCloseModal = () => setShowModal((prev) => !prev);
+
   return (
-    <button className="flex justify-center items-center gap-1 text-[14px] font-semibold text-gray-60 font-[Pretendard] not-italic leading-[normal]">
-      <Image src={src} alt={`${text} 아이콘`} width={18} height={18} />
-      {text}
-    </button>
+    <>
+      <button
+        className="flex justify-center items-center gap-1 text-[14px] font-semibold text-secondary-60 font-[Pretendard] not-italic leading-[normal]"
+        onClick={handleCloseModal}
+      >
+        <Image src={src} alt={`${text} 아이콘`} width={18} height={18} />
+        {text}
+      </button>
+      {showModal && (
+        <CommonModal closeModal={handleCloseModal}>
+          <ModalContent mode={modalType} />
+        </CommonModal>
+      )}
+    </>
   );
 };
-
-export default FolderMenu;
