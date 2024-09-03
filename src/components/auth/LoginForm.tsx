@@ -1,10 +1,13 @@
-import usePasswordVisuality from '@/lib/hooks/auth/usePasswordVisuality';
 import Image from 'next/image';
-import { useForm } from 'react-hook-form';
-import { CommonInputWithError } from '../common/input/CommonInput';
-import CommonButton from '../common/buttons/CommonButton';
+import { useContext } from 'react';
+import { FieldValues, useForm } from 'react-hook-form';
 
-const LoginForm = () => {
+import { AuthContext } from '@/lib/context';
+import { usePasswordVisuality } from '@/lib/hooks';
+import { CommonButton, CommonInputWithError } from '../common';
+
+export const LoginForm = () => {
+  const { login } = useContext(AuthContext);
   const {
     visible: passwordVisible,
     visibleIcon: passwordVisibleIcon,
@@ -17,10 +20,9 @@ const LoginForm = () => {
     formState: { errors, isValid },
   } = useForm({ mode: 'onBlur' });
 
-  const onSubmit = () => {
-    // const onSubmit = (values: FieldValues) => {
-    /* @TODO api 연결 */
-    // console.log(values);
+  const onSubmit = (values: FieldValues) => {
+    const { email, password } = values;
+    login({ email, password });
   };
   const formClassName =
     'w-full flex flex-col justify-center items-start gap-[12px]';
@@ -71,5 +73,3 @@ const LoginForm = () => {
     </form>
   );
 };
-
-export default LoginForm;

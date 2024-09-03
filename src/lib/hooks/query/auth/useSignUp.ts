@@ -15,15 +15,10 @@ export const useSignUp = ({
 }: SignUpHookParams) => {
   const router = useRouter();
   return useMutation({
-    mutationKey: MUTATION_KEY.signUp,
+    mutationKey: [MUTATION_KEY.signUp],
     mutationFn: signUp,
     onSuccess() {
-      /** @Todo default folder 만들기
-       * const { accessToken } = response.data;
-       * if (accessToken) {
-       *   localStorage.setItem('userInfo', JSON.stringify({ accessToken }));
-       * }
-       */
+      /** @Todo default folder 만들기 */
 
       onSuccess();
       router.push('/login');

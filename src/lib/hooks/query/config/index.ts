@@ -1,1 +1,1 @@
-export * from './mutationKey';
+export * from './queryKey';

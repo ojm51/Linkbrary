@@ -5,6 +5,7 @@ import {
   QueryClientProvider,
 } from '@tanstack/react-query';
 import type { AppProps } from 'next/app';
+import { AuthProvider } from '@/lib/context';
 import '@/styles/globals.css';
 
 const App = ({ Component, pageProps }: AppProps) => {
@@ -12,7 +13,9 @@ const App = ({ Component, pageProps }: AppProps) => {
   return (
     <QueryClientProvider client={queryClient}>
       <HydrationBoundary state={pageProps.dehydratedState}>
-        <Component {...pageProps} />
+        <AuthProvider>
+          <Component {...pageProps} />
+        </AuthProvider>
       </HydrationBoundary>
     </QueryClientProvider>
   );
