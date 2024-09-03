@@ -1,12 +1,15 @@
-export const getFromStorage = <T = any>(name: string) => {
-  if (typeof window === 'undefined') return;
-  const strItem = localStorage.getItem(name);
-  if (strItem) {
-    return JSON.parse(strItem) as T;
+export const getFromStorage = <T>(name: string) => {
+  let result;
+  if (typeof window !== 'undefined') {
+    const strItem = localStorage.getItem(name);
+    if (strItem) {
+      result = JSON.parse(strItem) as T;
+    }
   }
+  return result;
 };
 
-export const setToStorage = <T = any>(name: string, item: T) => {
+export const setToStorage = <T>(name: string, item: T) => {
   if (typeof window === 'undefined') return;
   localStorage.setItem(name, JSON.stringify(item));
 };
