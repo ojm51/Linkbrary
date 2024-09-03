@@ -9,7 +9,7 @@ interface AuthHeaderProps {
   href: string;
 }
 
-const AuthHeader = ({ children, href }: AuthHeaderProps) => {
+export const AuthHeader = ({ children, href }: AuthHeaderProps) => {
   return (
     <header className="flex flex-col justify-center items-center gap-4">
       <CommonButton mode="link" href="/" className="">
@@ -34,5 +34,3 @@ const AuthHeader = ({ children, href }: AuthHeaderProps) => {
     </header>
   );
 };
-
-export default AuthHeader;

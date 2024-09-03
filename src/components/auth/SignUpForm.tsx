@@ -1,11 +1,19 @@
 import Image from 'next/image';
-import { useForm } from 'react-hook-form';
+import { FieldValues, useForm } from 'react-hook-form';
 
-import usePasswordVisuality from '@/lib/hooks/auth/usePasswordVisuality';
-import { CommonInputWithError } from '@/components/common/input/CommonInput';
-import CommonButton from '@/components/common/buttons/CommonButton';
+import { usePasswordVisuality, useSignUp } from '@/lib/hooks';
 
-const SignUpForm = () => {
+import { CommonButton, CommonInputWithError } from '../common';
+
+export const SignUpForm = () => {
+  const signUpMutate = useSignUp({});
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+    watch,
+  } = useForm({ mode: 'onBlur' });
+
   const {
     visible: passwordVisible,
     visibleIcon: passwordVisibleIcon,
@@ -16,17 +24,10 @@ const SignUpForm = () => {
     visibleIcon: passwordConfirmVisibleIcon,
     handleVisible: handlePasswordConfirmVisible,
   } = usePasswordVisuality();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isValid },
-    watch,
-  } = useForm({ mode: 'onBlur' });
 
-  const onSubmit = () => {
-    // const onSubmit = (values: FieldValues) => {
-    /* @TODO api 연결 */
-    // console.log(values);
+  const onSubmit = async (values: FieldValues) => {
+    const { email, name, password } = values;
+    await signUpMutate.mutateAsync({ email, name, password });
   };
 
   const formClassName =
@@ -52,12 +53,13 @@ const SignUpForm = () => {
       </CommonInputWithError>
 
       <CommonInputWithError
-        htmlfor="nickname"
+        htmlfor="name"
         placeholder="닉네임을 입력해주세요"
-        errorMessage={`${errors.nickname?.message}`}
-        errorMessageVisible={!!errors.nickname}
-        register={register('nickname', {
+        errorMessage={`${errors.name?.message}`}
+        errorMessageVisible={!!errors.name}
+        register={register('name', {
           required: '닉네임을 입력해주세요',
+          maxLength: { value: 10, message: '최대 10자까지 가능합니다.' },
           pattern: {
             value: /^[가-힣a-zA-Z0-9]*$/i,
             message: '한글, 영문, 숫자만 가능합니다.',
@@ -129,5 +131,3 @@ const SignUpForm = () => {
     </form>
   );
 };
-
-export default SignUpForm;
