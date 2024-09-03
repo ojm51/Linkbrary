@@ -1,5 +1,11 @@
-import CommonLinkButton from '@/components/ui/CommonLinkButton';
+import { useEffect } from 'react';
 import Image from 'next/image';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import 'swiper/css';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay } from 'swiper/modules';
+import CommonLinkButton from '@/components/ui/CommonLinkButton';
 import KeyVisualImage from '@/assets/images/landingKeyvisual.png';
 import CardImage1_1 from '@/assets/images/landingCard1-1.png';
 import CardImage1_2 from '@/assets/images/landingCard1-2.png';
@@ -8,12 +14,6 @@ import CardImage2 from '@/assets/images/landingCard2.png';
 import CardImage3_2 from '@/assets/images/landingCard3-2.png';
 import CardImage4 from '@/assets/images/landingCard4.png';
 import DownloadIcon from '@/assets/icons/downloadIcon.svg';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
-import 'swiper/css';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay } from 'swiper/modules';
-import { useEffect } from 'react';
 
 const Home = () => {
   useEffect(() => {
@@ -25,7 +25,7 @@ const Home = () => {
   const LINK_ADD_STYLE = {
     width: 350,
     height: 53,
-    href: '/link',
+    href: '/links',
   };
 
   return (
@@ -38,13 +38,13 @@ const Home = () => {
         >
           <div className="h-[77px] overflow-hidden pt-[6px]">
             <ul className="key-title-slide flex flex-col gap-[15px] font-bold text-[64px]">
-              <li className="bg-gradient-text-color01 text-transparent bg-clip-text">
+              <li className="bg-gradient-text-blue-to-pink text-transparent bg-clip-text">
                 세상의 모든 정보
               </li>
-              <li className="bg-gradient-text-color01 text-transparent bg-clip-text">
+              <li className="bg-gradient-text-blue-to-pink text-transparent bg-clip-text">
                 우리의 모든 정보
               </li>
-              <li className="bg-gradient-text-color01 text-transparent bg-clip-text">
+              <li className="bg-gradient-text-blue-to-pink text-transparent bg-clip-text">
                 나만의 모든 정보
               </li>
             </ul>
@@ -94,7 +94,7 @@ const Home = () => {
               data-aos-duration="1500"
               data-aos-delay="500"
             >
-              <span className="bg-gradient-text-color02 text-transparent bg-clip-text">
+              <span className="bg-gradient-text-red-to-blue text-transparent bg-clip-text">
                 원하는 링크
               </span>
               를
@@ -197,7 +197,7 @@ const Home = () => {
             >
               링크를 폴더로
               <br />
-              <span className="bg-gradient-text-color03 text-transparent bg-clip-text">
+              <span className="bg-gradient-text-blue-to-yellow text-transparent bg-clip-text">
                 관리
               </span>
               하세요
@@ -229,7 +229,7 @@ const Home = () => {
             >
               저장한 링크를
               <br />
-              <span className="bg-gradient-text-color04 text-transparent bg-clip-text">
+              <span className="bg-gradient-text-blue-to-skyblue text-transparent bg-clip-text">
                 공유
               </span>
               해 보세요.
@@ -287,7 +287,7 @@ const Home = () => {
             >
               저장한 링크를
               <br />
-              <span className="bg-gradient-text-color05 text-transparent bg-clip-text">
+              <span className="bg-gradient-text-skyblue-to-blue text-transparent bg-clip-text">
                 검색
               </span>
               해 보세요.
