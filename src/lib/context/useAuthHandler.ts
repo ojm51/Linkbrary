@@ -22,7 +22,7 @@ export const useAuthHandler = () => {
   const loginMutate = useLogin();
 
   const [accessToken, setAccessToken] = useState<string>(
-    getFromStorage('userInfo')?.accessToken ?? '',
+    getFromStorage<UserInfo>('userInfo')?.accessToken ?? '',
   );
   const { data } = useGetUserInfo({
     accessToken,
@@ -36,9 +36,10 @@ export const useAuthHandler = () => {
       { email, password },
       {
         onSuccess(response) {
-          const { accessToken } = response.data;
-          if (accessToken) {
-            setAccessToken(accessToken);
+          if (response && response.data.accessToken) {
+            const { accessToken: newAccessToken } = response.data;
+            setAccessToken(newAccessToken);
+            router.push('/');
           }
         },
         onError() {
@@ -61,7 +62,7 @@ export const useAuthHandler = () => {
   };
 
   const authProviderValue = {
-    userInfo: userInfo,
+    userInfo,
     isLoggedin,
     login,
     logout,
@@ -74,7 +75,7 @@ export const useAuthHandler = () => {
       updateUserInfo({ ...newUserInfo, accessToken });
       setIsLoggedin(true);
     }
-  }, [data]);
+  }, [data, accessToken]);
 
   return { authProviderValue };
 };
