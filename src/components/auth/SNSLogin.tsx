@@ -3,7 +3,7 @@ import Image from 'next/image';
 import googleLogin from '@/assets/icons/sns/ic_google.svg';
 import kakaoLogin from '@/assets/icons/sns/ic_kakao.svg';
 
-const SNSLogin = () => {
+export const SNSLogin = () => {
   const sectionWrapper =
     'flex w-[400px] py-[12px] px-[24px] justify-between items-center rounded-[8px] border-[1px] bg-secondary-10';
   const textStyle = 'font-[Pretendard] text-[14px] not-italic leading-[normal]';
@@ -31,5 +31,3 @@ const SNSLogin = () => {
     </section>
   );
 };
-
-export default SNSLogin;
