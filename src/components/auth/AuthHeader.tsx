@@ -1,8 +1,8 @@
 import Image from 'next/image';
 
-import Logo from '@/assets/images/logo/logo@2x.png';
+import { CommonButton } from '@/components';
 
-import { CommonButton } from '../common';
+import Logo from '@/assets/images/logo/logo@2x.png';
 
 interface AuthHeaderProps {
   children: React.ReactNode;
