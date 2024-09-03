@@ -208,7 +208,7 @@ const CardList: React.FC = () => {
   };
 
   useEffect(() => {
-    loadMoreCards(); 
+    loadMoreCards();
   }, []);
 
   useEffect(() => {
