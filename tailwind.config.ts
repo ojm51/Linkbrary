@@ -119,9 +119,20 @@ const config: Config = {
       },
       backgroundImage: {
         'gradient-color': 'linear-gradient(to right, #6D6AFE 0%, #6AE3FE 100%)',
+        'gradient-text-blue-to-pink':
+          'linear-gradient(to right, #6D6AFE 0%, #FF9F9F 100%)',
+        'gradient-text-red-to-blue':
+          'linear-gradient(to right, #FE8A8A 2%, #A4CEFF 100%)',
+        'gradient-text-blue-to-yellow':
+          'linear-gradient(to left, #6FBAFF 0%, #FFD88B 100%)',
+        'gradient-text-blue-to-skyblue':
+          'linear-gradient(to right, #6D7CCD 0%, #728EB8 100%)',
+        'gradient-text-skyblue-to-blue':
+          'linear-gradient(to right, #7DD4EB 0%, #9AB8D6 100%)',
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+        'card-image': 'url("/images/landingCard3-1.png")',
       },
     },
   },
