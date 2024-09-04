@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import Card from './Card';
 
 // Assuming `CardList` is imported from a data source or defined in the same file
@@ -185,10 +185,35 @@ const CardList = [
   },
 ];
 
-const CardsPerPage = 9; // Number of cards per page
+const CardsPerPageDesktop = 9; // 데스크톱에서 한 페이지당 카드 수 (3x3)
+const CardsPerPageTablet = 6; // 테이블릿에서 한 페이지당 카드 수 (2x3)
+const CardsPerPageMobile = 9; // 모바일에서 한 페이지당 카드 수 (1x9)
 
 const CardListPage: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
+  const [cardsPerPage, setCardsPerPage] = useState(CardsPerPageDesktop);
+
+  // Effect to handle window resize
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) {
+        setCardsPerPage(CardsPerPageDesktop); // 데스크톱
+      } else if (window.innerWidth >= 768) {
+        setCardsPerPage(CardsPerPageTablet); // 테이블릿
+      } else {
+        setCardsPerPage(CardsPerPageMobile); // 모바일
+      }
+    };
+
+    // Add event listener for resize
+    window.addEventListener('resize', handleResize);
+
+    // Initial check
+    handleResize();
+
+    // Clean up event listener on component unmount
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // Calculate the cards to display based on the current page
   const cardsToDisplay = useMemo(() => {
@@ -196,15 +221,15 @@ const CardListPage: React.FC = () => {
     const favoriteCards = CardList.filter((card) => card.favorite);
 
     // Calculate start and end index for pagination
-    const startIndex = (currentPage - 1) * CardsPerPage;
-    const endIndex = startIndex + CardsPerPage;
+    const startIndex = (currentPage - 1) * cardsPerPage;
+    const endIndex = startIndex + cardsPerPage;
 
     return favoriteCards.slice(startIndex, endIndex);
-  }, [currentPage]);
+  }, [currentPage, cardsPerPage]);
 
   // Calculate the total number of pages based on the filtered cards
   const totalPages = Math.ceil(
-    CardList.filter((card) => card.favorite).length / CardsPerPage,
+    CardList.filter((card) => card.favorite).length / cardsPerPage,
   );
 
   // Handle page change
@@ -215,9 +240,11 @@ const CardListPage: React.FC = () => {
   };
 
   return (
-    <div className="p-4">
+    <div className="px-4 sm:px-8 lg:px-20">
       {/* Card Grid */}
-      <div className="grid grid-cols-3 gap-4">
+      <div
+        className={`grid gap-4 ${cardsPerPage === CardsPerPageMobile ? 'grid-cols-1' : 'md:grid-cols-2'} ${cardsPerPage === CardsPerPageDesktop ? 'lg:grid-cols-3' : ''}`}
+      >
         {cardsToDisplay.map((card) => (
           <Card key={card.id} card={card} />
         ))}
