@@ -1,5 +1,5 @@
 import { match } from 'ts-pattern';
-import { AddFolderParams } from '@/lib/api/folder';
+import { AddFolderProps } from '@/lib/api';
 import {
   AddFolder,
   ShareFolder,
@@ -10,8 +10,8 @@ import {
 // 타입을 문자열이 아닌 모달 타입 그 자체로 지정
 type AddModal = {
   mode: 'add';
-  getInputValue: AddFolderParams['getInputValue'];
-  handleAddFolder: AddFolderParams['handleAddFolder'];
+  getInputValue: AddFolderProps['getInputValue'];
+  handleAddFolder: AddFolderProps['handleAddFolder'];
 };
 type ShareModal = { mode: 'share' };
 type ChangeNameModal = { mode: 'changeName' };
@@ -34,9 +34,9 @@ export const ModalContent = (modalProps: ModalContentProps) => {
         />
       );
     })
-    .with('changeName', () => <ShareFolder />)
-    .with('delete', () => <ChangeFolderName />)
-    .with('share', () => <DeleteFolder />)
+    .with('changeName', () => <ChangeFolderName />)
+    .with('delete', () => <DeleteFolder />)
+    .with('share', () => <ShareFolder />)
     .exhaustive();
 
   return SelectedModalContent;

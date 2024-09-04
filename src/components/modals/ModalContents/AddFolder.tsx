@@ -1,10 +1,10 @@
-import { AddFolderParams } from '@/lib/api/folder';
+import { AddFolderProps } from '@/lib/api/folder';
 import { CommonInput, CommonButton } from '@/components';
 
 export const AddFolder = ({
   getInputValue,
   handleAddFolder,
-}: AddFolderParams) => {
+}: AddFolderProps) => {
   return (
     <div>
       <h3 className="text-xl font-bold text-[#373740] font-[Pretendard] not-italic leading-[normal] text-center">

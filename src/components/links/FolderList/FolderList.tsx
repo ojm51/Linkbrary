@@ -1,25 +1,60 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import plusIcon from '@/assets/icons/ic_plus.svg';
 import { CommonModal, ModalContent, Folder } from '@/components';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import {
+  AddFolderProps,
+  FolderTypes,
+  getFolderList,
+  postAddFolder,
+} from '@/lib/api';
 
 export const FolderList = () => {
-  const folderList = [
-    { id: 1, name: 'a' },
-    { id: 2, name: 'bb' },
-    { id: 3, name: 'ccc' },
-    { id: 4, name: 'dddd' },
-  ];
-  const [showModal, setShowModal] = useState<boolean>(false);
+  const [folderName, setFolderName] = useState('');
 
+  const [showModal, setShowModal] = useState<boolean>(false);
   const handleCloseModal = () => setShowModal((prev) => !prev);
+  const getInputValue: AddFolderProps['getInputValue'] = (e) => {
+    setFolderName(e.target.value);
+  };
+
+  // const {
+  //   data: folderList = [],
+  //   isLoading,
+  //   isError,
+  // } = useQuery<FolderTypes[]>({
+  //   queryKey: ['folderList'],
+  //   queryFn: getFolderList,
+  // });
+
+  const [folderList, setFolderList] = useState<FolderTypes[]>([]);
+  const fetchFolderList = async () => {
+    const data = await getFolderList();
+    setFolderList(data);
+  };
+  useEffect(() => {
+    fetchFolderList();
+  }, []);
+  // const queryClient = useQueryClient();
+  // const mutation = useMutation({ mutationFn: postAddFolder });
+
+  const handleAddFolderButtonClick = async () => {
+    // await postAddFolder({ folderName });
+    // fetchFolderList();
+    // // mutation.mutate({ folderName });
+    // setShowModal((prev) => !prev);
+    await postAddFolder({ folderName });
+    fetchFolderList();
+    setShowModal((prev) => !prev);
+  };
 
   return (
     <div className="flex justify-between items-center">
       <ul className="flex justify-start items-center gap-2">
-        {folderList.map((folderName) => (
-          <li key={folderName.id}>
-            <Folder folderName={folderName.name} />
+        {folderList.map((folder) => (
+          <li key={folder.id}>
+            <Folder folderName={folder.name} />
           </li>
         ))}
       </ul>
@@ -33,7 +68,11 @@ export const FolderList = () => {
       </button>
       {showModal && (
         <CommonModal closeModal={handleCloseModal}>
-          <ModalContent mode="add" />
+          <ModalContent
+            mode="add"
+            getInputValue={getInputValue}
+            handleAddFolder={handleAddFolderButtonClick}
+          />
         </CommonModal>
       )}
     </div>
