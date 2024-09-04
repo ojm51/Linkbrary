@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useMemo } from 'react';
 import Card from './Card';
 
-const allCardList = [
+// Assuming `CardList` is imported from a data source or defined in the same file
+const CardList = [
   {
     id: 1,
     favorite: false,
@@ -123,60 +124,60 @@ const allCardList = [
     createAt: '2024-08-30T07:56:21.621Z',
   },
   {
-    id: 12,
+    id: 13,
     favorite: true,
     url: 'naver.com',
-    title: '네이버12',
+    title: '네이버13',
     imageSource:
       'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FCNxUY%2Fbtqw7dnElRU%2FHuVZgvpT6J8n4aEYFathEk%2Fimg.jpg',
     description: '네이버에서 모든 것을 만나보세요.',
     createAt: '2024-08-30T07:56:21.621Z',
   },
   {
-    id: 12,
+    id: 14,
     favorite: true,
     url: 'naver.com',
-    title: '네이버12',
+    title: '네이버14',
     imageSource:
       'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FCNxUY%2Fbtqw7dnElRU%2FHuVZgvpT6J8n4aEYFathEk%2Fimg.jpg',
     description: '네이버에서 모든 것을 만나보세요.',
     createAt: '2024-08-30T07:56:21.621Z',
   },
   {
-    id: 12,
+    id: 15,
     favorite: true,
     url: 'naver.com',
-    title: '네이버12',
+    title: '네이버15',
     imageSource:
       'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FCNxUY%2Fbtqw7dnElRU%2FHuVZgvpT6J8n4aEYFathEk%2Fimg.jpg',
     description: '네이버에서 모든 것을 만나보세요.',
     createAt: '2024-08-30T07:56:21.621Z',
   },
   {
-    id: 12,
+    id: 16,
     favorite: true,
     url: 'naver.com',
-    title: '네이버12',
+    title: '네이버16',
     imageSource:
       'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FCNxUY%2Fbtqw7dnElRU%2FHuVZgvpT6J8n4aEYFathEk%2Fimg.jpg',
     description: '네이버에서 모든 것을 만나보세요.',
     createAt: '2024-08-30T07:56:21.621Z',
   },
   {
-    id: 12,
+    id: 17,
     favorite: true,
     url: 'naver.com',
-    title: '네이버12',
+    title: '네이버17',
     imageSource:
       'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FCNxUY%2Fbtqw7dnElRU%2FHuVZgvpT6J8n4aEYFathEk%2Fimg.jpg',
     description: '네이버에서 모든 것을 만나보세요.',
     createAt: '2024-08-30T07:56:21.621Z',
   },
   {
-    id: 12,
+    id: 18,
     favorite: true,
     url: 'naver.com',
-    title: '네이버12',
+    title: '네이버18',
     imageSource:
       'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FCNxUY%2Fbtqw7dnElRU%2FHuVZgvpT6J8n4aEYFathEk%2Fimg.jpg',
     description: '네이버에서 모든 것을 만나보세요.',
@@ -184,67 +185,72 @@ const allCardList = [
   },
 ];
 
-const PAGE_SIZE = 9; // 페이지 당 로드할 카드 수
+const CardsPerPage = 9; // Number of cards per page
 
-const CardList: React.FC = () => {
-  const [cardList, setCardList] = useState<typeof allCardList>([]);
-  const [hasMore, setHasMore] = useState(true);
-  const [page, setPage] = useState(0);
-  const observer = useRef<IntersectionObserver | null>(null);
-  const lastCardElementRef = useRef<HTMLDivElement | null>(null);
+const CardListPage: React.FC = () => {
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const loadMoreCards = () => {
-    const nextPage = page + 1;
-    const startIndex = (nextPage - 1) * PAGE_SIZE;
-    const endIndex = nextPage * PAGE_SIZE;
-    const nextCards = allCardList.slice(startIndex, endIndex);
+  // Calculate the cards to display based on the current page
+  const cardsToDisplay = useMemo(() => {
+    // Filter cards with favorite: true
+    const favoriteCards = CardList.filter((card) => card.favorite);
 
-    if (nextCards.length > 0) {
-      setCardList((prevCards) => [...prevCards, ...nextCards]);
-      setPage(nextPage);
-    } else {
-      setHasMore(false);
+    // Calculate start and end index for pagination
+    const startIndex = (currentPage - 1) * CardsPerPage;
+    const endIndex = startIndex + CardsPerPage;
+
+    return favoriteCards.slice(startIndex, endIndex);
+  }, [currentPage]);
+
+  // Calculate the total number of pages based on the filtered cards
+  const totalPages = Math.ceil(
+    CardList.filter((card) => card.favorite).length / CardsPerPage,
+  );
+
+  // Handle page change
+  const handlePageChange = (page: number) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
     }
   };
 
-  useEffect(() => {
-    loadMoreCards();
-  }, []);
-
-  useEffect(() => {
-    if (observer.current) observer.current.disconnect();
-
-    observer.current = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting && hasMore) {
-        loadMoreCards();
-      }
-    });
-
-    if (lastCardElementRef.current) {
-      observer.current.observe(lastCardElementRef.current);
-    }
-
-    return () => {
-      if (observer.current) observer.current.disconnect();
-    };
-  }, [hasMore, page]);
-
-  const favoriteCards = cardList.filter((card) => card.favorite);
-
   return (
-    <div className="grid grid-cols-3 gap-4 p-8">
-      {favoriteCards.map((card, index) => {
-        if (index === favoriteCards.length - 1) {
-          return (
-            <div ref={lastCardElementRef} key={card.id}>
-              <Card card={card} />
-            </div>
-          );
-        }
-        return <Card key={card.id} card={card} />;
-      })}
+    <div className="p-4">
+      {/* Card Grid */}
+      <div className="grid grid-cols-3 gap-4">
+        {cardsToDisplay.map((card) => (
+          <Card key={card.id} card={card} />
+        ))}
+      </div>
+
+      {/* Pagination Controls */}
+      <div className="flex justify-center mt-4">
+        <button
+          onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+          className="px-4 py-2 mx-1 bg-blue-500 text-white rounded"
+        >
+          Previous
+        </button>
+        {Array.from({ length: totalPages }, (_, index) => (
+          <button
+            key={index + 1}
+            onClick={() => handlePageChange(index + 1)}
+            className={`px-4 py-2 mx-1 rounded ${currentPage === index + 1 ? 'bg-blue-500 text-white' : 'bg-gray-300 text-black'}`}
+          >
+            {index + 1}
+          </button>
+        ))}
+        <button
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}
+          className="px-4 py-2 mx-1 bg-blue-500 text-white rounded"
+        >
+          Next
+        </button>
+      </div>
     </div>
   );
 };
 
-export default CardList;
+export default CardListPage;
