@@ -13,6 +13,12 @@ import { useRouter } from 'next/router';
 import '@/styles/globals.css';
 import '@/styles/landingEffect.css';
 
+declare global {
+  interface Window {
+    Kakao: any;
+  }
+}
+
 const App = ({ Component, pageProps }: AppProps) => {
   const [queryClient] = useState(() => new QueryClient());
   const router = useRouter();
