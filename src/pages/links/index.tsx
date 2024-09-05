@@ -1,6 +1,10 @@
+import { useContext } from 'react';
 import { AddLink, SearchBar, FolderList, FolderMenuList } from '@/components';
+import { FolderContext } from '@/lib/context';
 
 function links() {
+  const { selectedFolder } = useContext(FolderContext);
+
   return (
     <>
       <div className="h-[220px] pt-[60px] bg-bg">
@@ -13,7 +17,7 @@ function links() {
         <FolderList />
         <div className="flex justify-between items-center">
           <h3 className="font-semibold text-2xl text-black my-6 font-[Pretendard] not-italic leading-[normal]">
-            title
+            {selectedFolder}
           </h3>
           <FolderMenuList />
         </div>

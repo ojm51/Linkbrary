@@ -2,18 +2,8 @@ import Image from 'next/image';
 import kakaoIcon from '@/assets/images/kakaoTalk.png';
 import facebookIcon from '@/assets/images/facebook.png';
 import copyLinkIcon from '@/assets/images/copyLink.png';
-import defaultImage from '@/assets/images/defaultImage.png';
-import { useEffect, useCallback } from 'react';
-
-// interface KakaoImageUploadResponse {
-//   original: {
-//     url: string;
-//     length: number;
-//     content_type: string;
-//     width: number;
-//     height: number;
-//   };
-// }
+import { useEffect, useCallback, useContext } from 'react';
+import { FolderContext } from '@/lib/context';
 
 export const ShareFolder = () => {
   const { Kakao, location } = window;
@@ -100,13 +90,15 @@ export const ShareFolder = () => {
     },
   ];
 
+  const { selectedFolder } = useContext(FolderContext);
+
   return (
     <div>
       <h3 className="text-xl font-bold text-[#373740] font-[Pretendard] not-italic leading-[normal] text-center">
         폴더 공유
       </h3>
       <h4 className="mt-2 mb-6 text-center text-[14px] font-normal text-secondary-60 font-[Pretendard] not-italic leading-[22px]">
-        폴더명
+        {selectedFolder}
       </h4>
       <ul className="flex justify-center items-center gap-8">
         {shareMethodList.map((shareMethod) => (

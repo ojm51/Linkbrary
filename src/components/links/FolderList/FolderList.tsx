@@ -1,34 +1,22 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Image from 'next/image';
 import plusIcon from '@/assets/icons/ic_plus.svg';
-import { CommonModal, ModalContent, Folder } from '@/components';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import {
-  AddFolderProps,
-  FolderTypes,
-  getFolderList,
-  postAddFolder,
-} from '@/lib/api';
+import { CommonModal, ModalRenderer, Folder } from '@/components';
+import { AddFolderProps, getFolderList, postFolder } from '@/lib/api';
+import { FolderContext } from '@/lib/context';
 
 export const FolderList = () => {
-  const [folderName, setFolderName] = useState('');
+  const { folderList, setFolderList, setSelectedFolder } =
+    useContext(FolderContext);
 
-  const [showModal, setShowModal] = useState<boolean>(false);
-  const handleCloseModal = () => setShowModal((prev) => !prev);
+  const [folderName, setFolderName] = useState('');
   const getInputValue: AddFolderProps['getInputValue'] = (e) => {
     setFolderName(e.target.value);
   };
 
-  // const {
-  //   data: folderList = [],
-  //   isLoading,
-  //   isError,
-  // } = useQuery<FolderTypes[]>({
-  //   queryKey: ['folderList'],
-  //   queryFn: getFolderList,
-  // });
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const handleCloseModal = () => setShowModal((prev) => !prev);
 
-  const [folderList, setFolderList] = useState<FolderTypes[]>([]);
   const fetchFolderList = async () => {
     const data = await getFolderList();
     setFolderList(data);
@@ -36,15 +24,9 @@ export const FolderList = () => {
   useEffect(() => {
     fetchFolderList();
   }, []);
-  // const queryClient = useQueryClient();
-  // const mutation = useMutation({ mutationFn: postAddFolder });
 
   const handleAddFolderButtonClick = async () => {
-    // await postAddFolder({ folderName });
-    // fetchFolderList();
-    // // mutation.mutate({ folderName });
-    // setShowModal((prev) => !prev);
-    await postAddFolder({ folderName });
+    await postFolder({ folderName });
     fetchFolderList();
     setShowModal((prev) => !prev);
   };
@@ -54,7 +36,10 @@ export const FolderList = () => {
       <ul className="flex justify-start items-center gap-2">
         {folderList.map((folder) => (
           <li key={folder.id}>
-            <Folder folderName={folder.name} />
+            <Folder
+              folderName={folder.name}
+              handleFolderButtonClick={setSelectedFolder}
+            />
           </li>
         ))}
       </ul>
@@ -66,9 +51,10 @@ export const FolderList = () => {
         폴더 추가
         <Image src={plusIcon} alt="플러스 아이콘" width={16} height={16} />
       </button>
+
       {showModal && (
         <CommonModal closeModal={handleCloseModal}>
-          <ModalContent
+          <ModalRenderer
             mode="add"
             getInputValue={getInputValue}
             handleAddFolder={handleAddFolderButtonClick}
