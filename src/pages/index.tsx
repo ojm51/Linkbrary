@@ -8,13 +8,13 @@ import { Autoplay } from 'swiper/modules';
 import { AuthContext } from '@/lib/context';
 import DownloadIcon from '@/assets/icons/downloadIcon.svg';
 import CommonLinkButton from '@/components/ui/CommonLinkButton';
+import FolderNameImage from '@/assets/images/landingFolderName.png';
+import FolderShareImage from '@/assets/images/landingFolderShare.png';
 import KeyVisualImage from '@/assets/images/landingKeyvisual.png';
-import CardImage4 from '@/assets/images/landingCard4.png';
-import CardImage3_2 from '@/assets/images/landingCard3-2.png';
-import CardImage2 from '@/assets/images/landingCard2.png';
-import CardImage1_1 from '@/assets/images/landingCard1-1.png';
-import CardImage1_3 from '@/assets/images/landingCard1-3.png';
-import CardImage1_2 from '@/assets/images/landingCard1-2.png';
+import LinkCardBackImage from '@/assets/images/landingLinkBackCard.png';
+import LinkCardDogImage from '@/assets/images/landIngLinkDogCard.png';
+import LinkCardImage from '@/assets/images/landingLinkCard.png';
+import SearchCardImage from '@/assets/images/landingLinkSearch.png';
 
 const Home = () => {
   useEffect(() => {
@@ -155,7 +155,7 @@ const Home = () => {
                 <Image
                   width={244}
                   height={239}
-                  src={CardImage1_1}
+                  src={LinkCardImage}
                   alt="원하는 링크를 저장하세요 카드 이미지1"
                 />
               </SwiperSlide>
@@ -171,7 +171,7 @@ const Home = () => {
                 <Image
                   width={244}
                   height={239}
-                  src={CardImage1_2}
+                  src={LinkCardDogImage}
                   alt="원하는 링크를 저장하세요 카드 이미지2"
                 />
               </SwiperSlide>
@@ -179,7 +179,7 @@ const Home = () => {
                 <Image
                   width={244}
                   height={239}
-                  src={CardImage1_3}
+                  src={LinkCardBackImage}
                   alt="원하는 링크를 저장하세요 카드 이미지3"
                 />
               </SwiperSlide>
@@ -199,7 +199,7 @@ const Home = () => {
               className="card-rotate"
               width={414}
               height={270}
-              src={CardImage2}
+              src={FolderNameImage}
               alt="폴더 이름 변경하기 모달 이미지"
             />
           </div>
@@ -271,7 +271,7 @@ const Home = () => {
               className="card-rotate-delay"
               width={414}
               height={270}
-              src={CardImage3_2}
+              src={FolderShareImage}
               alt="폴더 이름 변경하기 모달 이미지"
             />
           </div>
@@ -289,7 +289,7 @@ const Home = () => {
               className="absolute top-[55px] left-[60px] scale-[0.9] card-scale"
               width={619}
               height={584}
-              src={CardImage4}
+              src={SearchCardImage}
               alt="폴더 이름 변경하기 모달 이미지"
             />
           </div>
