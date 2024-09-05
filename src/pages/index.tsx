@@ -1,19 +1,20 @@
-import { useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Image from 'next/image';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import 'swiper/css';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
+import { AuthContext } from '@/lib/context';
 import DownloadIcon from '@/assets/icons/downloadIcon.svg';
 import CommonLinkButton from '@/components/ui/CommonLinkButton';
 import KeyVisualImage from '@/assets/images/landingKeyvisual.png';
 import CardImage4 from '@/assets/images/landingCard4.png';
-import CardImage1_1 from '@/assets/images/landingCard1-1.png';
-import CardImage1_2 from '@/assets/images/landingCard1-2.png';
-import CardImage1_3 from '@/assets/images/landingCard1-3.png';
-import CardImage2 from '@/assets/images/landingCard2.png';
 import CardImage3_2 from '@/assets/images/landingCard3-2.png';
+import CardImage2 from '@/assets/images/landingCard2.png';
+import CardImage1_3 from '@/assets/images/landingCard1-3.png';
+import CardImage1_2 from '@/assets/images/landingCard1-2.png';
+import CardImage1_1 from '@/assets/images/landingCard1-1.png';
 
 const Home = () => {
   useEffect(() => {
@@ -22,11 +23,26 @@ const Home = () => {
     });
   }, []);
 
-  const LINK_ADD_STYLE = {
+  const LINK_ADD_STYLE: {
+    width: number;
+    height: number;
+    href: string;
+  } = {
     width: 350,
     height: 53,
     href: '/links',
   };
+
+  const { userInfo } = useContext(AuthContext);
+  const [isLinkAccessible, setIsLinkAccessible] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (userInfo) {
+      setIsLinkAccessible(true);
+    } else {
+      setIsLinkAccessible(false);
+    }
+  }, [userInfo]);
 
   return (
     <main>
@@ -67,7 +83,7 @@ const Home = () => {
           <CommonLinkButton
             width={LINK_ADD_STYLE.width}
             height={LINK_ADD_STYLE.height}
-            href={LINK_ADD_STYLE.href}
+            href={isLinkAccessible ? LINK_ADD_STYLE.href : '/login'}
           >
             링크 추가하기
           </CommonLinkButton>
