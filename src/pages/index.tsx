@@ -13,8 +13,8 @@ import CardImage4 from '@/assets/images/landingCard4.png';
 import CardImage3_2 from '@/assets/images/landingCard3-2.png';
 import CardImage2 from '@/assets/images/landingCard2.png';
 import CardImage1_1 from '@/assets/images/landingCard1-1.png';
-import CardImage1_2 from '@/assets/images/landingCard1-2.png';
 import CardImage1_3 from '@/assets/images/landingCard1-3.png';
+import CardImage1_2 from '@/assets/images/landingCard1-2.png';
 
 const Home = () => {
   useEffect(() => {
