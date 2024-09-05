@@ -17,7 +17,8 @@ const CardList = [
     id: 2,
     favorite: true,
     url: 'naver.com',
-    title: '네이버2',
+    title:
+      '국회는 국민의 보통·평등·직접·비밀선거에 의하여 선출된 국회의원으로 구성한다. 이 헌법시행 당시에 이 헌법에 의하여 새로 설치될 기관의 권한에 속하는 직무를 행하고 있는 기관은 이 헌법에 의하여 새로운 기관이 설치될 때까지 존속하며 그 직무를 행한다.',
     imageSource:
       'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FCNxUY%2Fbtqw7dnElRU%2FHuVZgvpT6J8n4aEYFathEk%2Fimg.jpg',
     description: '네이버에서 모든 것을 만나보세요.',
@@ -193,46 +194,36 @@ const CardListPage: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [cardsPerPage, setCardsPerPage] = useState(CardsPerPageDesktop);
 
-  // Effect to handle window resize
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 1024) {
-        setCardsPerPage(CardsPerPageDesktop); // 데스크톱
+        setCardsPerPage(CardsPerPageDesktop);
       } else if (window.innerWidth >= 768) {
-        setCardsPerPage(CardsPerPageTablet); // 테이블릿
+        setCardsPerPage(CardsPerPageTablet);
       } else {
-        setCardsPerPage(CardsPerPageMobile); // 모바일
+        setCardsPerPage(CardsPerPageMobile);
       }
     };
-
-    // Add event listener for resize
     window.addEventListener('resize', handleResize);
 
-    // Initial check
     handleResize();
 
-    // Clean up event listener on component unmount
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Calculate the cards to display based on the current page
   const cardsToDisplay = useMemo(() => {
-    // Filter cards with favorite: true
     const favoriteCards = CardList.filter((card) => card.favorite);
 
-    // Calculate start and end index for pagination
     const startIndex = (currentPage - 1) * cardsPerPage;
     const endIndex = startIndex + cardsPerPage;
 
     return favoriteCards.slice(startIndex, endIndex);
   }, [currentPage, cardsPerPage]);
 
-  // Calculate the total number of pages based on the filtered cards
   const totalPages = Math.ceil(
     CardList.filter((card) => card.favorite).length / cardsPerPage,
   );
 
-  // Handle page change
   const handlePageChange = (page: number) => {
     if (page >= 1 && page <= totalPages) {
       setCurrentPage(page);
@@ -240,10 +231,10 @@ const CardListPage: React.FC = () => {
   };
 
   return (
-    <div className="px-4 sm:px-8 lg:px-20">
+    <div className="pt-1 px-4 sm:px-8 lg:px-[150px]">
       {/* Card Grid */}
       <div
-        className={`grid gap-4 ${cardsPerPage === CardsPerPageMobile ? 'grid-cols-1' : 'md:grid-cols-2'} ${cardsPerPage === CardsPerPageDesktop ? 'lg:grid-cols-3' : ''}`}
+        className={`grid gap-5 ${cardsPerPage === CardsPerPageMobile ? 'grid-cols-1' : 'md:grid-cols-2'} ${cardsPerPage === CardsPerPageDesktop ? 'lg:grid-cols-3' : ''}`}
       >
         {cardsToDisplay.map((card) => (
           <Card key={card.id} card={card} />
@@ -251,29 +242,64 @@ const CardListPage: React.FC = () => {
       </div>
 
       {/* Pagination Controls */}
-      <div className="flex justify-center mt-4">
+      <div className="flex justify-center mt-4 pt-[30px] pb-[70px]">
+        {/* Previous Page Button */}
         <button
           onClick={() => handlePageChange(currentPage - 1)}
           disabled={currentPage === 1}
-          className="px-4 py-2 mx-1 bg-blue-500 text-white rounded"
+          className={`px-[20px] py-[20px] mx-1 rounded flex items-center justify-center ${currentPage === 1 ? 'bg-[#F7F7F7] text-gray-400' : 'bg-[#F7F7F7] text-gray-700'}`}
+          aria-label="Previous Page"
         >
-          Previous
+          <svg
+            width="8"
+            height="14"
+            viewBox="0 0 8 14"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M7 1L1 7L7 13"
+              stroke={currentPage === 1 ? '#ABABAB' : '#1F1F1F'}
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
         </button>
+
+        {/* Page Number Buttons */}
         {Array.from({ length: totalPages }, (_, index) => (
           <button
             key={index + 1}
             onClick={() => handlePageChange(index + 1)}
-            className={`px-4 py-2 mx-1 rounded ${currentPage === index + 1 ? 'bg-blue-500 text-white' : 'bg-gray-300 text-black'}`}
+            className={`px-[20px] py-[20px] mx-[2px] rounded bg-[#F7F7F7] ${currentPage === index + 1 ? 'text-[#1F1F1F]' : 'text-[#C4C4C4]'} font-pretendard text-2lg font-semibold leading-26`}
           >
             {index + 1}
           </button>
         ))}
+
+        {/* Next Page Button */}
         <button
           onClick={() => handlePageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
-          className="px-4 py-2 mx-1 bg-blue-500 text-white rounded"
+          className={`px-[20px] py-[20px] mx-1 rounded flex items-center justify-center ${currentPage === totalPages ? 'bg-[#F7F7F7] text-gray-400' : 'bg-[#F7F7F7] text-gray-700'}`}
+          aria-label="Next Page"
         >
-          Next
+          <svg
+            width="8"
+            height="14"
+            viewBox="0 0 8 14"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M1 1L7 7L0.999999 13"
+              stroke={currentPage === totalPages ? '#ABABAB' : '#1F1F1F'}
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
         </button>
       </div>
     </div>
