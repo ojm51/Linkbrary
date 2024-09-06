@@ -29,7 +29,7 @@ const Header = () => {
 
   return (
     <header className="bg-bg">
-      <div className="w-full flex justify-between items-center mx-auto max-w-[365px] h-[60px] px-[20px] md:max-w-[840px] md:h-[90px] lg:max-w-[1560px] ">
+      <div className="w-full flex justify-between items-center mx-auto max-w-[365px] h-[60px] px-[30px] md:px-[20px] md:max-w-[840px] md:h-[90px] lg:max-w-[1560px] ">
         <h1>
           <Link href="/">
             <Image
@@ -39,9 +39,11 @@ const Header = () => {
             />
           </Link>
         </h1>
+
         <div className="flex justify-between items-center">
           {isLoggedIn ? (
             <>
+              {/** @Todo 해당 영역 보여지기전에 텀 수정 */}
               <Link
                 href="/favorite"
                 className="flex items-center justify-center w-[70px] h-[30px] border border-solid border-primary rounded-[4px] text-[12px] md:w-[93px] mr-[16px] md:h-[37px] md:text-sm md:mr-[24px]"
@@ -65,7 +67,7 @@ const Header = () => {
                   />
                   <span className="hidden md:block">{userInfo?.name}</span>
                 </button>
-                <ul className="absolute bottom-[-45px]">
+                <ul className="absolute left-[50%] translate-x-[-50%] bottom-[-45px]">
                   <li
                     className={`w-[80px] h-[35px] text-center leading-[35px] text-[14px] bg-white rounded-[4px] border border-solid border-primary transition-opacity duration-1000 ${logoutView ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
                   >
