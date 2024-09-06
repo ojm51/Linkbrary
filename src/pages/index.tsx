@@ -276,7 +276,7 @@ const Home = () => {
             data-aos-duration="1500"
           >
             <Image
-              className="absolute top-[55px] left-[60px] card-scale lg:w-[619px] lg:h-[584px] md:w-[500px]"
+              className="card-scale absolute top-[30px] left-[35px] md:top-[55px] md:left-[60px]"
               src={SearchCardImage}
               alt="링크 검색하기 이미지"
             />
