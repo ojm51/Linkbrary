@@ -1,5 +1,6 @@
 import Head from 'next/head';
-import { AuthHeader, SNSAuth, SignUpForm } from '@/components';
+import { AuthHeader, SNSAuth, SignUpForm, AuthStyle as S } from '@/components';
+import { Routes } from '@/lib/route';
 
 const SignUp = () => {
   return (
@@ -7,12 +8,12 @@ const SignUp = () => {
       <Head>
         <title>회원가입 - Linkbrary</title>
       </Head>
-      <main className="w-full h-full bg-bg py-[120px]">
-        <div className="flex flex-col max-w-[400px] justify-center items-center gap-[32px] m-auto">
-          <article className="flex w-full flex-col gap-[30px] ">
-            <AuthHeader href="/login">로그인 하기</AuthHeader>
+      <main className={S.BackGroundStyle}>
+        <div className={S.WrapperStyle}>
+          <section className={S.AuthorizeSectionStyle}>
+            <AuthHeader href={Routes.LOGIN}>로그인 하기</AuthHeader>
             <SignUpForm />
-          </article>
+          </section>
           <SNSAuth type="signup" />
         </div>
       </main>

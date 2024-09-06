@@ -5,3 +5,5 @@ export enum Routes {
   LINKS = '/links',
   FAVORITE = '/favorite',
 }
+
+export type RoutesType = Partial<Routes>;
