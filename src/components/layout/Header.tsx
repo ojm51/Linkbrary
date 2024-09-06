@@ -4,19 +4,8 @@ import Link from 'next/link';
 import { AuthContext } from '@/lib/context';
 import HeaderLogoImage from '@/assets/images/headerLogo.png';
 import ProfileImage from '@/assets/images/profileImage.png';
-import CommonLinkButton from '@/components/ui/CommonLinkButton';
 
 const Header = () => {
-  const LOGIN_STYLE: {
-    width: number;
-    height: number;
-    href: string;
-  } = {
-    width: 128,
-    height: 53,
-    href: '/login',
-  };
-
   const { userInfo, logout } = useContext(AuthContext);
   const [logoutView, setLogoutView] = useState<boolean>(false);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
@@ -40,12 +29,11 @@ const Header = () => {
 
   return (
     <header className="bg-bg">
-      <div className="w-full max-w-[1560px] h-[90px] flex items-center justify-between mx-auto px-[20px]">
+      <div className="w-full flex justify-between items-center mx-auto max-w-[365px] h-[60px] px-[20px] md:max-w-[840px] md:h-[90px] lg:max-w-[1560px] ">
         <h1>
           <Link href="/">
             <Image
-              width={133}
-              height={24}
+              className="w-[89px] h-[16px] md:w-[133px] md:h-[24px]"
               src={HeaderLogoImage}
               alt="linkbrary"
             />
@@ -56,7 +44,7 @@ const Header = () => {
             <>
               <Link
                 href="/favorite"
-                className="flex items-center justify-center w-[93px] h-[37px] border border-solid border-primary rounded-[4px] text-sm mr-[24px]"
+                className="flex items-center justify-center w-[70px] h-[30px] border border-solid border-primary rounded-[4px] text-[12px] md:w-[93px] mr-[16px] md:h-[37px] md:text-sm md:mr-[24px]"
               >
                 ⭐️ 즐겨찾기
               </Link>
@@ -75,7 +63,7 @@ const Header = () => {
                     src={ProfileImage}
                     alt="프로필 이미지"
                   />
-                  {userInfo?.name}
+                  <span className="hidden md:block">{userInfo?.name}</span>
                 </button>
                 <ul className="absolute bottom-[-45px]">
                   <li
@@ -94,13 +82,12 @@ const Header = () => {
               </div>
             </>
           ) : (
-            <CommonLinkButton
-              width={LOGIN_STYLE.width}
-              height={LOGIN_STYLE.height}
-              href={LOGIN_STYLE.href}
+            <Link
+              href="/login"
+              className="bg-gradient-color flex items-center justify-center w-[80px] h-[37px] rounded-[8px] text-sm text-white md:w-[128px] md:h-[53px] md:text-lg"
             >
               로그인
-            </CommonLinkButton>
+            </Link>
           )}
         </div>
       </div>
