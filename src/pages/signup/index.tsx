@@ -1,17 +1,20 @@
 import Head from 'next/head';
-import { AuthHeader, SignUpForm } from '@/components';
+import { AuthHeader, SNSAuth, SignUpForm } from '@/components';
 
 const SignUp = () => {
   return (
     <>
       <Head>
-        <title>Linkbrary - 회원가입</title>
+        <title>회원가입 - Linkbrary</title>
       </Head>
-      <main className="w-screen h-screen bg-bg pt-[120px]">
-        <article className="flex max-w-[400px] flex-col justify-center items-center gap-[30px] m-auto">
-          <AuthHeader href="/login">로그인 하기</AuthHeader>
-          <SignUpForm />
-        </article>
+      <main className="w-full h-full bg-bg py-[120px]">
+        <div className="flex flex-col max-w-[400px] justify-center items-center gap-[32px] m-auto">
+          <article className="flex w-full flex-col gap-[30px] ">
+            <AuthHeader href="/login">로그인 하기</AuthHeader>
+            <SignUpForm />
+          </article>
+          <SNSAuth type="signup" />
+        </div>
       </main>
     </>
   );
