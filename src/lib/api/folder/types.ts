@@ -19,6 +19,10 @@ export interface PutFolderParams {
   folderId: number;
 }
 
+export interface DeleteFolderParams {
+  folderId: number;
+}
+
 export interface AddFolderProps {
   getInputValue: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleAddFolder: () => void;

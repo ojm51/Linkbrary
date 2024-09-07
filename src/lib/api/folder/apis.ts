@@ -1,5 +1,6 @@
 import { API_PATH, instance } from '../config';
 import {
+  DeleteFolderParams,
   FolderTypes,
   PostFolderParams,
   PostLinkParams,
@@ -38,6 +39,14 @@ export const putFolder = async ({ folderName, folderId }: PutFolderParams) => {
     API_PATH.folder.detail(folderId),
     JSON.stringify(params),
   );
+
+  return response.data ?? [];
+};
+
+export const deleteFolder = async ({ folderId }: DeleteFolderParams) => {
+  const response = await instance.delete(API_PATH.folder.detail(folderId), {
+    params: { id: folderId },
+  });
 
   return response.data ?? [];
 };

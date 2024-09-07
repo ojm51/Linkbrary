@@ -1,9 +1,15 @@
 import { useContext } from 'react';
 import { FolderContext } from '@/lib/context';
 import { CommonButton } from '@/components';
+import { deleteFolder } from '@/lib/api';
 
 export const DeleteFolder = () => {
   const { selectedFolder } = useContext(FolderContext);
+
+  const handleDeleteButtonClick = () => {
+    const folderId = selectedFolder.id;
+    deleteFolder({ folderId });
+  };
 
   return (
     <div>
@@ -16,6 +22,7 @@ export const DeleteFolder = () => {
       <CommonButton
         className="flex w-full py-4 px-5 justify-center items-center gap-2.5 bg-red rounded-lg text-white disabled:bg-none disabled:bg-gray-500"
         mode="default"
+        onClick={handleDeleteButtonClick}
       >
         삭제하기{' '}
       </CommonButton>
