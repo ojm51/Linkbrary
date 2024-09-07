@@ -3,7 +3,11 @@ import { FolderTypes, getFolderList } from '@/lib/api';
 
 export const useFolderHandler = () => {
   const [folderList, setFolderList] = useState<FolderTypes[]>([]);
-  const [selectedFolder, setSelectedFolder] = useState<string>('전체');
+  const [selectedFolder, setSelectedFolder] = useState<FolderTypes>({
+    createdAt: '',
+    id: 0,
+    name: '',
+  });
 
   const fetchFolderList = async () => {
     const data = await getFolderList();

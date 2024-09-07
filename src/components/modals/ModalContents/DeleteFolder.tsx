@@ -11,7 +11,7 @@ export const DeleteFolder = () => {
         폴더 삭제
       </h3>
       <h4 className="mt-2 mb-6 text-center text-[14px] font-normal text-secondary-60 font-[Pretendard] not-italic leading-[22px]">
-        {selectedFolder}
+        {selectedFolder.name}
       </h4>
       <CommonButton
         className="flex w-full py-4 px-5 justify-center items-center gap-2.5 bg-red rounded-lg text-white disabled:bg-none disabled:bg-gray-500"

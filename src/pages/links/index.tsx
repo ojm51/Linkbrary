@@ -17,7 +17,7 @@ function links() {
         <FolderList />
         <div className="flex justify-between items-center">
           <h3 className="font-semibold text-2xl text-black my-6 font-[Pretendard] not-italic leading-[normal]">
-            {selectedFolder}
+            {selectedFolder.name || '전체'}
           </h3>
           <FolderMenuList />
         </div>

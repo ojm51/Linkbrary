@@ -98,7 +98,7 @@ export const ShareFolder = () => {
         폴더 공유
       </h3>
       <h4 className="mt-2 mb-6 text-center text-[14px] font-normal text-secondary-60 font-[Pretendard] not-italic leading-[22px]">
-        {selectedFolder}
+        {selectedFolder.name}
       </h4>
       <ul className="flex justify-center items-center gap-8">
         {shareMethodList.map((shareMethod) => (

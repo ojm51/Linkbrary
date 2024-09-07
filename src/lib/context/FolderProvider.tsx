@@ -5,14 +5,18 @@ import { FolderTypes } from '@/lib/api';
 interface FolderContextType {
   folderList: FolderTypes[];
   setFolderList: Dispatch<SetStateAction<FolderTypes[]>>;
-  selectedFolder: string;
-  setSelectedFolder: Dispatch<SetStateAction<string>>;
+  selectedFolder: FolderTypes;
+  setSelectedFolder: Dispatch<SetStateAction<FolderTypes>>;
 }
 
 export const FolderContext = createContext<FolderContextType>({
   folderList: [],
   setFolderList: () => {},
-  selectedFolder: '',
+  selectedFolder: {
+    createdAt: '',
+    id: 0,
+    name: '',
+  },
   setSelectedFolder: () => {},
 });
 

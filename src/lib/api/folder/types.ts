@@ -14,19 +14,12 @@ export interface PostLinkParams {
   folderId?: number;
 }
 
+export interface PutFolderParams {
+  folderName: string;
+  folderId: number;
+}
+
 export interface AddFolderProps {
   getInputValue: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleAddFolder: () => void;
-}
-
-export interface ChangeFolderNameProps {
-  folderName: string;
-}
-
-export interface DeleteFolderProps {
-  folderName: string;
-}
-
-export interface ShareFolderProps {
-  folderName: string;
 }
