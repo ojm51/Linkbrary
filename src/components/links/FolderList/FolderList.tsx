@@ -6,8 +6,7 @@ import { AddFolderProps, getFolderList, postFolder } from '@/lib/api';
 import { FolderContext } from '@/lib/context';
 
 export const FolderList = () => {
-  const { folderList, setFolderList, setSelectedFolder } =
-    useContext(FolderContext);
+  const { folderList, setFolderList } = useContext(FolderContext);
 
   const [folderName, setFolderName] = useState('');
   const getInputValue: AddFolderProps['getInputValue'] = (e) => {
@@ -36,10 +35,7 @@ export const FolderList = () => {
       <ul className="flex justify-start items-center gap-2">
         {folderList.map((folder) => (
           <li key={folder.id}>
-            <Folder
-              folderName={folder.name}
-              handleFolderButtonClick={setSelectedFolder}
-            />
+            <Folder folder={folder} />
           </li>
         ))}
       </ul>
