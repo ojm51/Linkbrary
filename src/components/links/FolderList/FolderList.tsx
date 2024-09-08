@@ -32,7 +32,7 @@ export const FolderList = () => {
 
   return (
     <div className="flex justify-between items-center">
-      <ul className="flex justify-start items-center gap-2">
+      <ul className="flex justify-start items-center gap-2 overflow-hidden whitespace-nowrap scrollbar-hide">
         {folderList.map((folder) => (
           <li key={folder.id}>
             <Folder folder={folder} />
