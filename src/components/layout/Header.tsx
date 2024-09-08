@@ -1,14 +1,14 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { AuthContext } from '@/lib/context';
 import HeaderLogoImage from '@/assets/images/headerLogo.png';
 import ProfileImage from '@/assets/images/profileImage.png';
+import { useLoginAccessibility } from '@/lib/hooks';
 
 const Header = () => {
-  const { userInfo, logout } = useContext(AuthContext);
+  const { logout } = useContext(AuthContext);
   const [logoutView, setLogoutView] = useState<boolean>(false);
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
   const toggleProfileMenu = () => {
     setLogoutView(!logoutView);
@@ -19,13 +19,7 @@ const Header = () => {
     logout();
   };
 
-  useEffect(() => {
-    if (userInfo) {
-      setIsLoggedIn(true);
-    } else {
-      setIsLoggedIn(false);
-    }
-  }, [userInfo]);
+  const { isLoginAccessible, userInfo } = useLoginAccessibility();
 
   return (
     <header className="bg-bg">
@@ -41,7 +35,7 @@ const Header = () => {
         </h1>
 
         <div className="flex justify-between items-center">
-          {isLoggedIn ? (
+          {isLoginAccessible ? (
             <>
               {/** @Todo 해당 영역 보여지기전에 텀 수정 */}
               <Link

@@ -1,11 +1,11 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Image from 'next/image';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import 'swiper/css';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
-import { AuthContext } from '@/lib/context';
+import { useLoginAccessibility } from '@/lib/hooks';
 import DownloadIcon from '@/assets/icons/downloadIcon.svg';
 import FolderNameImage from '@/assets/images/landingFolderName.png';
 import FolderShareImage from '@/assets/images/landingFolderShare.png';
@@ -23,16 +23,7 @@ const Home = () => {
     });
   }, []);
 
-  const { userInfo } = useContext(AuthContext);
-  const [isLinkAccessible, setIsLinkAccessible] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (userInfo) {
-      setIsLinkAccessible(true);
-    } else {
-      setIsLinkAccessible(false);
-    }
-  }, [userInfo]);
+  const { isLoginAccessible } = useLoginAccessibility();
 
   return (
     <main>
@@ -75,7 +66,7 @@ const Home = () => {
           data-aos-delay="200"
         >
           <Link
-            href={isLinkAccessible ? '/links' : '/login'}
+            href={isLoginAccessible ? '/links' : '/login'}
             className="bg-gradient-color flex items-center justify-center rounded-[8px] text-white w-[200px] h-[37px] text-sm md:w-[350px] md:h-[53px] md:text-lg "
           >
             링크 추가하기
