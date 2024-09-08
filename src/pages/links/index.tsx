@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { AddLink, SearchBar, FolderList, FolderMenuList } from '@/components';
 import { FolderContext } from '@/lib/context';
 
-function links() {
+function Links() {
   const { selectedFolder } = useContext(FolderContext);
 
   return (
@@ -26,4 +26,4 @@ function links() {
   );
 }
 
-export default links;
+export default Links;
