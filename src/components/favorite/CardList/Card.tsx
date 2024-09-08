@@ -24,9 +24,14 @@ const Card: React.FC<CardProps> = ({ card }) => (
       className="w-full h-48 object-cover"
     />
     <div className="p-4">
-      <p className="text-gray-400">{timeAgo(card.createAt)}</p>
-      <h2 className="text-xl font-bold">{card.title}</h2>
-      <p className="text-gray-500">
+      <p className="font-pretendard text-[13px] font-[400] leading-[15.51px] text-left text-gray-400 pb-2">
+        {timeAgo(card.createAt)}
+      </p>
+      <h2 className="font-pretendard text-lg font-normal leading-6 text-left line-clamp-2">
+        {card.title}
+      </h2>
+
+      <p className="font-pretendard text-[14px] font-[400] leading-[16.71px] text-left text-gray-500 pt-2">
         {new Date(card.createAt).toLocaleDateString()}
       </p>
     </div>
