@@ -1,20 +1,22 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import Image from 'next/image';
 import linkIcon from '@/assets/icons/ic_link.svg';
 import { CommonButton } from '@/components';
 import { postLink } from '@/lib/api';
+import { FolderContext } from '@/lib/context';
 
 const addLinkButtonClassName =
   'shrink-0 px-4 py-[10px] rounded-lg bg-gradient-color text-[14px] font-semibold text-[#f5f5f5] font-[Pretendard] not-italic leading-[normal]';
 
 export const AddLink = () => {
+  const { selectedFolder } = useContext(FolderContext);
+
   const [url, setUrl] = useState('');
   const getInputValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUrl(e.target.value);
   };
 
-  // TODO: 전체 폴더 아이디로?
-  const folderId = 348;
+  const folderId = selectedFolder.id;
 
   return (
     <div className="m-auto max-w-[800px] h-auto px-5 py-4 flex justify-between items-center rounded-[15px] bg-white border border-solid border-primary">

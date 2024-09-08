@@ -42,21 +42,6 @@ export const ShareFolder = () => {
   const clipboardCopy = () => {
     if (!navigator.clipboard) {
       return alert('복사하기가 지원되지 않는 브라우저입니다.');
-
-      /* 구형 브라우저도 지원하는 경우 - 필요 없으면 지우기 */
-      // if (!document.queryCommandSupported('copy')) {
-      //   return alert('복사하기가 지원되지 않는 브라우저입니다.');
-      // }
-
-      // const textarea = document.createElement('textarea');
-      // textarea.value = location.href;
-
-      // document.body.appendChild(textarea);
-      // textarea.focus();
-      // textarea.select();
-      // document.execCommand('copy');
-      // document.body.removeChild(textarea);
-      // alert('클립보드에 복사되었습니다.');
     }
 
     navigator.clipboard
