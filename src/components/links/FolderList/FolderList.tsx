@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import Image from 'next/image';
 import plusIcon from '@/assets/icons/ic_plus.svg';
 import { CommonModal, ModalRenderer, Folder } from '@/components';
@@ -16,13 +16,13 @@ export const FolderList = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const handleCloseModal = () => setShowModal((prev) => !prev);
 
-  const fetchFolderList = async () => {
+  const fetchFolderList = useCallback(async () => {
     const data = await getFolderList();
     setFolderList(data);
-  };
+  }, []);
   useEffect(() => {
     fetchFolderList();
-  }, []);
+  }, [fetchFolderList]);
 
   const handleAddFolderButtonClick = async () => {
     await postFolder({ folderName });

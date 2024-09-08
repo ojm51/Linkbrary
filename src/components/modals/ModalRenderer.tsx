@@ -42,6 +42,7 @@
 //   return SelectedModalContent;
 // };
 
+/* eslint-disable prefer-destructuring */
 import { match } from 'ts-pattern';
 import { AddFolderProps } from '@/lib/api';
 import {
@@ -51,7 +52,6 @@ import {
   DeleteFolder,
 } from './ModalContents';
 
-// 타입을 문자열이 아닌 모달 타입 그 자체로 지정
 type AddModal = {
   mode: 'add';
   getInputValue: AddFolderProps['getInputValue'];

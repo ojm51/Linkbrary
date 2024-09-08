@@ -36,7 +36,6 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { CommonModal, ModalRenderer } from '@/components';
-import { AddFolderProps } from '@/lib/api';
 
 type ModalType = 'add' | 'share' | 'changeName' | 'delete';
 
@@ -50,15 +49,14 @@ export const FolderMenu = ({ src, text, modalType }: FolderMenuProps) => {
   const [showModal, setShowModal] = useState<boolean>(false);
 
   const handleCloseModal = () => setShowModal((prev) => !prev);
-  // 모드별로 추가 props를 정의
   const renderModal = () => {
     switch (modalType) {
       case 'share':
-        return <ModalRenderer mode="share" />; // Share 모드는 추가 props 필요 없음
+        return <ModalRenderer mode="share" />;
       case 'changeName':
-        return <ModalRenderer mode="changeName" />; // ChangeName 모드도 추가 props 없음
+        return <ModalRenderer mode="changeName" />;
       case 'delete':
-        return <ModalRenderer mode="delete" />; // Delete 모드도 추가 props 없음
+        return <ModalRenderer mode="delete" />;
       default:
         return null;
     }

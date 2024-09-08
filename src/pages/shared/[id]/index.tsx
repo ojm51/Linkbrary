@@ -1,7 +1,8 @@
+// 파일 내에 있는 주석들 수정 예정
 import { GetStaticPaths, GetStaticProps } from 'next';
-import { useContext } from 'react';
-import { getFolderList, getLinkList, LinkTypes } from '@/lib/api';
-import { FolderContext } from '@/lib/context';
+// import { useContext } from 'react';
+import { getFolderList, getLinkList } from '@/lib/api';
+// import { FolderContext } from '@/lib/context';
 import CardList from '@/components/favorite/CardList/CardList';
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -28,12 +29,13 @@ export const getStaticProps: GetStaticProps = async (context) => {
   };
 };
 
-interface SharedProps {
-  linkList: LinkTypes[];
-}
+// interface SharedProps {
+//   linkList: LinkTypes[];
+// }
 
-const Shared = ({ linkList }: SharedProps) => {
-  const { selectedFolder } = useContext(FolderContext);
+const Shared = () => {
+  // const Shared = ({ linkList }: SharedProps) => {
+  // const { selectedFolder } = useContext(FolderContext);
 
   return (
     <div>

@@ -1,6 +1,6 @@
 import { createContext, Dispatch, SetStateAction } from 'react';
-import { useFolderHandler } from './useFolderHandler';
 import { FolderTypes } from '@/lib/api';
+import { useFolderHandler } from './useFolderHandler';
 
 interface FolderContextType {
   folderList: FolderTypes[];

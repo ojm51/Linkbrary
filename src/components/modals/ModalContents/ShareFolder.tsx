@@ -10,7 +10,7 @@ export const ShareFolder = () => {
   const BASE_URL = 'http://localhost:3000';
   const SHARING_URL = `${BASE_URL}/shared/${selectedFolder.id}`;
 
-  const { Kakao } = window;
+  const { Kakao, open } = window;
   const initializeKakao = useCallback(() => {
     if (Kakao && !Kakao.isInitialized()) {
       Kakao.init(process.env.NEXT_PUBLIC_KAKAO_API_KEY);
@@ -37,22 +37,26 @@ export const ShareFolder = () => {
   };
 
   const facebookShare = () => {
-    open('http://www.facebook.com/sharer/sharer.php?u=' + SHARING_URL);
+    open(`http://www.facebook.com/sharer/sharer.php?u=${SHARING_URL}`);
   };
 
   const clipboardCopy = () => {
+    let alertMessage = '';
+
     if (!navigator.clipboard) {
-      return alert('복사하기가 지원되지 않는 브라우저입니다.');
+      alertMessage = '복사하기가 지원되지 않는 브라우저입니다.';
     }
 
     navigator.clipboard
       .writeText(SHARING_URL)
       .then(() => {
-        alert('클립보드에 복사되었습니다.');
+        alertMessage = '클립보드에 복사되었습니다.';
       })
       .catch(() => {
-        alert('복사를 다시 시도해주세요.');
+        alertMessage = '복사를 다시 시도해주세요.';
       });
+
+    return alert(alertMessage);
   };
 
   const shareMethodList = [
