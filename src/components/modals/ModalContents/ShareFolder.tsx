@@ -6,37 +6,38 @@ import { useEffect, useCallback, useContext } from 'react';
 import { FolderContext } from '@/lib/context';
 
 export const ShareFolder = () => {
-  const { Kakao, location } = window;
+  const { selectedFolder } = useContext(FolderContext);
+  const BASE_URL = 'http://localhost:3000';
+  const SHARING_URL = `${BASE_URL}/shared/${selectedFolder.id}`;
 
+  const { Kakao } = window;
   const initializeKakao = useCallback(() => {
     if (Kakao && !Kakao.isInitialized()) {
       Kakao.init(process.env.NEXT_PUBLIC_KAKAO_API_KEY);
     }
   }, []);
-
   useEffect(() => {
     initializeKakao();
   }, [initializeKakao]);
 
-  // 각 콘텐츠에 원하는 값을 넣는 방법 모르겠음
+  // TODO: 각 콘텐츠에 원하는 값 넣으면 cors 오류 나는 듯
   const kakaoTalkShare = () => {
     Kakao.Share.sendDefault({
       objectType: 'feed',
       content: {
-        title: '타이틀',
-        description: '설명',
-        imageUrl: '모르게따',
+        title: `공유된 ${selectedFolder.name} 폴더`,
+        description: `공유된 ${selectedFolder.name} 폴더에 속한 링크 목록입니다`,
+        imageUrl: '디폴트 이미지 넣고 싶음',
         link: {
-          mobileWebUrl: location.href,
-          webUrl: location.href,
+          mobileWebUrl: SHARING_URL,
+          webUrl: SHARING_URL,
         },
       },
     });
   };
 
   const facebookShare = () => {
-    const url = 'www.naver.com';
-    open('http://www.facebook.com/sharer/sharer.php?u=' + url);
+    open('http://www.facebook.com/sharer/sharer.php?u=' + SHARING_URL);
   };
 
   const clipboardCopy = () => {
@@ -45,7 +46,7 @@ export const ShareFolder = () => {
     }
 
     navigator.clipboard
-      .writeText(location.href)
+      .writeText(SHARING_URL)
       .then(() => {
         alert('클립보드에 복사되었습니다.');
       })
@@ -74,8 +75,6 @@ export const ShareFolder = () => {
       onClick: clipboardCopy,
     },
   ];
-
-  const { selectedFolder } = useContext(FolderContext);
 
   return (
     <div>
