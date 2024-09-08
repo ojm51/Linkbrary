@@ -1,9 +1,23 @@
-// 파일 내에 있는 주석들 수정 예정
+// TODO: 파일 내에 있는 주석들 수정 예정
 import { GetStaticPaths, GetStaticProps } from 'next';
 // import { useContext } from 'react';
-import { getFolderList, getLinkList } from '@/lib/api';
+import { API_PATH, FolderTypes, getLinkList } from '@/lib/api';
 // import { FolderContext } from '@/lib/context';
 import CardList from '@/components/favorite/CardList/CardList';
+import axios from 'axios';
+
+const getFolderList = async () => {
+  const instance = axios.create({
+    baseURL: process.env.NEXT_PUBLIC_BASE_URL,
+    timeout: 3000,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  const response = await instance.get<FolderTypes[]>(API_PATH.folder.default);
+
+  return response.data ?? [];
+};
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const folderList = await getFolderList();

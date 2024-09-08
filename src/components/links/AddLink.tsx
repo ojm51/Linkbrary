@@ -16,6 +16,7 @@ export const AddLink = () => {
     setUrl(e.target.value);
   };
 
+  // TODO: 기본적으로 '전체' 폴더에 추가하기? -> 다른 폴더에 추가는 링크의 케밥 메뉴에서 가능함
   const folderId = selectedFolder.id;
 
   return (
