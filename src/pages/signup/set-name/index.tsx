@@ -7,7 +7,7 @@ const NameSettings = () => {
   return (
     <>
       <Head>
-        <title>이름 설정</title>
+        <title>이름 설정 - Linkbrary</title>
       </Head>
       <main className={S.BackGroundStyle}>
         <div className={S.WrapperStyle}>
