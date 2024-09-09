@@ -1,8 +1,8 @@
-import Header from './Header';
-import Footer from './Footer';
 import { match } from 'ts-pattern';
 import { useRouter } from 'next/router';
 import { ROUTE_CONTROL, Routes } from '@/lib/route';
+import Header from './Header';
+import Footer from './Footer';
 
 type LayoutType = 'all' | 'header' | 'footer' | 'none';
 
@@ -46,7 +46,7 @@ export const Layout = ({ children }: LayoutProps) => {
         <Footer />
       </>
     ))
-    .with({ type: 'none' }, () => <>{children}</>)
+    .with({ type: 'none' }, () => children)
     .exhaustive();
   return withLayoutComponent;
 };
