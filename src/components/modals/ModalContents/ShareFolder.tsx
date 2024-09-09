@@ -26,9 +26,9 @@ export const ShareFolder = () => {
     Kakao.Share.sendDefault({
       objectType: 'feed',
       content: {
-        title: `공유된 [ ${selectedFolder.name} ] 폴더`,
-        description: `[ ${selectedFolder.name} ] 폴더에 저장된 링크 목록입니다`,
-        imageUrl: '디폴트 이미지 넣고 싶음',
+        title: `공유된 "${selectedFolder.name}" 폴더`,
+        description: `"${selectedFolder.name}" 폴더에 저장된 링크 목록입니다`,
+        imageUrl: '@/assets/images/defaultImage.png',
         link: {
           mobileWebUrl: SHARING_URL,
           webUrl: SHARING_URL,

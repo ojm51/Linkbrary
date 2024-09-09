@@ -22,7 +22,7 @@ type DeleteModal = { mode: 'delete'; handleDeleteButtonClick: () => void };
 
 type ModalRendererProps = AddModal | ShareModal | ChangeNameModal | DeleteModal;
 
-// getInputValue는 없을수도 있으니 프롭스를 받을 때 구조분해할당 하지 않음
+// 모달별 프롭스가 달라 전달 받을 때 구조분해할당 하지 않음
 export const ModalRenderer = (modalProps: ModalRendererProps) => {
   const mode = modalProps.mode;
 

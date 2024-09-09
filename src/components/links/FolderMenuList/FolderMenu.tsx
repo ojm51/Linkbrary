@@ -1,10 +1,4 @@
-import {
-  ChangeEvent,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
+import { ChangeEvent, useCallback, useContext, useState } from 'react';
 import Image from 'next/image';
 import { CommonModal, ModalRenderer } from '@/components';
 import { FolderContext } from '@/lib/context';
