@@ -58,8 +58,8 @@ export const getStaticProps: GetStaticProps = async (context) => {
 //   linkList: LinkTypes[];
 // }
 
+// const Shared = ({ linkList }: SharedProps) => {
 const Shared = () => {
-  // const Shared = ({ linkList }: SharedProps) => {
   // const { selectedFolder } = useContext(FolderContext);
 
   return (

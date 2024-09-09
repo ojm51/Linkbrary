@@ -1,8 +1,9 @@
+import { useEffect, useCallback, useContext } from 'react';
 import Image from 'next/image';
 import kakaoIcon from '@/assets/images/kakaoTalk.png';
 import facebookIcon from '@/assets/images/facebook.png';
 import copyLinkIcon from '@/assets/images/copyLink.png';
-import { useEffect, useCallback, useContext } from 'react';
+// import defaultShareImage from '@/assets/images/defaultImage.png';
 import { FolderContext } from '@/lib/context';
 
 export const ShareFolder = () => {
@@ -20,13 +21,13 @@ export const ShareFolder = () => {
     initializeKakao();
   }, [initializeKakao]);
 
-  // TODO: 각 콘텐츠에 원하는 값 넣으면 cors 오류 나는 듯
+  // TODO: 디폴트 이미지 어케 넣음?
   const kakaoTalkShare = () => {
     Kakao.Share.sendDefault({
       objectType: 'feed',
       content: {
-        title: `공유된 ${selectedFolder.name} 폴더`,
-        description: `공유된 ${selectedFolder.name} 폴더에 속한 링크 목록입니다`,
+        title: `공유된 [ ${selectedFolder.name} ] 폴더`,
+        description: `[ ${selectedFolder.name} ] 폴더에 저장된 링크 목록입니다`,
         imageUrl: '디폴트 이미지 넣고 싶음',
         link: {
           mobileWebUrl: SHARING_URL,
@@ -36,27 +37,26 @@ export const ShareFolder = () => {
     });
   };
 
+  // TODO: 왜 안 되지?
   const facebookShare = () => {
-    open(`http://www.facebook.com/sharer/sharer.php?u=${SHARING_URL}`);
+    return open(`http://www.facebook.com/sharer/sharer.php?u=${SHARING_URL}`);
   };
 
   const clipboardCopy = () => {
-    let alertMessage = '';
-
     if (!navigator.clipboard) {
-      alertMessage = '복사하기가 지원되지 않는 브라우저입니다.';
+      return alert('복사하기가 지원되지 않는 브라우저입니다.');
     }
 
     navigator.clipboard
       .writeText(SHARING_URL)
       .then(() => {
-        alertMessage = '클립보드에 복사되었습니다.';
+        alert('클립보드에 복사되었습니다.');
       })
       .catch(() => {
-        alertMessage = '복사를 다시 시도해주세요.';
+        alert('복사를 다시 시도해주세요.');
       });
 
-    return alert(alertMessage);
+    return;
   };
 
   const shareMethodList = [

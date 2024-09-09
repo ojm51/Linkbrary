@@ -1,15 +1,21 @@
-import { useCallback, useContext, useEffect, useState } from 'react';
+import {
+  ChangeEvent,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import Image from 'next/image';
 import plusIcon from '@/assets/icons/ic_plus.svg';
 import { CommonModal, ModalRenderer, Folder } from '@/components';
-import { AddFolderProps, getFolderList, postFolder } from '@/lib/api';
+import { getFolderList, postFolder } from '@/lib/api';
 import { FolderContext } from '@/lib/context';
 
 export const FolderList = () => {
   const { folderList, setFolderList } = useContext(FolderContext);
 
   const [folderName, setFolderName] = useState('');
-  const getInputValue: AddFolderProps['getInputValue'] = (e) => {
+  const getInputValue = (e: ChangeEvent<HTMLInputElement>) => {
     setFolderName(e.target.value);
   };
 
@@ -24,7 +30,7 @@ export const FolderList = () => {
     fetchFolderList();
   }, [fetchFolderList]);
 
-  const handleAddFolderButtonClick = async () => {
+  const handleAddButtonClick = async () => {
     await postFolder({ folderName });
     fetchFolderList();
     setShowModal((prev) => !prev);
@@ -53,7 +59,7 @@ export const FolderList = () => {
           <ModalRenderer
             mode="add"
             getInputValue={getInputValue}
-            handleAddFolder={handleAddFolderButtonClick}
+            handleAddButtonClick={handleAddButtonClick}
           />
         </CommonModal>
       )}

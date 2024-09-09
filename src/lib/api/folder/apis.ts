@@ -24,19 +24,20 @@ export const postFolder = async ({ folderName }: PostFolderParams) => {
   return response.data ?? [];
 };
 
-export const putFolder = async ({ folderName, folderId }: PutFolderParams) => {
-  const params = { name: folderName, id: folderId };
+export const putFolder = async ({
+  newFolderName,
+  folderId,
+}: PutFolderParams) => {
+  const params = { name: newFolderName };
   const response = await instance.put(API_PATH.folder.detail(folderId), params);
 
   return response.data ?? [];
 };
 
 export const deleteFolder = async ({ folderId }: DeleteFolderParams) => {
-  const response = await instance.delete(API_PATH.folder.detail(folderId), {
-    params: { id: folderId },
-  });
+  const response = await instance.delete(API_PATH.folder.detail(folderId));
 
-  return response.data.list ?? [];
+  return response.data ?? [];
 };
 
 export const getLinkList = async ({ folderId }: GetFolderParams) => {

@@ -1,16 +1,17 @@
 import { useContext } from 'react';
 import { FolderContext } from '@/lib/context';
 import { CommonInput, CommonButton } from '@/components';
-import { putFolder } from '@/lib/api';
 
-export const ChangeFolderName = () => {
+interface ChangeFolderNameProps {
+  getInputValue: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleChangeButtonClick: () => void;
+}
+
+export const ChangeFolderName = ({
+  getInputValue,
+  handleChangeButtonClick,
+}: ChangeFolderNameProps) => {
   const { selectedFolder } = useContext(FolderContext);
-
-  const handleChangeButtonClick = () => {
-    const folderName = selectedFolder.name;
-    const folderId = selectedFolder.id;
-    putFolder({ folderName, folderId });
-  };
 
   return (
     <div>
@@ -21,7 +22,7 @@ export const ChangeFolderName = () => {
         {selectedFolder.name}
       </h4>
       <div className="mt-6 mb-[15px]">
-        <CommonInput placeholder="내용 입력" />
+        <CommonInput placeholder="내용 입력" onChange={getInputValue} />
       </div>
       <CommonButton mode="default" onClick={handleChangeButtonClick}>
         변경하기{' '}

@@ -1,9 +1,13 @@
-import { AddFolderProps } from '@/lib/api/folder';
 import { CommonInput, CommonButton } from '@/components';
+
+interface AddFolderProps {
+  getInputValue: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleAddButtonClick: () => void;
+}
 
 export const AddFolder = ({
   getInputValue,
-  handleAddFolder,
+  handleAddButtonClick: handleAddButtonClick,
 }: AddFolderProps) => {
   return (
     <div>
@@ -13,7 +17,7 @@ export const AddFolder = ({
       <div className="mt-6 mb-[15px]">
         <CommonInput placeholder="내용 입력" onChange={getInputValue} />
       </div>
-      <CommonButton mode="default" onClick={handleAddFolder}>
+      <CommonButton mode="default" onClick={handleAddButtonClick}>
         추가하기{' '}
       </CommonButton>
     </div>

@@ -2,7 +2,7 @@ import { useContext, useState } from 'react';
 import Image from 'next/image';
 import linkIcon from '@/assets/icons/ic_link.svg';
 import { CommonButton } from '@/components';
-import { postLink } from '@/lib/api';
+import { postLink, PostLinkParams } from '@/lib/api';
 import { FolderContext } from '@/lib/context';
 
 const addLinkButtonClassName =
@@ -14,6 +14,12 @@ export const AddLink = () => {
   const [url, setUrl] = useState('');
   const getInputValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUrl(e.target.value);
+  };
+
+  const handleAddLinkButtonClick = async () => {
+    await postLink({ url, folderId });
+    // TODO: 400 에러(이미 존재하는 링크, 올바르지 않은 링크)/성공 처리, 내용이 있을 때만 버튼 활성화, 요청이 성공하면 인풋 초기화
+    alert('링크가 추가되었습니다!');
   };
 
   // TODO: 기본적으로 '전체' 폴더에 추가하기? -> 다른 폴더에 추가는 링크의 케밥 메뉴에서 가능함
@@ -34,7 +40,7 @@ export const AddLink = () => {
       <CommonButton
         mode="default"
         className={addLinkButtonClassName}
-        onClick={() => postLink({ url, folderId })}
+        onClick={handleAddLinkButtonClick}
       >
         추가하기{' '}
       </CommonButton>

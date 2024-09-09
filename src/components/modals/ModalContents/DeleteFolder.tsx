@@ -1,15 +1,15 @@
 import { useContext } from 'react';
 import { FolderContext } from '@/lib/context';
 import { CommonButton } from '@/components';
-import { deleteFolder } from '@/lib/api';
 
-export const DeleteFolder = () => {
+interface DeleteFolderProps {
+  handleDeleteButtonClick: () => void;
+}
+
+export const DeleteFolder = ({
+  handleDeleteButtonClick,
+}: DeleteFolderProps) => {
   const { selectedFolder } = useContext(FolderContext);
-
-  const handleDeleteButtonClick = () => {
-    const folderId = selectedFolder.id;
-    deleteFolder({ folderId });
-  };
 
   return (
     <div>
