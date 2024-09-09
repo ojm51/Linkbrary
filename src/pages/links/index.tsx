@@ -424,7 +424,6 @@ type PageNumberProps = {
   page: string | number;
   isActive: boolean;
 };
-
 const PageNumber = ({ page, position, isActive }: PageNumberProps) => {
   return isActive || position === 'middle' ? (
     <div className={`${pageStyle} font-semibold`}>{page}</div>
