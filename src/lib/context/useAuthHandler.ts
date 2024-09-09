@@ -1,9 +1,9 @@
+import { AxiosError } from 'axios';
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
 
-import { LoginParams, UserInfoDTO } from '../api';
+import { LoginParams, UserInfoDTO, getUserInfo } from '../api';
 import { getFromStorage, setToStorage } from '../storage';
-import { useGetUserInfo, useLogin } from '../hooks';
+import { useLogin } from '../hooks';
 
 interface UserInfo extends UserInfoDTO {
   accessToken: string;
@@ -15,19 +15,13 @@ export interface AuthContextType {
   login: (params: LoginParams) => void;
   logout: () => void;
   updateUserInfo: (items: UserInfo) => void;
+  updateIsLoggedIn: (state: boolean) => void;
 }
 
+const localStorageName = 'userInfo';
+
 export const useAuthHandler = () => {
-  const router = useRouter();
   const loginMutate = useLogin();
-
-  const [accessToken, setAccessToken] = useState<string>(
-    getFromStorage<UserInfo>('userInfo')?.accessToken ?? '',
-  );
-  const { data } = useGetUserInfo({
-    accessToken,
-  });
-
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const [isLoggedin, setIsLoggedin] = useState<boolean>(false);
 
@@ -35,15 +29,39 @@ export const useAuthHandler = () => {
     await loginMutate.mutateAsync(
       { email, password },
       {
-        onSuccess(response) {
-          if (response && response.data.accessToken) {
-            const { accessToken: newAccessToken } = response.data;
-            setAccessToken(newAccessToken);
-            router.push('/');
+        onSuccess: async (res) => {
+          if (res?.data.accessToken) {
+            const { accessToken } = res.data;
+            await getUserInfo({ accessToken })
+              .then((response) => {
+                if (response.data) {
+                  updateUserInfo({
+                    ...response.data,
+                    accessToken,
+                  });
+                  updateIsLoggedIn(true);
+                }
+              })
+              .catch((error) => {
+                throw new Error(error);
+              });
           }
         },
-        onError() {
-          /** @Todo 에러 메세지 모달 처리 */
+        onError(error) {
+          if (error instanceof AxiosError) {
+            switch (error.status) {
+              case 401:
+                /** @Todo 모달로 로그인 만료 나타내기 */
+                break;
+              case 400:
+                /** @Todo 모달로 잘못된 정보 나타내기 */
+                break;
+              default:
+                /** @Todo 모달로 알 수 없는 에러 나타내기  */
+                break;
+            }
+          }
+          logout();
         },
       },
     );
@@ -52,30 +70,32 @@ export const useAuthHandler = () => {
   const logout = () => {
     setUserInfo(null);
     setIsLoggedin(false);
-    localStorage.removeItem('userInfo');
-    router.push('/');
+    localStorage.removeItem(localStorageName);
   };
 
   const updateUserInfo = (newInfo: UserInfo) => {
     setUserInfo(newInfo);
-    setToStorage('userInfo', newInfo);
+    setToStorage(localStorageName, newInfo);
   };
 
-  const authProviderValue = {
+  const updateIsLoggedIn = (newState: boolean) => {
+    setIsLoggedin(newState);
+  };
+
+  useEffect(() => {
+    const savedUserInfo = getFromStorage<UserInfo>(localStorageName);
+    if (savedUserInfo) {
+      updateUserInfo(savedUserInfo);
+      updateIsLoggedIn(true);
+    }
+  }, []);
+
+  return {
     userInfo,
     isLoggedin,
     login,
     logout,
     updateUserInfo,
+    updateIsLoggedIn,
   };
-
-  useEffect(() => {
-    if (data) {
-      const newUserInfo = data.data;
-      updateUserInfo({ ...newUserInfo, accessToken });
-      setIsLoggedin(true);
-    }
-  }, [data, accessToken]);
-
-  return { authProviderValue };
 };
