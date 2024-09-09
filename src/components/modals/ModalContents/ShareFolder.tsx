@@ -42,9 +42,10 @@ export const ShareFolder = () => {
     return open(`http://www.facebook.com/sharer/sharer.php?u=${SHARING_URL}`);
   };
 
-  const clipboardCopy = () => {
+  const clipboardCopy = (): void => {
     if (!navigator.clipboard) {
-      return alert('복사하기가 지원되지 않는 브라우저입니다.');
+      alert('복사하기가 지원되지 않는 브라우저입니다.');
+      return;
     }
 
     navigator.clipboard
@@ -55,8 +56,6 @@ export const ShareFolder = () => {
       .catch(() => {
         alert('복사를 다시 시도해주세요.');
       });
-
-    return;
   };
 
   const shareMethodList = [

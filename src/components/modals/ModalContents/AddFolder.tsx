@@ -7,7 +7,7 @@ interface AddFolderProps {
 
 export const AddFolder = ({
   getInputValue,
-  handleAddButtonClick: handleAddButtonClick,
+  handleAddButtonClick,
 }: AddFolderProps) => {
   return (
     <div>
