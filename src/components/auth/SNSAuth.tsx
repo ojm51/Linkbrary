@@ -7,7 +7,7 @@ import { ComponentType, useEffect } from 'react';
 import googleLogin from '@/assets/icons/sns/ic_google.svg';
 import kakaoLogin from '@/assets/icons/sns/ic_kakao.svg';
 
-import { useSNSLogin } from '@/lib/hooks/query/auth/useSNSLogin';
+import { useSNSLogin } from '@/lib/hooks';
 import { API_PATH } from '@/lib/api';
 import { Routes } from '@/lib/route';
 
