@@ -495,7 +495,7 @@ const LinkPagination = () => {
     <section className="p-8">
       <ul className="flex justify-center gap-x-2" ref={ulRef}>
         {page && (
-          <li key="prev">
+          <li>
             <PageArrow
               direction="left"
               page={page - 1}
@@ -522,7 +522,7 @@ const LinkPagination = () => {
           );
         })}
         {page && totalPages && (
-          <li key="next">
+          <li>
             <PageArrow
               direction="right"
               page={page + 1}
