@@ -1,12 +1,12 @@
 import Image from 'next/image';
 import { match } from 'ts-pattern';
 import { useRouter } from 'next/router';
+import { useSearchParams } from 'next/navigation';
 import { ComponentType, useEffect } from 'react';
 
 import googleLogin from '@/assets/icons/sns/ic_google.svg';
 import kakaoLogin from '@/assets/icons/sns/ic_kakao.svg';
 
-import { useSearchParams } from 'next/navigation';
 import { useSNSLogin } from '@/lib/hooks/query/auth/useSNSLogin';
 import { API_PATH } from '@/lib/api';
 import { Routes } from '@/lib/route';
@@ -98,7 +98,7 @@ const withSocialAuthHandler = (
         kakaoMutate.mutate({ token: kakaoCode });
         router.push(Routes.LOGIN);
       }
-    }, [kakaoCode, router, kakaoMutate]);
+    }, [kakaoCode]);
 
     return <WrappedComponent {...handleSocialLogin} />;
   };

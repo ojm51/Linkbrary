@@ -40,6 +40,5 @@ export const useSNSLogin = ({
     onError() {
       /** @Todo 모달창 에러 메세지 처리 */
     },
-    gcTime: 0,
   });
 };
