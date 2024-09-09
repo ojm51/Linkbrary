@@ -4,6 +4,7 @@ export enum Routes {
   SIGNUP = '/signup',
   LINKS = '/links',
   FAVORITE = '/favorite',
+  SET_NAME = '/signup/set-name',
 }
 
 export type RoutesType = Partial<Routes>;
