@@ -307,7 +307,7 @@ const LinkCardSkeleton = () => {
   );
 };
 
-const LinkPagenationSkeleton = () => {
+const LinkPaginationSkeleton = () => {
   return (
     <section className="p-8 lg:container lg:mx-auto">
       <ul className="relative flex justify-center gap-x-2">
@@ -363,7 +363,7 @@ const LinkCard = ({ data }: LinkCardProps) => {
             src={imageSource}
             alt={title}
             fill
-            sizes="100vw"
+            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
           />
           <Image
             id={String(id)}
@@ -479,7 +479,7 @@ const usePaginationEvent = (
   return ulRef;
 };
 
-const LinkPagenation = () => {
+const LinkPagination = () => {
   const { linksAction, linksQueryAction, clientSizeAction } =
     useLinksContextSelector();
 
@@ -590,7 +590,7 @@ const LinkComponent = (props: LinkComponentProps) => {
     .with({ isLoading: true }, () => (
       <>
         <LinkCardsSkeleton />
-        <LinkPagenationSkeleton />
+        <LinkPaginationSkeleton />
       </>
     ))
     .with({ isLoading: false, isError: true }, () => (
@@ -604,7 +604,7 @@ const LinkComponent = (props: LinkComponentProps) => {
     .otherwise(() => (
       <>
         <LinkCards />
-        <LinkPagenation />
+        <LinkPagination />
       </>
     ));
 };
