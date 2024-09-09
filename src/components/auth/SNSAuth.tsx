@@ -1,17 +1,25 @@
 import Image from 'next/image';
+import { match } from 'ts-pattern';
+import { useRouter } from 'next/router';
+import { ComponentType, useEffect } from 'react';
 
 import googleLogin from '@/assets/icons/sns/ic_google.svg';
 import kakaoLogin from '@/assets/icons/sns/ic_kakao.svg';
+
+import { useSearchParams } from 'next/navigation';
+import { useSNSLogin } from '@/lib/hooks/query/auth/useSNSLogin';
 import { API_PATH } from '@/lib/api';
-import { ComponentType } from 'react';
-import { match } from 'ts-pattern';
+import { Routes } from '@/lib/route';
 
 interface SNSLoginProps {
   handleGoogleLogin: () => void;
   handleKakaoLogin: () => void;
 }
 
-const SNSLogin = ({ handleGoogleLogin, handleKakaoLogin }: SNSLoginProps) => {
+const SNSAuthComponent = ({
+  handleGoogleLogin,
+  handleKakaoLogin,
+}: SNSLoginProps) => {
   const sectionWrapper =
     'flex w-[400px] py-[12px] px-[24px] justify-between items-center rounded-[8px] border-[1px] bg-secondary-10';
   const textStyle = 'font-[Pretendard] text-[14px] not-italic leading-[normal]';
@@ -48,29 +56,52 @@ interface SocialLoginProps {
 
 type SocialLoginType = { type: 'login' } | { type: 'signup' };
 
-const SocialLoginHandler = (WrappedComponent: ComponentType<SNSLoginProps>) => {
+const withSocialAuthHandler = (
+  WrappedComponent: ComponentType<SNSLoginProps>,
+) => {
   return ({ type }: SocialLoginProps) => {
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const kakaoCode = searchParams.get('code');
+    const kakaoMutate = useSNSLogin({
+      socialProvider: 'kakao',
+    });
     const TSocialLogin: SocialLoginType = { type };
     const handleSocialLogin = match(TSocialLogin)
       .with({ type: 'login' }, () => ({
         handleGoogleLogin: () => {},
-        handleKakaoLogin: () => {},
+        handleKakaoLogin: () => {
+          if (window) {
+            window.location.assign(API_PATH.oauth.kakao.login);
+          }
+        },
       }))
       .with({ type: 'signup' }, () => ({
         handleGoogleLogin: () => {},
-        handleKakaoLogin: () => {},
+        handleKakaoLogin: () => {
+          if (window) {
+            window.location.assign(API_PATH.oauth.kakao.signup);
+          }
+        },
       }))
       .otherwise(() => ({
-        handleGoogleLogin: () => {},
-        handleKakaoLogin: () => {},
+        handleGoogleLogin: () => {
+          /** @Todo 모달로 에러처리 */
+        },
+        handleKakaoLogin: () => {
+          /** @Todo 모달로 에러처리 */
+        },
       }));
 
-    return (
-      <>
-        <WrappedComponent {...handleSocialLogin} />
-      </>
-    );
+    useEffect(() => {
+      if (kakaoCode) {
+        kakaoMutate.mutate({ token: kakaoCode });
+        router.push(Routes.LOGIN);
+      }
+    }, [kakaoCode, router, kakaoMutate]);
+
+    return <WrappedComponent {...handleSocialLogin} />;
   };
 };
 
-export const SNSAuth = SocialLoginHandler(SNSLogin);
+export const SNSAuth = withSocialAuthHandler(SNSAuthComponent);
