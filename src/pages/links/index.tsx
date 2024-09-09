@@ -292,6 +292,7 @@ const LinkCardsSkeleton = () => {
 };
 
 const LinkCardSkeleton = () => {
+  const cardStyle = 'w-full h-5 bg-gray-200 rounded-2xl';
   return (
     <div className={`${shimmer} flex flex-col gap-y-1`}>
       <div className="relative w-full h-0 pt-[56.25%]">
@@ -299,9 +300,9 @@ const LinkCardSkeleton = () => {
           className={`${shimmer} absolute top-0 left-0 w-full h-full bg-gray-200 rounded-2xl`}
         />
       </div>
-      <div className="w-full h-5 bg-gray-200 rounded-2xl" />
-      <div className="w-full h-5 bg-gray-200 rounded-2xl" />
-      <div className="w-full h-5 bg-gray-200 rounded-2xl" />
+      <div className={cardStyle} />
+      <div className={cardStyle} />
+      <div className={cardStyle} />
     </div>
   );
 };
