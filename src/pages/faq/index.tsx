@@ -32,8 +32,8 @@ const Faq = () => {
 
   return (
     <>
-      <section className="bg-bg h-[88px] pt-[10px] text-center mb-[20px] lg:mb-[100px] lg:h-[128px] lg:pt-[20px]">
-        <h2 className="text-[32px] font-bold lg:text-[40px]">🤔 FAQ</h2>
+      <section className="bg-bg h-[88px] pt-[10px] text-center mb-[20px] md:mb-[100px] md:h-[128px] md:pt-[20px]">
+        <h2 className="text-[32px] font-bold md:text-[40px]">🤔 FAQ</h2>
       </section>
       <section className="px-[20px] mb-[120px]">
         <div className="w-full max-w-[1060px] mx-auto">
@@ -43,11 +43,11 @@ const Faq = () => {
                 <li key={faq.id} className="mb-[20px]">
                   <button
                     type="button"
-                    className={`relative flex justify-between items-center w-full min-h-[70px] pl-[60px] pr-[20px] text-base font-bold rounded-[11px] bg-white border-solid  border-2 cursor-pointer hover:text-primary hover:border-primary lg:min-h-[80px] lg:text-lg ${isFaqActive === faq.id ? 'text-primary border-primary' : 'border-gray-200'}`}
+                    className={`relative flex justify-between items-center w-full min-h-[70px] pl-[60px] pr-[20px] text-base font-bold rounded-[11px] bg-white border-solid  border-2 cursor-pointer hover:text-primary hover:border-primary md:min-h-[80px] md:text-lg ${isFaqActive === faq.id ? 'text-primary border-primary' : 'border-gray-200'}`}
                     onClick={() => handleFaqToggle(faq.id)}
                   >
                     <i
-                      className={`absolute top-[50%] translate-y-[-50%] left-[20px] text-[20px] font-medium lg:text-[26px] ${isFaqActive === faq.id && 'text-primary'}`}
+                      className={`absolute top-[50%] translate-y-[-50%] left-[20px] text-[20px] font-medium md:text-[26px] ${isFaqActive === faq.id && 'text-primary'}`}
                     >
                       Q
                     </i>
@@ -57,12 +57,12 @@ const Faq = () => {
                     </i>
                   </button>
                   <p
-                    className={`relative transition-all duration-500 ease-out overflow-hidden text-sm lg:text-base ${isFaqActive === faq.id ? 'h-[154px] lg:h-[204px]' : 'h-0'}`}
+                    className={`relative transition-all duration-500 ease-out overflow-hidden text-sm md:text-base ${isFaqActive === faq.id ? 'h-[154px] md:h-[204px]' : 'h-0'}`}
                   >
-                    <i className="absolute top-[20px] left-[23px] text-[20px] font-medium text-secondary-60 lg:text-[26px]">
+                    <i className="absolute top-[20px] left-[23px] text-[20px] font-medium text-secondary-60 md:text-[26px]">
                       A
                     </i>
-                    <span className="block min-h-[150px] lg:min-h-[200px] rounded-[11px] border-gray-200 border-2 border-solid bg-gray-100 p-[20px] pl-[60px]">
+                    <span className="block min-h-[150px]  rounded-[11px] border-gray-200 border-2 border-solid bg-gray-100 p-[20px] pl-[60px] md:min-h-[200px]">
                       {faq.q}
                     </span>
                   </p>
