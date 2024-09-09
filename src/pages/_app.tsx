@@ -12,6 +12,7 @@ import { Routes } from '@/lib/route/index';
 import { useRouter } from 'next/router';
 import '@/styles/globals.css';
 import '@/styles/landingEffect.css';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 const App = ({ Component, pageProps }: AppProps) => {
   const [queryClient] = useState(() => new QueryClient());
@@ -28,6 +29,7 @@ const App = ({ Component, pageProps }: AppProps) => {
           </div>
           {!isAuthPage && <Footer />}
         </AuthProvider>
+        <ReactQueryDevtools initialIsOpen={false} />
       </HydrationBoundary>
     </QueryClientProvider>
   );
