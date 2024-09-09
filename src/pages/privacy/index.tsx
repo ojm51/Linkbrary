@@ -1,6 +1,10 @@
 const PrivacyPolicy = () => {
+  const privacySubTitleClassName = 'text-base font-bold mb-[10px] md:text-lg';
+  const privacyTextClassName = 'break-keep leading-[1.5] text-sm md:text-base';
+
   return (
     <>
+      {/** @Todo 상단 타이틀 영역 faq와 같이 컴포넌트로 구현 */}
       <section className="bg-bg h-[88px] pt-[10px] text-center mb-[20px] md:mb-[100px] md:h-[128px] md:pt-[20px]">
         <h2 className="text-[32px] font-bold md:text-[40px]">
           📋 PRIVACY POLICY
@@ -9,7 +13,7 @@ const PrivacyPolicy = () => {
       <section className="px-[20px] mb-[120px]">
         <div className="w-full max-w-[1060px] mx-auto">
           <h2 className="font-bold border-b-2 border-solid border-gray-300 pb-[10px] mb-[20px] text-[20px] md:text-[24px]">
-            개인정보 처리 방침 내용
+            개인정보 보호 정책
           </h2>
           <p className="leading-[1.2] mb-[40px] break-keep text-sm md:text-base">
             본 LinkBrary는 귀하의 개인정보보호를 매우 중요시하며, 개인정보보호법
@@ -22,10 +26,8 @@ const PrivacyPolicy = () => {
           </p>
 
           <div className="mb-[40px]">
-            <h3 className="text-base font-bold mb-[10px] md:text-lg">
-              제 1 조 총칙
-            </h3>
-            <p className="break-keep leading-[1.5] text-sm md:text-base">
+            <h3 className={privacySubTitleClassName}>제 1 조 총칙</h3>
+            <p className={privacyTextClassName}>
               1. 개인정보란 살아 있는 개인에 관한 정보로서 성명, 주민등록번호 및
               영상 등을 통하여 개인을 알아볼 수 있는 정보(해당 정보 만으로는
               특정 개인을 알아볼 수 없더라도 다른 정보와 쉽게 결합하여 알아볼 수
@@ -41,10 +43,10 @@ const PrivacyPolicy = () => {
           </div>
 
           <div className="mb-[40px]">
-            <h3 className="text-base font-bold mb-[10px] md:text-lg">
+            <h3 className={privacySubTitleClassName}>
               제 2 조 수집하는 개인정보의 처리 항목
             </h3>
-            <p className="break-keep leading-[1.5] text-sm md:text-base">
+            <p className={privacyTextClassName}>
               회사는 법령의 규정 또는 정보 주체의 동의 없이는 정보 주체의
               사생활을 현저히 침해할 우려가 있는 민감 정보, 개인을 고유하게
               구별하기 위하여 부여된 고유식별정보를 처리하지 않습니다. 선택
@@ -74,10 +76,10 @@ const PrivacyPolicy = () => {
           </div>
 
           <div className="mb-[40px]">
-            <h3 className="text-base font-bold mb-[10px] md:text-lg">
+            <h3 className={privacySubTitleClassName}>
               제 3 조 개인정보의 처리 목적
             </h3>
-            <p className="break-keep leading-[1.5] text-sm md:text-base">
+            <p className={privacyTextClassName}>
               회사는 회원관리, 서비스 제공 및 향상, 맞춤형 서비스 제공 등 아래의
               목적으로만 이용정보를 이용합니다.
               <br />- 회원 가입의사 확인, 연령 확인 및 법정대리인의 동의 진행,
@@ -99,10 +101,10 @@ const PrivacyPolicy = () => {
           </div>
 
           <div className="mb-[40px]">
-            <h3 className="text-base font-bold mb-[10px] md:text-lg">
+            <h3 className={privacySubTitleClassName}>
               제 4 조 개인정보의 보유 및 이용 기간
             </h3>
-            <p className="break-keep leading-[1.5] text-sm md:text-base">
+            <p className={privacyTextClassName}>
               회사는 개인정보 사용을 제한하기 위해 개인정보 수집 및 이용 목적이
               달성 된 후에는 해당 정보를 사용하지 않습니다. 단, 개인정보 수집
               목적 또는 제공 받은 목적이 달성 된 경우에도 상법 등 법령의 규정에
@@ -124,10 +126,10 @@ const PrivacyPolicy = () => {
           </div>
 
           <div className="mb-[40px]">
-            <h3 className="text-base font-bold mb-[10px] md:text-lg">
+            <h3 className={privacySubTitleClassName}>
               제 5 조 개인정보의 파기에 관한 사항
             </h3>
-            <p className="break-keep leading-[1.5] text-sm md:text-base">
+            <p className={privacyTextClassName}>
               회사는 수집한 개인정보의 처리 목적이 달성 되거나 그 보유 기간이
               종료되는 경우 정보주체의 동의, 이용약관, 관련 법령에 따라 보관이
               필요한 경우를 제외하고 해당 정보를 지체 없이 파기합니다. 파기절차
@@ -149,10 +151,10 @@ const PrivacyPolicy = () => {
           </div>
 
           <div className="mb-[40px]">
-            <h3 className="text-base font-bold mb-[10px] md:text-lg">
+            <h3 className={privacySubTitleClassName}>
               제 6 조 개인정보의 동의 철회, 열람 또는 정정
             </h3>
-            <p className="break-keep leading-[1.5] text-sm md:text-base">
+            <p className={privacyTextClassName}>
               ① 회원 또는 회원의 법정대리인은 언제든지 개인정보의 수집 및 이용,
               목적 외의 사용, 제3자 제공에 대한 동의를 철회할 수 있습니다.
               <br />② 회원 또는 회원의 법정대리인은 언제든지 자신의 개인정보를
@@ -163,10 +165,10 @@ const PrivacyPolicy = () => {
           </div>
 
           <div className="mb-[40px]">
-            <h3 className="text-base font-bold mb-[10px] md:text-lg">
+            <h3 className={privacySubTitleClassName}>
               제 7 조 개인정보의 제3자 제공의 금지
             </h3>
-            <p className="break-keep leading-[1.5] text-sm md:text-base">
+            <p className={privacyTextClassName}>
               제공된 개인정보는 원칙적으로 당해 이용자의 동의 없이 목적 외의
               이용이나 제3자에게 제공할 수 없으며, 이에 대한 모든 책임은 회사가
               집니다. 다만, 개인정보보호법에 따라 허용되는 당초 수집 목적과
@@ -184,10 +186,10 @@ const PrivacyPolicy = () => {
           </div>
 
           <div className="mb-[40px]">
-            <h3 className="text-base font-bold mb-[10px] md:text-lg">
+            <h3 className={privacySubTitleClassName}>
               제 8 조 수집한 개인정보의 위탁
             </h3>
-            <p className="break-keep leading-[1.5] text-sm md:text-base">
+            <p className={privacyTextClassName}>
               회사는 정보 주체의 동의 없이 개인정보의 처리를 외부 업체에
               위탁하지 않습니다. 회사는 아래와 같이 개인정보의 처리를 위탁하고
               있으며, 관련 법령에 따라 위탁계약 시 개인정보가 안전하게 관리될 수
@@ -197,10 +199,10 @@ const PrivacyPolicy = () => {
           </div>
 
           <div className="mb-[40px]">
-            <h3 className="text-base font-bold mb-[10px] md:text-lg">
+            <h3 className={privacySubTitleClassName}>
               제 9 조 이용자 및 법정 대리인의 권리와 그 행사 방법
             </h3>
-            <p className="break-keep leading-[1.5] text-sm md:text-base">
+            <p className={privacyTextClassName}>
               모든 정보 주체는 회사가 처리하는 자신의 개인정보에 대한 열람,
               정정, 삭제 및 처리 정지를 요구할 수 있습니다. 다만, 아래 사항에
               해당하는 경우 회사는 위와 같은 요구를 거절하거나 제한할 수
@@ -216,10 +218,10 @@ const PrivacyPolicy = () => {
           </div>
 
           <div className="mb-[40px]">
-            <h3 className="text-base font-bold mb-[10px] md:text-lg">
+            <h3 className={privacySubTitleClassName}>
               제 10 조 개인정보의 기술적/관리적/물리적 보호 대책
             </h3>
-            <p className="break-keep leading-[1.5] text-sm md:text-base">
+            <p className={privacyTextClassName}>
               회사는 개인정보를 취급함에 있어 개인정보가 분실, 도난, 누출 변조
               또는 훼손되지 않도록 아래와 같은 안전성 확보 조치를 취하고
               있습니다.
