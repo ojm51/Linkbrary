@@ -4,11 +4,13 @@ const Favorite = () => {
   return (
     <div>
       <div className="bg-[#F0F6FF]">
-        <h1 className="font-pretendard text-[40px] font-semibold leading-[47.73px] text-center">
+        <h1 className="font-pretendard text-[40px] font-semibold leading-[47.73px] text-center pb-10">
           ⭐️즐겨찾기
         </h1>
       </div>
-      <CardList />
+      <div className="p-4">
+        <CardList />
+      </div>
     </div>
   );
 };
