@@ -1,9 +1,11 @@
-// TODO: 파일 내에 있는 주석들 수정 예정
 import { GetStaticPaths, GetStaticProps } from 'next';
-// import { useContext } from 'react';
-// import { FolderContext } from '@/lib/context';
 import CardList from '@/components/favorite/CardList/CardList';
-import { getFolderListForSSG, getLinkListForSSG } from '@/lib/api';
+import {
+  getFolder,
+  getFolderListForSSG,
+  getLinkListForSSG,
+  LinkTypes,
+} from '@/lib/api';
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const folderList = await getFolderListForSSG();
@@ -25,23 +27,25 @@ export const getStaticProps: GetStaticProps = async (context) => {
   return {
     props: {
       linkList,
+      folderId,
     },
   };
 };
 
-// interface SharedProps {
-//   linkList: LinkTypes[];
-// }
+interface SharedProps {
+  linkList: LinkTypes[];
+  folderId: number;
+}
 
-// const Shared = ({ linkList }: SharedProps) => {
-const Shared = () => {
-  // const { selectedFolder } = useContext(FolderContext);
+const Shared = async ({ linkList, folderId }: SharedProps) => {
+  const sharedFolderName = (await getFolder({ folderId })).name;
+  console.log(linkList);
 
   return (
     <div>
       <div className="bg-[#F0F6FF]">
         <h1 className="font-pretendard text-[40px] font-semibold leading-[47.73px] text-center pb-10">
-          {/* {selectedFolder.name} */}FOLDER
+          {sharedFolderName}
         </h1>
       </div>
       <div className="p-4">

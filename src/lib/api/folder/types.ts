@@ -5,16 +5,6 @@ export interface FolderTypes {
   name: string;
 }
 
-export interface LinkTypes {
-  id: number;
-  favorite: boolean;
-  url: string;
-  title: string;
-  imageSource: string;
-  description: string;
-  createdAt: string;
-}
-
 export interface GetFolderParams {
   folderId: number;
 }
