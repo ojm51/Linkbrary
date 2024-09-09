@@ -1,8 +1,8 @@
-import { ChangeEvent, useCallback, useContext, useState } from 'react';
+import { ChangeEvent, useContext, useState } from 'react';
 import Image from 'next/image';
 import { CommonModal, ModalRenderer } from '@/components';
 import { FolderContext } from '@/lib/context';
-import { deleteFolder, getFolderList, putFolder } from '@/lib/api';
+import { deleteFolder, getFolderList, updateFolder } from '@/lib/api';
 
 type ModalType = 'add' | 'share' | 'changeName' | 'delete';
 
@@ -32,7 +32,7 @@ export const FolderMenu = ({ src, text, modalType }: FolderMenuProps) => {
   const handleChangeButtonClick = async () => {
     const folderId = selectedFolder.id;
     try {
-      const newFolder = await putFolder({ newFolderName, folderId });
+      const newFolder = await updateFolder({ newFolderName, folderId });
       fetchFolderList();
       setShowModal((prev) => !prev);
       setSelectedFolder(newFolder);

@@ -1,14 +1,8 @@
-import {
-  ChangeEvent,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
+import { ChangeEvent, useContext, useEffect, useState } from 'react';
 import Image from 'next/image';
 import plusIcon from '@/assets/icons/ic_plus.svg';
 import { CommonModal, ModalRenderer, Folder } from '@/components';
-import { getFolderList, postFolder } from '@/lib/api';
+import { getFolderList, addFolder } from '@/lib/api';
 import { FolderContext } from '@/lib/context';
 
 export const FolderList = () => {
@@ -32,7 +26,7 @@ export const FolderList = () => {
 
   const handleAddButtonClick = async () => {
     try {
-      await postFolder({ folderName });
+      await addFolder({ folderName });
       fetchFolderList();
       setShowModal((prev) => !prev);
     } catch (error) {
