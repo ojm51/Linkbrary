@@ -25,7 +25,7 @@ export interface PostFolderParams {
 
 export interface PostLinkParams {
   url: string;
-  folderId?: number;
+  folderId: number;
 }
 
 export interface PutFolderParams {

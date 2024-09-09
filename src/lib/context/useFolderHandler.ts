@@ -1,7 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { FolderTypes, getFolderList } from '@/lib/api';
+import { AuthContext } from './AuthProvider';
 
 export const useFolderHandler = () => {
+  const { isLoggedin } = useContext(AuthContext);
   const [folderList, setFolderList] = useState<FolderTypes[]>([]);
   const [selectedFolder, setSelectedFolder] = useState<FolderTypes>({
     createdAt: '',
@@ -15,8 +17,10 @@ export const useFolderHandler = () => {
   };
 
   useEffect(() => {
-    fetchFolderList();
-  }, []);
+    if (isLoggedin) {
+      fetchFolderList();
+    }
+  }, [isLoggedin]);
 
   const folderProviderValue = {
     folderList,

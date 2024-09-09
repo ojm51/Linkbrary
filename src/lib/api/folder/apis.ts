@@ -18,7 +18,7 @@ export const postFolder = async ({ folderName }: PostFolderParams) => {
   const params = { name: folderName };
   const response = await instance.post<FolderTypes[]>(
     API_PATH.folder.default,
-    JSON.stringify(params),
+    params,
   );
 
   return response.data ?? [];
@@ -26,10 +26,7 @@ export const postFolder = async ({ folderName }: PostFolderParams) => {
 
 export const putFolder = async ({ folderName, folderId }: PutFolderParams) => {
   const params = { name: folderName, id: folderId };
-  const response = await instance.put(
-    API_PATH.folder.detail(folderId),
-    JSON.stringify(params),
-  );
+  const response = await instance.put(API_PATH.folder.detail(folderId), params);
 
   return response.data ?? [];
 };
@@ -50,12 +47,9 @@ export const getLinkList = async ({ folderId }: GetFolderParams) => {
   return response.data ?? [];
 };
 
-export const postLink = async ({ url, folderId = 0 }: PostLinkParams) => {
+export const postLink = async ({ url, folderId }: PostLinkParams) => {
   const params = { url, folderId };
-  const response = await instance.post(
-    API_PATH.link.default,
-    JSON.stringify(params),
-  );
+  const response = await instance.post(API_PATH.link.default, params);
 
   return response.data ?? [];
 };
