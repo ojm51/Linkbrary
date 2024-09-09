@@ -510,10 +510,9 @@ const LinkPagination = () => {
           if (allPages.length === 1) position = 'single';
           if (val === '...') position = 'middle';
           return (
-            <li>
+            // eslint-disable-next-line react/no-array-index-key
+            <li key={index}>
               <PageNumber
-                // eslint-disable-next-line react/no-array-index-key
-                key={index}
                 page={val}
                 position={position}
                 isActive={page === val}
