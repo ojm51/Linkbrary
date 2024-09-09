@@ -12,7 +12,7 @@ const Login = () => {
       <main className={S.BackGroundStyle}>
         <div className={S.WrapperStyle}>
           <section className={S.AuthorizeSectionStyle}>
-            <AuthHeader href={Routes.SIGNUP}>회원 가입하기</AuthHeader>
+            <AuthHeader type="login" href={Routes.SIGNUP} />
             <LoginForm />
           </section>
           <SNSAuth type="login" />
