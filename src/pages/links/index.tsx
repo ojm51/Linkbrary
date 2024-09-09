@@ -9,6 +9,7 @@ import {
 import Image from 'next/image';
 import star from '@/assets/icons/ic_star.svg';
 import starSelected from '@/assets/icons/ic_star_selected.svg';
+import kebab from '@/assets/icons/ic_kebab.svg';
 import {
   createContext,
   useContext,
@@ -268,7 +269,6 @@ const useLinksContextSelector = () => {
 
 const pageStyle =
   'relative box-content w-7 h-7 p-2 text-center rounded-lg bg-gray-200 text-lg leading-relaxed';
-
 const shimmer =
   'before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:bg-gradient-to-r before:from-transparent before:via-white/60 before:to-transparent';
 const LinkCardsSkeleton = () => {
@@ -354,9 +354,9 @@ const LinkCard = ({ data }: LinkCardProps) => {
     url,
   } = data;
   return (
-    <Link href={url} target="_blank">
-      <div>
-        <div className="relative w-full h-0 pt-[56.25%]">
+    <div>
+      <div className="relative w-full h-0 pt-[56.25%]">
+        <Link href={url} target="_blank">
           <Image
             priority
             className="rounded-2xl"
@@ -365,21 +365,34 @@ const LinkCard = ({ data }: LinkCardProps) => {
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
           />
-          <Image
-            id={String(id)}
-            className="absolute top-5 right-3 hover:scale-110 cursor-pointer"
-            src={favorite ? starSelected : star}
-            alt=""
-            width={34}
-            height={34}
-            data-favorite={!favorite}
-          />
-        </div>
-        <div>{relativeTime}</div>
-        <div>{description}</div>
-        <div>{createdAt}</div>
+        </Link>
+        <Image
+          id={String(id)}
+          className="absolute top-5 right-3 hover:scale-110 cursor-pointer"
+          src={favorite ? starSelected : star}
+          alt=""
+          width={34}
+          height={34}
+          data-favorite={!favorite}
+        />
       </div>
-    </Link>
+      <ul className="flex justify-between">
+        <li className="text-xs">{relativeTime}</li>
+        <li>
+          <LinkInteraction />
+        </li>
+      </ul>
+      <div>{description}</div>
+      <div>{createdAt}</div>
+    </div>
+  );
+};
+
+const LinkInteraction = () => {
+  return (
+    <div className="relative">
+      <Image src={kebab} alt="..." width={21} height={17} />
+    </div>
   );
 };
 
