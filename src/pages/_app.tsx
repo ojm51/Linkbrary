@@ -7,7 +7,7 @@ import {
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import type { AppProps } from 'next/app';
-import { AuthProvider, FolderProvider } from '@/lib/context';
+import { AuthProvider } from '@/lib/context';
 import { Routes } from '@/lib/route/index';
 import { useRouter } from 'next/router';
 import '@/styles/globals.css';
@@ -28,15 +28,13 @@ const App = ({ Component, pageProps }: AppProps) => {
   return (
     <QueryClientProvider client={queryClient}>
       <HydrationBoundary state={pageProps.dehydratedState}>
-        <FolderProvider>
-          <AuthProvider>
-            {!isAuthPage && <Header />}
-            <div className="custom-footer-height">
-              <Component {...pageProps} />
-            </div>
-            {!isAuthPage && <Footer />}
-          </AuthProvider>
-        </FolderProvider>
+        <AuthProvider>
+          {!isAuthPage && <Header />}
+          <div className="custom-footer-height">
+            <Component {...pageProps} />
+          </div>
+          {!isAuthPage && <Footer />}
+        </AuthProvider>
       </HydrationBoundary>
     </QueryClientProvider>
   );

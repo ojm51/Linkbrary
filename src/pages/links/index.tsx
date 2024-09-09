@@ -1,12 +1,12 @@
 import { useContext } from 'react';
 import { AddLink, SearchBar, FolderList, FolderMenuList } from '@/components';
-import { FolderContext } from '@/lib/context';
+import { FolderContext, FolderProvider } from '@/lib/context';
 
 const Links = () => {
   const { selectedFolder } = useContext(FolderContext);
 
   return (
-    <>
+    <FolderProvider>
       <div className="h-[220px] pt-[60px] bg-bg">
         <AddLink />
       </div>
@@ -22,7 +22,7 @@ const Links = () => {
           <FolderMenuList />
         </div>
       </div>
-    </>
+    </FolderProvider>
   );
 };
 
