@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { FolderTypes, getFolderList } from '@/lib/api';
 import { AuthContext } from './AuthProvider';
 
@@ -11,16 +11,16 @@ export const useFolderHandler = () => {
     name: '',
   });
 
-  const fetchFolderList = async () => {
+  const fetchFolderList = useCallback(async () => {
     const data = await getFolderList();
     setFolderList(data);
-  };
+  }, [setFolderList]);
 
   useEffect(() => {
     if (isLoggedin) {
       fetchFolderList();
     }
-  }, [isLoggedin]);
+  }, [isLoggedin, fetchFolderList]);
 
   const folderProviderValue = {
     folderList,

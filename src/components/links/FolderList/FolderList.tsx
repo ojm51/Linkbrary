@@ -22,18 +22,22 @@ export const FolderList = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const handleCloseModal = () => setShowModal((prev) => !prev);
 
-  const fetchFolderList = useCallback(async () => {
+  const fetchFolderList = async () => {
     const data = await getFolderList();
     setFolderList(data);
-  }, []);
+  };
   useEffect(() => {
     fetchFolderList();
-  }, [fetchFolderList]);
+  }, []);
 
   const handleAddButtonClick = async () => {
-    await postFolder({ folderName });
-    fetchFolderList();
-    setShowModal((prev) => !prev);
+    try {
+      await postFolder({ folderName });
+      fetchFolderList();
+      setShowModal((prev) => !prev);
+    } catch (error) {
+      console.log('폴더 추가 중 오류가 발생했습니다:', error);
+    }
   };
 
   return (

@@ -24,10 +24,10 @@ export const FolderMenu = ({ src, text, modalType }: FolderMenuProps) => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const handleCloseModal = () => setShowModal((prev) => !prev);
 
-  const fetchFolderList = useCallback(async () => {
+  const fetchFolderList = async () => {
     const data = await getFolderList();
     setFolderList(data);
-  }, []);
+  };
 
   const handleChangeButtonClick = async () => {
     const folderId = selectedFolder.id;
