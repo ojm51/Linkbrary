@@ -1,46 +1,60 @@
 import { AddLink, SearchBar, FolderList, FolderMenuList } from '@/components';
 import { instance } from '@/lib/api';
 import { debounce } from '@/lib/react';
-import { QueryFunctionContext, useQuery } from '@tanstack/react-query';
+import {
+  QueryFunctionContext,
+  queryOptions,
+  useQuery,
+} from '@tanstack/react-query';
 import Image from 'next/image';
 import star from '@/assets/icons/ic_star.svg';
 import starSelected from '@/assets/icons/ic_star_selected.svg';
-import { useCallback, useEffect, useState } from 'react';
-import { PLACEHOLDER_LINKS } from './placeholder-data';
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+import { match } from 'ts-pattern';
+import Link from 'next/link';
 
-type QueryResponse<T> = {
-  data: T;
+type TQueryResponse<T> =
+  | undefined
+  | {
+      data: T;
+    };
+
+type TLinksResponse<T> = {
+  list: T;
+  totalCount: number;
 };
-type FoldersQueryResponse<T> = QueryResponse<T>;
-type LinksQueryResponse<T> = QueryResponse<T> & {
-  additional: {
-    favorites: LinksFavorites;
-  };
-};
-type Query = {
-  id: number;
-};
-type LinksQuery = Query & {
-  page: number;
-  pageSize: number;
-  keyword: string;
-};
-type FoldersQuery = Query & {};
-type FoldersRdo = {
-  id: number;
-  createdAt: string;
-  name: string;
-  linkCount: number;
-};
-type FoldersListRdo = Array<FoldersRdo>;
-type FoldersDto = {
+
+type TLinksQuery =
+  | undefined
+  | {
+      folderId: number;
+      pageSize: number;
+      page: number;
+      keyword: string;
+    };
+
+type TFolder = {
   id: number;
   createdAt: string;
   name: string;
   linkCount: number;
 };
-type FoldersListDto = Array<FoldersDto>;
-type LinksRdo = {
+
+type TFolderDto = {
+  id: number;
+  createdAt: string;
+  name: string;
+  linkCount: number;
+};
+
+type TLink = {
   id: number;
   favorite: boolean;
   url: string;
@@ -49,8 +63,8 @@ type LinksRdo = {
   description: string;
   createdAt: string;
 };
-type LinksListRdo = Array<LinksRdo>;
-type LinksDto = {
+
+type TLinkDto = {
   id: number;
   favorite: boolean;
   url: string;
@@ -60,58 +74,13 @@ type LinksDto = {
   createdAt: string;
   relativeTime: string;
 };
-type LinksListDto = Array<LinksDto>;
-type LinksFavorites = Array<LinksFavorite>;
-type LinksFavorite = Pick<LinksDto, 'id' | 'favorite'>;
 
-const fetchLinksData = async <T,>({
-  queryKey,
-  signal,
-}: QueryFunctionContext): Promise<T> => {
-  const resource = queryKey[0] as string;
-  const query = queryKey[2] as LinksQuery;
-  const { id, page, pageSize, keyword } = query;
-  const url = `${id ? `/folders/${id}` : ''}/${resource}?page=${page}&pageSize=${pageSize}&keyword=${keyword}`;
-  const response = await instance.get(url, { signal });
-  return response.data as T;
-};
-
-const fetchFoldersData = async <T,>({
-  queryKey,
-  signal,
-}: QueryFunctionContext): Promise<T> => {
-  const resource = queryKey[0] as string;
-  const { id } = queryKey[2] as FoldersQuery;
-  const url = `/${resource}${id > 0 ? `/${id}` : ''}`;
-  const response = await instance.get(url, { signal });
-  return response.data as T;
-};
-
-const foldersQueryOptions = {
-  default: () => ['folders'],
-  lists: () => [...foldersQueryOptions.default(), 'list'],
-  list: ({ id = 0 }: Partial<FoldersQuery> = {}) => ({
-    staleTime: 1000 * 60 * 3,
-    gcTime: 1000 * 2,
-    queryKey: [...foldersQueryOptions.lists(), { id }],
-    queryFn: async (
-      context: QueryFunctionContext,
-    ): Promise<FoldersQueryResponse<FoldersListDto>> => {
-      // const data = await fetchFoldersData<FoldersListRdo>({ ...context });
-      // return { data };
-      return {
-        data: [
-          {
-            id: 294,
-            createdAt: '2024-09-02T00:48:37.679Z',
-            linkCount: 100,
-            name: '전체',
-          },
-        ],
-      };
-    },
-  }),
-};
+type TClientSize =
+  | undefined
+  | {
+      width: number;
+      height: number;
+    };
 
 const TIME_UNITS = [
   { value: 31536000, text: 'years' },
@@ -127,20 +96,17 @@ const getRelativeTimeString = (createdDate: Date): string => {
   const diffInSeconds = Math.floor(
     (now.getTime() - createdDate.getTime()) / 1000,
   );
-
   const result = TIME_UNITS.find(({ value }) => diffInSeconds >= value);
-
   if (result) {
     const { value, text } = result;
     const count = Math.floor(diffInSeconds / value);
     return `${count} ${text} ago`;
   }
-
   return 'a moment ago';
 };
 
-const mapLinkRdoToDto = (resDto: LinksListRdo): LinksListDto => {
-  return resDto.map(({ id, createdAt, imageSource, ...rest }) => {
+const linkEntitiesToDtos = (entities: Array<TLink>): Array<TLinkDto> => {
+  return entities.map(({ id, createdAt, imageSource, ...rest }) => {
     const createdDate = new Date(createdAt);
     const createdDateString = createdDate
       .toLocaleDateString('ko-KR')
@@ -152,57 +118,8 @@ const mapLinkRdoToDto = (resDto: LinksListRdo): LinksListDto => {
       relativeTime: relativeTimeString,
       imageSource,
       ...rest,
-    } as LinksDto;
+    };
   });
-};
-
-const linksQueryOptions = {
-  default: () => ['links'],
-  lists: () => [...linksQueryOptions.default(), 'list'],
-  list: ({
-    id = 0,
-    pageSize = 9,
-    page = 1,
-    keyword = '',
-  }: Partial<LinksQuery> = {}) => ({
-    staleTime: 1000 * 60 * 3,
-    gcTime: 1000 * 2,
-    queryKey: [...linksQueryOptions.lists(), { id, page, pageSize, keyword }],
-    queryFn: async (
-      context: QueryFunctionContext,
-    ): Promise<LinksQueryResponse<LinksListDto>> => {
-      // const data = await fetchLinksData<LinksListRdo>({ ...context });
-      // const dtos = mapLinkRdoToDto(data);
-      // const favorites = dtos.map((dto) => ({ id: dto.id, favorite: dto.favorite }));
-      // return { data: dtos, additional: { favorites: favorites } };
-      const dtos = mapLinkRdoToDto(PLACEHOLDER_LINKS().slice(0, pageSize));
-      const favorites = dtos.map((dto) => ({
-        id: dto.id,
-        favorite: dto.favorite,
-      }));
-      return { data: dtos, additional: { favorites } };
-    },
-  }),
-};
-
-const useFetchFoldersHook = (id: number) => {
-  return useQuery<FoldersQueryResponse<FoldersListDto>>(
-    foldersQueryOptions.list({ id }),
-  );
-};
-
-const useWidthHook = () => {
-  const [width, setWidth] = useState(0);
-  const handleResize = () => setWidth(window.innerWidth);
-  useEffect(() => {
-    const debouncedResize = debounce(() => {
-      handleResize();
-    }, 300);
-    handleResize();
-    window.addEventListener('resize', debouncedResize);
-    return () => window.removeEventListener('resize', debouncedResize);
-  }, []);
-  return { width };
 };
 
 const getPageSize = (width: number) => {
@@ -210,85 +127,209 @@ const getPageSize = (width: number) => {
   return 9;
 };
 
-const useFetchLinksHook = (query: LinksQuery) => {
-  return useQuery<LinksQueryResponse<LinksListDto>>(
-    linksQueryOptions.list(query),
+const folderServices = ({ signal }: QueryFunctionContext) => ({
+  all: async (): Promise<TQueryResponse<TFolderDto[]>> => {
+    const response = await instance.get<TFolder[]>('/folders', { signal });
+    const { data } = response;
+    return { data };
+  },
+});
+
+const linkServices = ({ signal }: QueryFunctionContext) => ({
+  find: async (
+    query: TLinksQuery,
+  ): Promise<TQueryResponse<TLinksResponse<TLinkDto[]>>> => {
+    const response = await instance.get<TLinksResponse<TLink[]>>(
+      `/folders/${query?.folderId}/links`,
+      {
+        params: {
+          page: query?.page,
+          pageSize: query?.pageSize,
+          keyword: query?.keyword,
+        },
+        signal,
+      },
+    );
+    const { data } = response;
+    const { list, totalCount } = data;
+    const dtos = linkEntitiesToDtos(list);
+    return { data: { list: dtos, totalCount } };
+  },
+});
+
+const folderOptions = {
+  all: () => {
+    return queryOptions({
+      queryKey: ['folders', 'all'],
+      queryFn: (context) => folderServices(context).all(),
+      staleTime: 180000,
+      gcTime: 2000,
+    });
+  },
+};
+
+const linkOptions = {
+  find: (query: TLinksQuery) => {
+    return queryOptions({
+      queryKey: ['links', 'find', query],
+      queryFn: (context) => linkServices(context).find(query),
+      staleTime: 180000,
+      gcTime: 2000,
+      enabled: !!query,
+    });
+  },
+};
+
+const useLinksQueryAction = (
+  clientSize: TClientSize,
+  allFolders: TQueryResponse<TFolderDto[]>,
+) => {
+  const [linksQuery, setlinksQuery] = useState<TLinksQuery>(undefined);
+
+  const initializer = (width: number, allFoldersData: TFolderDto[]) => {
+    const folder = allFoldersData.find(
+      (folderData) => folderData.name === '전체',
+    ) as TFolderDto;
+    const initQuery: TLinksQuery = {
+      page: 1,
+      pageSize: getPageSize(width),
+      keyword: '',
+      folderId: folder.id,
+    };
+    setlinksQuery(initQuery);
+  };
+
+  const updator = (updatedQuery: Partial<TLinksQuery>) => {
+    setlinksQuery((prevQuery) =>
+      !prevQuery
+        ? undefined
+        : {
+            ...prevQuery,
+            ...updatedQuery,
+          },
+    );
+  };
+
+  useEffect(() => {
+    if (clientSize && allFolders) {
+      initializer(clientSize.width, allFolders.data);
+    }
+  }, [clientSize, allFolders]);
+
+  return { data: linksQuery, updator };
+};
+
+const useClientSize = () => {
+  const [clientSize, setClientSize] = useState<TClientSize>(undefined);
+  const handleResize = () => {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    setClientSize({ width, height });
+  };
+  useEffect(() => {
+    const debouncedResize = debounce(() => {
+      handleResize();
+    }, 300);
+    handleResize();
+    window.addEventListener('resize', debouncedResize);
+    return () => {
+      window.removeEventListener('resize', debouncedResize);
+    };
+  }, []);
+  return { data: clientSize };
+};
+const useFolderAction = () => useQuery(folderOptions.all());
+const useLinksAction = (query: TLinksQuery) =>
+  useQuery(linkOptions.find(query));
+
+type FolderAction = ReturnType<typeof useFolderAction>;
+type ClientSizeAction = ReturnType<typeof useClientSize>;
+type LinksQueryAction = ReturnType<typeof useLinksQueryAction>;
+type LinksAction = ReturnType<typeof useLinksAction>;
+
+type LinksContextProps =
+  | undefined
+  | {
+      folderAction: FolderAction;
+      clientSizeAction: ClientSizeAction;
+      linksQueryAction: LinksQueryAction;
+      linksAction: LinksAction;
+    };
+const LinksContext = createContext<LinksContextProps>(undefined);
+const useLinksContextSelector = () => {
+  const context = useContext(LinksContext);
+  if (!context) {
+    throw new Error(
+      'LinksContextSelector는 프로바이더 내부에서 사용되어야 합니다.',
+    );
+  }
+  return context;
+};
+
+const pageStyle =
+  'relative box-content w-7 h-7 p-2 text-center rounded-lg bg-gray-200 text-lg leading-relaxed';
+
+const shimmer =
+  'before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:bg-gradient-to-r before:from-transparent before:via-white/60 before:to-transparent';
+const LinkCardsSkeleton = () => {
+  const { clientSizeAction } = useLinksContextSelector();
+  const width = clientSizeAction.data?.width;
+  const pageSize = getPageSize(width || 0);
+  return (
+    <section className="p-8 lg:container lg:mx-auto">
+      <ul className="grid grid-flow-row auto-rows-fr grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {Array(pageSize)
+          .fill(0)
+          .map((_, index) => (
+            // eslint-disable-next-line react/no-array-index-key
+            <li key={index} className="relative overflow-hidden">
+              <LinkCardSkeleton />
+            </li>
+          ))}
+      </ul>
+    </section>
   );
 };
 
-const LinkComponent = ({
-  data: { id, url, title, createdAt, description, imageSource, relativeTime },
-  favorite: { favorite: currentFavorite },
-  update,
-}: {
-  data: LinksDto;
-  favorite: LinksFavorite;
-  update: (updatedFavorite: LinksFavorite) => void;
-}) => {
-  const onClick = () => update({ id, favorite: !currentFavorite });
+const LinkCardSkeleton = () => {
   return (
-    <div>
+    <div className={`${shimmer} flex flex-col gap-y-1`}>
       <div className="relative w-full h-0 pt-[56.25%]">
-        <Image priority src={imageSource} alt={title} fill sizes="100vw" />
-        <Image
-          className="absolute top-5 right-3 hover:scale-110"
-          src={currentFavorite ? starSelected : star}
-          alt=""
-          width={34}
-          height={34}
-          onClick={onClick}
+        <div
+          className={`${shimmer} absolute top-0 left-0 w-full h-full bg-gray-200 rounded-2xl`}
         />
       </div>
-      <div>{relativeTime}</div>
-      <div>{description}</div>
-      <div>{createdAt}</div>
+      <div className="w-full h-5 bg-gray-200 rounded-2xl" />
+      <div className="w-full h-5 bg-gray-200 rounded-2xl" />
+      <div className="w-full h-5 bg-gray-200 rounded-2xl" />
     </div>
   );
 };
 
-const mutationLinksFavorite = async (updatedFavorite: LinksFavorite) => {
-  // To-do
-  // 즐겨찾기 추가
-};
-
-const useLinksFavoritesHook = (initFavorites: LinksFavorites = []) => {
-  const [state, setState] = useState(initFavorites);
-
-  const update = useCallback(async (updatedFavorite: LinksFavorite) => {
-    const response = await mutationLinksFavorite(updatedFavorite);
-    setState((prevState) =>
-      prevState.map((prevFavorite) =>
-        prevFavorite.id === updatedFavorite.id ? updatedFavorite : prevFavorite,
-      ),
-    );
-  }, []);
-
-  return { favorites: state, update };
-};
-
-type LinksListComponentProps = {
-  query: LinksQuery;
-};
-
-const LinkListComponent = ({ query }: LinksListComponentProps) => {
-  const { data, isPending, isError } = useFetchLinksHook(query);
-  const { favorites, update: updateFavorite } = useLinksFavoritesHook(
-    data?.additional?.favorites,
-  );
+const LinkPagenationSkeleton = () => {
   return (
-    <section className="lg:container lg:mx-auto p-8">
-      <ul className="grid grid-flow-row auto-rows-fr grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
-        {data?.data.map((link) => {
-          const currentFavorite = favorites.find(
-            (favorite) => favorite.id === link.id,
-          );
+    <section className="p-8 lg:container lg:mx-auto">
+      <ul className="relative flex justify-center gap-x-2">
+        {Array(5)
+          .fill(0)
+          .map((_, index) => {
+            // eslint-disable-next-line react/no-array-index-key
+            return <li key={index} className={`${shimmer} ${pageStyle}`} />;
+          })}
+      </ul>
+    </section>
+  );
+};
+
+const LinkCards = () => {
+  const { linksAction } = useLinksContextSelector();
+  return (
+    <section className="p-8 lg:container lg:mx-auto">
+      <ul className="grid grid-flow-row auto-rows-fr grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {linksAction.data?.data.list.map((card) => {
           return (
-            <li key={link.id} className="shadow-md rounded-xl">
-              <LinkComponent
-                data={link}
-                favorite={currentFavorite as LinksFavorite}
-                update={updateFavorite}
-              />
+            <li key={card.id}>
+              <LinkCard data={card} />
             </li>
           );
         })}
@@ -297,217 +338,275 @@ const LinkListComponent = ({ query }: LinksListComponentProps) => {
   );
 };
 
-const initialLinksQueryState = (width: number) => ({
-  id: 0,
-  page: 1,
-  pageSize: getPageSize(width),
-  keyword: '',
-});
-
-const useFoldersQueryHook = () => {
-  const [query, setQuery] = useState(() => ({
-    id: 0,
-  }));
-  const update = useCallback((updatedQuery: FoldersQuery) => {
-    setQuery((prevQuery) => ({
-      ...prevQuery,
-      ...updatedQuery,
-    }));
-  }, []);
-  return { query, update };
+type LinkCardProps = {
+  data: TLinkDto;
 };
-
-const useLinksQueryHook = (width: number, folderId: number = 0) => {
-  const [query, setQuery] = useState(initialLinksQueryState(width));
-  const update = useCallback(
-    (updatedQuery: Partial<LinksQuery>) => {
-      setQuery((prevQuery) => ({
-        ...prevQuery,
-        ...updatedQuery,
-        id: folderId,
-      }));
-    },
-    [folderId],
+const LinkCard = ({ data }: LinkCardProps) => {
+  const {
+    title,
+    imageSource,
+    createdAt,
+    description,
+    favorite,
+    relativeTime,
+    id,
+    url,
+  } = data;
+  return (
+    <Link href={url} target="_blank">
+      <div>
+        <div className="relative w-full h-0 pt-[56.25%]">
+          <Image
+            priority
+            className="rounded-2xl"
+            src={imageSource}
+            alt={title}
+            fill
+            sizes="100vw"
+          />
+          <Image
+            id={String(id)}
+            className="absolute top-5 right-3 hover:scale-110 cursor-pointer"
+            src={favorite ? starSelected : star}
+            alt=""
+            width={34}
+            height={34}
+            data-favorite={!favorite}
+          />
+        </div>
+        <div>{relativeTime}</div>
+        <div>{description}</div>
+        <div>{createdAt}</div>
+      </div>
+    </Link>
   );
-  useEffect(() => {
-    update({ pageSize: getPageSize(width) });
-  }, [update, width]);
-  return { query, update };
 };
 
-type LinkListPagenationComponentProps = {
-  query: LinksQuery;
-  width: number;
-  update: (updatedQuery: Partial<LinksQuery>) => void;
+const getTotalPages = (totalCount?: number, pageSize?: number) => {
+  if (!totalCount || !pageSize) {
+    return undefined;
+  }
+  return Math.ceil(totalCount / pageSize);
 };
-
-const getPagination = (page: number, totalPages: number, width: number) => {
+const getPagination = (
+  page?: number,
+  pageSize?: number,
+  totalPages?: number,
+  width?: number,
+) => {
+  if (!page || !pageSize || !totalPages || !width) {
+    return undefined;
+  }
   if (totalPages <= 7) {
     return Array.from({ length: totalPages }, (_, i) => i + 1);
   }
-
   const isNarrowScreen = width < 1024;
   const isVeryNarrowScreen = width < 425;
   const nearStart = page <= 3;
   const nearEnd = page >= totalPages - 2;
-
   if (nearStart) {
     return isNarrowScreen
       ? [1, 2, 3, '...', totalPages]
       : [1, 2, 3, '...', totalPages - 1, totalPages];
   }
-
   if (nearEnd) {
     return isNarrowScreen
       ? [1, '...', totalPages - 2, totalPages - 1, totalPages]
       : [1, 2, '...', totalPages - 2, totalPages - 1, totalPages];
   }
-
   return isVeryNarrowScreen
     ? [page - 2, page - 1, page, page + 1, page + 2]
     : [1, '...', page - 1, page, page + 1, '...', totalPages];
 };
 
-type PagenationNumberComponentProps = {
-  page: number | string;
-  position: 'first' | 'last' | 'middle' | 'single' | undefined;
+type PageNumberProps = {
+  position: 'first' | 'last' | 'single' | 'middle' | undefined;
+  page: string | number;
   isActive: boolean;
-  query: Partial<LinksQuery> | undefined;
-  update: (updatedQuery: Partial<LinksQuery>) => void;
 };
-const pageStyle =
-  'box-content w-7 h-7 p-2 text-center rounded-lg bg-gray-200 text-lg leading-relaxed';
-const PaginationNumberComponent = ({
-  page,
-  isActive,
-  position,
-  query,
-  update,
-}: PagenationNumberComponentProps) => {
+
+const PageNumber = ({ page, position, isActive }: PageNumberProps) => {
   return isActive || position === 'middle' ? (
-    <li className={`${pageStyle} font-semibold`}>{page}</li>
+    <div className={`${pageStyle} font-semibold`}>{page}</div>
   ) : (
-    <li className={pageStyle}>
-      <button
-        className="w-full h-full"
-        onClick={() => update(query as LinksQuery)}
-      >
-        {page}
-      </button>
-    </li>
+    <button className={`${pageStyle}`} data-page={page}>
+      {page}
+    </button>
   );
 };
 
-type PagenationArrowComponentProps = {
-  query: Partial<LinksQuery>;
+type PageArrowProps = {
   direction: 'left' | 'right';
+  page: number;
   isDisabled: boolean;
-  update: (updatedQuery: Partial<LinksQuery>) => void;
 };
-const PagenationArrowComponent = ({
-  query,
-  direction,
-  isDisabled,
-  update,
-}: PagenationArrowComponentProps) => {
+const PageArrow = ({ direction, page, isDisabled }: PageArrowProps) => {
   const arrow = direction === 'left' ? '<' : '>';
   return isDisabled ? (
-    <li className={pageStyle}>
-      <button className="w-full h-full">{arrow}</button>
-    </li>
+    <div className={`${pageStyle} bg-red-400 text-white font-semibold`}>
+      {arrow}
+    </div>
   ) : (
-    <li className={`${pageStyle} bg-green-600 text-white`}>
-      <button onClick={() => update(query)}>{arrow}</button>
-    </li>
+    <button
+      className={`${pageStyle} bg-green-400 text-white font-semibold`}
+      data-page={page}
+    >
+      {arrow}
+    </button>
   );
 };
 
-const LinkListPagenationComponent = ({
-  query,
-  width,
-  update,
-}: LinkListPagenationComponentProps) => {
-  const { data, isPending, isError } = useFetchFoldersHook(query.id);
-  if (isPending) {
-    return <div>로딩중</div>;
-  }
-  if (isError) {
-    return undefined;
-  }
-  const entire = data.data.find((dto) => dto.name === '전체') as FoldersDto;
-  const { page, pageSize } = query;
-  const { linkCount } = entire;
-  const totalPages = Math.ceil(linkCount / pageSize);
-  const allPages = getPagination(page, totalPages, width);
+const usePaginationEvent = (
+  updator: (updatedQuery: Partial<TLinksQuery>) => void,
+) => {
+  const ulRef = useRef<HTMLUListElement>(null);
+
+  useEffect(() => {
+    const handleClick = (e: MouseEvent) => {
+      const { target } = e;
+      if (target instanceof HTMLButtonElement && target.dataset.page) {
+        const { page } = target.dataset;
+        updator({ page: Number(page) });
+      }
+    };
+    const ulRefCurrent = ulRef.current;
+    ulRefCurrent?.addEventListener('click', handleClick);
+    return () => {
+      ulRefCurrent?.removeEventListener('click', handleClick);
+    };
+  }, [updator]);
+
+  return ulRef;
+};
+
+const LinkPagenation = () => {
+  const { linksAction, linksQueryAction, clientSizeAction } =
+    useLinksContextSelector();
+
+  const { width } = clientSizeAction.data || {};
+  const { totalCount } = linksAction.data?.data || {};
+  const { page, pageSize } = linksQueryAction?.data || {};
+  const totalPages = getTotalPages(totalCount, pageSize);
+  const allPages = getPagination(page, pageSize, totalPages, width);
+
+  const ulRef = usePaginationEvent(linksQueryAction.updator);
+
   return (
-    <section className="px-8">
-      <ul className="flex justify-center gap-x-2">
-        <PagenationArrowComponent
-          query={{ page: page - 1 }}
-          direction="left"
-          isDisabled={page <= 1}
-          update={update}
-        />
-        {allPages.map((val, index) => {
+    <section className="p-8">
+      <ul className="flex justify-center gap-x-2" ref={ulRef}>
+        {page && (
+          <li>
+            <PageArrow
+              direction="left"
+              page={page - 1}
+              isDisabled={page <= 1}
+            />
+          </li>
+        )}
+        {allPages?.map((val, index) => {
           let position: 'first' | 'last' | 'single' | 'middle' | undefined;
           if (index === 0) position = 'first';
           if (index === allPages.length - 1) position = 'last';
           if (allPages.length === 1) position = 'single';
           if (val === '...') position = 'middle';
           return (
-            <PaginationNumberComponent
-              // eslint-disable-next-line react/no-array-index-key
-              key={index}
-              page={val}
-              position={position}
-              isActive={page === val}
-              query={{
-                page: position !== 'middle' ? (val as number) : undefined,
-              }}
-              update={update}
-            />
+            <li>
+              <PageNumber
+                // eslint-disable-next-line react/no-array-index-key
+                key={index}
+                page={val}
+                position={position}
+                isActive={page === val}
+              />
+            </li>
           );
         })}
-        <PagenationArrowComponent
-          query={{ page: page + 1 }}
-          direction="right"
-          isDisabled={page >= totalPages}
-          update={update}
-        />
+        {page && totalPages && (
+          <li>
+            <PageArrow
+              direction="right"
+              page={page + 1}
+              isDisabled={page >= totalPages}
+            />
+          </li>
+        )}
       </ul>
     </section>
   );
 };
 
 const Links = () => {
-  const { width } = useWidthHook();
-  const { query: linksQuery, update: linksupdate } = useLinksQueryHook(width);
-  const { query: foldersQuery, update: foldersupdate } = useFoldersQueryHook();
-  return (
-    <>
-      <div className="h-[220px] pt-[60px] bg-bg">
-        <AddLink />
-      </div>
-      <div className="max-w-[1060px] m-auto">
-        <div className="my-10">
-          <SearchBar />
-        </div>
-        <FolderList />
-        <div className="flex justify-between items-center">
-          <h3 className="font-semibold text-2xl text-black my-6 font-[Pretendard] not-italic leading-[normal]">
-            title
-          </h3>
-          <FolderMenuList />
-        </div>
-      </div>
-      <LinkListComponent query={linksQuery} />
-      <LinkListPagenationComponent
-        query={linksQuery}
-        width={width}
-        update={linksupdate}
-      />
-    </>
+  const folderAction = useFolderAction();
+  const clientSizeAction = useClientSize();
+  const linksQueryAction = useLinksQueryAction(
+    clientSizeAction.data,
+    folderAction.data,
   );
+  const linksAction = useLinksAction(linksQueryAction.data);
+
+  const value = useMemo(
+    () => ({
+      folderAction,
+      clientSizeAction,
+      linksQueryAction,
+      linksAction,
+    }),
+    [clientSizeAction, folderAction, linksAction, linksQueryAction],
+  );
+
+  return (
+    <LinksContext.Provider value={value}>
+      <main className="select-none">
+        <div className="h-[220px] pt-[60px] bg-bg">
+          <AddLink />
+        </div>
+        <div className="max-w-[1060px] m-auto">
+          <div className="my-10">
+            <SearchBar />
+          </div>
+          <FolderList />
+          <div className="flex justify-between items-center">
+            <h3 className="font-semibold text-2xl text-black my-6 font-[Pretendard] not-italic leading-[normal]">
+              title
+            </h3>
+            <FolderMenuList />
+          </div>
+        </div>
+        <LinkComponent
+          isLoading={folderAction.isLoading || linksAction.isLoading}
+          isError={folderAction.isError || linksAction.isError}
+        />
+      </main>
+    </LinksContext.Provider>
+  );
+};
+
+type LinkComponentProps = {
+  isLoading: boolean;
+  isError: boolean;
+};
+const LinkComponent = (props: LinkComponentProps) => {
+  return match(props)
+    .with({ isLoading: true }, () => (
+      <>
+        <LinkCardsSkeleton />
+        <LinkPagenationSkeleton />
+      </>
+    ))
+    .with({ isLoading: false, isError: true }, () => (
+      <section>
+        <div>
+          데이터가 존재하지 않거나, 불러오는 데 실패했습니다. 다시 시도 해
+          주세요.
+        </div>
+      </section>
+    ))
+    .otherwise(() => (
+      <>
+        <LinkCards />
+        <LinkPagenation />
+      </>
+    ));
 };
 
 export default Links;
