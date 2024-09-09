@@ -1,55 +1,94 @@
+import { useContext, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import HeaderLogoImage from '../../assets/images/headerLogo.png';
-// import ProfileImage from '../../assets/images/profileImage.png';
-import CommonLinkButton from '../ui/CommonLinkButton';
+import { match } from 'ts-pattern';
+import { AuthContext } from '@/lib/context';
+import { useLoginAccessibility } from '@/lib/hooks';
+import HeaderLogoImage from '@/assets/images/headerLogo.png';
+import ProfileImage from '@/assets/images/profileImage.png';
 
 const Header = () => {
-  const LOGIN_STYLE = {
-    width: 128,
-    height: 53,
-    href: '/login',
+  const { logout } = useContext(AuthContext);
+  const [logoutView, setLogoutView] = useState<boolean>(false);
+
+  const toggleProfileMenu = () => {
+    setLogoutView(!logoutView);
   };
+
+  const handleUserLogout = () => {
+    setLogoutView(false);
+    logout();
+  };
+
+  const { isLoginAccessible, userInfo } = useLoginAccessibility();
 
   return (
     <header className="bg-bg">
-      <div className="w-full max-w-[1560px] h-[90px] flex items-center justify-between mx-auto px-[20px]">
+      <div className="w-full flex justify-between items-center mx-auto max-w-[365px] h-[60px] px-[30px] md:px-[20px] md:max-w-[840px] md:h-[90px] lg:max-w-[1560px] ">
         <h1>
           <Link href="/">
             <Image
-              width="133"
-              height="24"
+              className="w-[89px] h-[16px] md:w-[133px] md:h-[24px]"
               src={HeaderLogoImage}
               alt="linkbrary"
             />
           </Link>
         </h1>
-        <div className="flex justify-between items-center">
-          <CommonLinkButton
-            width={LOGIN_STYLE.width}
-            height={LOGIN_STYLE.height}
-            href={LOGIN_STYLE.href}
-          >
-            로그인
-          </CommonLinkButton>
 
-          {/* 로그인 성공 했을 경우 */}
-          {/* <Link
-            href="/"
-            className="flex items-center justify-center w-[93px] h-[37px] border border-solid border-primary rounded-[4px] text-sm mr-[24px]"
-          >
-            ⭐️ 즐겨찾기
-          </Link>
-          <button type="button" className="flex items-center justify-center">
-            <Image
-              className="mr-[6px]"
-              width={28}
-              height={28}
-              src={ProfileImage}
-              alt="프로필 이미지"
-            />
-            이용섭
-          </button> */}
+        <div className="flex justify-between items-center">
+          {match(isLoginAccessible)
+            .with(true, () => (
+              <>
+                {/** @Todo 해당 영역 보여지기전에 텀 수정 */}
+                <Link
+                  href="/favorite"
+                  className="flex items-center justify-center w-[70px] h-[30px] border border-solid border-primary rounded-[4px] text-[12px] md:w-[93px] mr-[16px] md:h-[37px] md:text-sm md:mr-[24px]"
+                >
+                  ⭐️ 즐겨찾기
+                </Link>
+                <div className="relative ">
+                  <button
+                    type="button"
+                    className="flex items-center justify-center"
+                    onClick={() => {
+                      toggleProfileMenu();
+                    }}
+                  >
+                    <Image
+                      className="mr-[6px]"
+                      width={28}
+                      height={28}
+                      src={ProfileImage}
+                      alt="프로필 이미지"
+                    />
+                    <span className="hidden md:block">{userInfo?.name}</span>
+                  </button>
+                  <ul className="absolute left-[50%] translate-x-[-50%] bottom-[-45px]">
+                    <li
+                      className={`w-[80px] h-[35px] text-center leading-[35px] text-[14px] bg-white rounded-[4px] border border-solid border-primary transition-opacity duration-1000 ${logoutView ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+                    >
+                      <button
+                        type="button"
+                        onClick={() => {
+                          handleUserLogout();
+                        }}
+                      >
+                        로그아웃
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              </>
+            ))
+            .with(false, () => (
+              <Link
+                href="/login"
+                className="bg-gradient-color flex items-center justify-center w-[80px] h-[37px] rounded-[8px] text-sm text-white md:w-[128px] md:h-[53px] md:text-lg"
+              >
+                로그인
+              </Link>
+            ))
+            .exhaustive()}
         </div>
       </div>
     </header>
