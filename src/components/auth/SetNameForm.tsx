@@ -20,8 +20,7 @@ export const SetNameForm = () => {
     }
   };
 
-  const formClassName =
-    'w-full flex flex-col justify-center items-start gap-[12px]';
+  const formClassName = 'w-full flex flex-col justify-center items-start gap-3';
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={formClassName}>
