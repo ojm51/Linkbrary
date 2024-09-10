@@ -8,13 +8,13 @@ import { FolderContext } from '@/lib/context';
 
 export const ShareFolder = () => {
   const { selectedFolder } = useContext(FolderContext);
-  const BASE_URL = 'http://localhost:3000';
+  const BASE_URL = window.location.href;
   const SHARING_URL = `${BASE_URL}/shared/${selectedFolder.id}`;
 
   const { Kakao, open } = window;
   const initializeKakao = useCallback(() => {
     if (Kakao && !Kakao.isInitialized()) {
-      Kakao.init(process.env.NEXT_PUBLIC_KAKAO_API_KEY);
+      Kakao.init(process.env.NEXT_PUBLIC_KAKAO_JAVASCRIPT_API_KEY);
     }
   }, []);
   useEffect(() => {
@@ -37,7 +37,6 @@ export const ShareFolder = () => {
     });
   };
 
-  // TODO: 왜 안 되지?
   const facebookShare = () => {
     return open(`http://www.facebook.com/sharer/sharer.php?u=${SHARING_URL}`);
   };
