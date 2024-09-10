@@ -7,10 +7,10 @@ import { match } from 'ts-pattern';
 import googleLogin from '@/assets/icons/sns/ic_google.svg';
 import kakaoLogin from '@/assets/icons/sns/ic_kakao.svg';
 
+import { useModal } from '@/lib/context';
 import { useSNSLogin } from '@/lib/hooks';
 import { API_PATH } from '@/lib/api';
 import { Routes } from '@/lib/route';
-import { useModal } from '@/lib/context';
 
 interface SNSLoginProps {
   handleGoogleLogin: () => void;
@@ -65,7 +65,6 @@ const withSocialAuthHandler = (
     const router = useRouter();
     const searchParams = useSearchParams();
     const kakaoCode = searchParams.get('code');
-
     const kakaoMutate = useSNSLogin({
       socialProvider: 'kakao',
     });
@@ -113,7 +112,7 @@ const withSocialAuthHandler = (
         kakaoMutate.mutate({ token: kakaoCode });
         router.push(Routes.LOGIN);
       }
-    }, [kakaoCode]);
+    }, []);
 
     return <WrappedComponent {...handleSocialLogin} />;
   };

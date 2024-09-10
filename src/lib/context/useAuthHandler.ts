@@ -1,10 +1,10 @@
 import { AxiosError } from 'axios';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { LoginParams, UserInfoDTO, getUserInfo } from '../api';
 import { getFromStorage, setToStorage } from '../storage';
 import { useLogin } from '../hooks';
-import { ModalContext, useModal } from './ModalProvider';
+import { useModal } from './ModalProvider';
 
 interface UserInfo extends UserInfoDTO {
   accessToken: string;
@@ -61,11 +61,12 @@ export const useAuthHandler = () => {
                 });
                 break;
               case 400:
-                const { message } = error.response?.data;
                 openModal({
                   type: 'alert',
                   key: 'loginError400',
-                  message,
+                  message:
+                    error.response?.data.message ??
+                    '로그인에 실패하였습니다. 다시 시도해주세요',
                 });
                 break;
               default:

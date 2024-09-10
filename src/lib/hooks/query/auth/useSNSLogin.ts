@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios';
 import { useRouter } from 'next/router';
 import { useContext } from 'react';
 import { useMutation } from '@tanstack/react-query';
@@ -6,7 +7,6 @@ import { SocialLoginParams, socialLogin } from '@/lib/api';
 import { AuthContext, useModal } from '@/lib/context';
 import { Routes } from '@/lib/route';
 import { MUTATION_KEY } from '../config';
-import { AxiosError } from 'axios';
 
 export const useSNSLogin = ({
   socialProvider,

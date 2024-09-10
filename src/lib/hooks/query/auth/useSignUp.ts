@@ -1,10 +1,10 @@
-import { useMutation } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 import { useRouter } from 'next/router';
+import { useMutation } from '@tanstack/react-query';
 
 import { signUp } from '@/lib/api/';
-import { MUTATION_KEY } from '../config';
 import { useModal } from '@/lib/context';
-import { AxiosError } from 'axios';
+import { MUTATION_KEY } from '../config';
 
 interface SignUpHookParams {
   onSuccess?: () => void;

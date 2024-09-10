@@ -1,4 +1,4 @@
-import { ModalContentsProps } from '@/components/common/modal/ModalContainer';
+import { ModalContentsProps } from '@/components/common/modal/Modal';
 import { useState } from 'react';
 
 interface ModalType extends ModalContentsProps {

@@ -1,6 +1,6 @@
 import { createContext, useContext } from 'react';
+import { Modal } from '@/components';
 import { ModalContextType, useModalHandler } from './useModalHandler';
-import { Modal } from '@/components/common/modal/ModalContainer';
 
 export const ModalContext = createContext<ModalContextType>({
   modalList: [],
@@ -13,10 +13,10 @@ interface ModalProviderProps {
 }
 
 export const ModalProvider = ({ children }: ModalProviderProps) => {
-  const { modalList, openModal, closeModal } = useModalHandler();
-
+  const modalProviderValue = useModalHandler();
+  const { modalList } = modalProviderValue;
   return (
-    <ModalContext.Provider value={{ modalList, openModal, closeModal }}>
+    <ModalContext.Provider value={modalProviderValue}>
       {children}
       {modalList.map(({ key, ...rest }) => {
         return <Modal key={key} modalName={key} {...rest} />;

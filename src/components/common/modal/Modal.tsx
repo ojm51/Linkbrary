@@ -131,7 +131,7 @@ interface CommonModalProps extends ModalContentsProps {
   modalName: string;
 }
 
-const ModalContainer = (
+const withModalContainer = (
   WrappedComponent: ComponentType<ModalContentsProps>,
 ) => {
   return ({
@@ -174,4 +174,4 @@ const ModalContainer = (
   };
 };
 
-export const Modal = ModalContainer(ModalContents);
+export const Modal = withModalContainer(ModalContents);
