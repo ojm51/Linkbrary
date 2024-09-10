@@ -8,7 +8,7 @@ const Favorite = () => {
           ⭐️즐겨찾기
         </h1>
       </div>
-      <div className="p-4">
+      <div className="pt-[30px]">
         <CardList />
       </div>
     </div>
