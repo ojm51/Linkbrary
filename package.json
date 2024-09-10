@@ -19,7 +19,7 @@
     "react-dom": "^18",
     "react-hook-form": "^7.53.0",
     "swiper": "^11.1.12",
-    "zod": "^3.23.8",
+    "tailwind-scrollbar-hide": "^1.1.7",
     "ts-pattern": "^5.3.1"
   },
   "devDependencies": {

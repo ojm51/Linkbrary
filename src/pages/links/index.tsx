@@ -1,3 +1,13 @@
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+import Link from 'next/link';
+import { FolderContext, FolderProvider } from '@/lib/context';
 import { AddLink, SearchBar, FolderList, FolderMenuList } from '@/components';
 import { instance } from '@/lib/api';
 import { debounce } from '@/lib/react';
@@ -9,16 +19,7 @@ import {
 import Image from 'next/image';
 import star from '@/assets/icons/ic_star.svg';
 import starSelected from '@/assets/icons/ic_star_selected.svg';
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
 import { match } from 'ts-pattern';
-import Link from 'next/link';
 
 type TQueryResponse<T> =
   | undefined
@@ -190,6 +191,12 @@ const useLinksQueryAction = (
     const folder = allFoldersData.find(
       (folderData) => folderData.name === '전체',
     ) as TFolderDto;
+
+    if (!folder) {
+      console.error("Error: '전체' 폴더를 찾을 수 없습니다.");
+      return; // 폴더가 없을 경우 함수 실행을 중단
+    }
+
     const initQuery: TLinksQuery = {
       page: 1,
       pageSize: getPageSize(width),
@@ -534,7 +541,37 @@ const LinkPagination = () => {
   );
 };
 
-const Links = () => {
+type LinkComponentProps = {
+  isLoading: boolean;
+  isError: boolean;
+};
+
+const LinkComponent = (props: LinkComponentProps) => {
+  return match(props)
+    .with({ isLoading: true }, () => (
+      <>
+        <LinkCardsSkeleton />
+        <LinkPaginationSkeleton />
+      </>
+    ))
+    .with({ isLoading: false, isError: true }, () => (
+      <section>
+        <div>
+          데이터가 존재하지 않거나, 불러오는 데 실패했습니다. 다시 시도 해
+          주세요.
+        </div>
+      </section>
+    ))
+    .otherwise(() => (
+      <>
+        <LinkCards />
+        <LinkPagination />
+      </>
+    ));
+};
+
+const MainContent = () => {
+  const { selectedFolder } = useContext(FolderContext);
   const folderAction = useFolderAction();
   const clientSizeAction = useClientSize();
   const linksQueryAction = useLinksQueryAction(
@@ -566,7 +603,7 @@ const Links = () => {
           <FolderList />
           <div className="flex justify-between items-center">
             <h3 className="font-semibold text-2xl text-black my-6 font-[Pretendard] not-italic leading-[normal]">
-              title
+              {selectedFolder.name || '전체'}
             </h3>
             <FolderMenuList />
           </div>
@@ -580,32 +617,12 @@ const Links = () => {
   );
 };
 
-type LinkComponentProps = {
-  isLoading: boolean;
-  isError: boolean;
-};
-const LinkComponent = (props: LinkComponentProps) => {
-  return match(props)
-    .with({ isLoading: true }, () => (
-      <>
-        <LinkCardsSkeleton />
-        <LinkPaginationSkeleton />
-      </>
-    ))
-    .with({ isLoading: false, isError: true }, () => (
-      <section>
-        <div>
-          데이터가 존재하지 않거나, 불러오는 데 실패했습니다. 다시 시도 해
-          주세요.
-        </div>
-      </section>
-    ))
-    .otherwise(() => (
-      <>
-        <LinkCards />
-        <LinkPagination />
-      </>
-    ));
+const Links = () => {
+  return (
+    <FolderProvider>
+      <MainContent />
+    </FolderProvider>
+  );
 };
 
 export default Links;

@@ -14,6 +14,13 @@ import '@/styles/globals.css';
 import '@/styles/landingEffect.css';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
+declare global {
+  interface Window {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    Kakao: any;
+  }
+}
+
 const App = ({ Component, pageProps }: AppProps) => {
   const [queryClient] = useState(() => new QueryClient());
   const router = useRouter();
