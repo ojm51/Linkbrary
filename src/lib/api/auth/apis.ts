@@ -11,30 +11,30 @@ import {
 
 export const signUp = async ({ email, name, password }: SignUpParams) => {
   const params = { email, name, password };
-  const response = await instance
-    .post<AuthDTO>(API_PATH.auth.signUp, JSON.stringify(params))
-    .then((res) => res)
-    .catch(() => {});
+  const response = await instance.post<AuthDTO>(
+    API_PATH.auth.signUp,
+    JSON.stringify(params),
+  );
 
   return response;
 };
 
 export const validateEmail = async ({ email }: EmailConfirmParams) => {
   const params = { email };
-  const response = await instance
-    .post(API_PATH.user.emailCheck, JSON.stringify(params))
-    .then((res) => res)
-    .catch(() => {});
+  const response = await instance.post(
+    API_PATH.user.emailCheck,
+    JSON.stringify(params),
+  );
 
   return response;
 };
 
 export const login = async ({ email, password }: LoginParams) => {
   const params = { email, password };
-  const response = await instance
-    .post<AuthDTO>(API_PATH.auth.Login, JSON.stringify(params))
-    .then((res) => res)
-    .catch(() => {});
+  const response = await instance.post<AuthDTO>(
+    API_PATH.auth.Login,
+    JSON.stringify(params),
+  );
 
   return response;
 };
@@ -55,10 +55,7 @@ export const socialSignUp = async ({
       ? API_PATH.auth.googleSignUp
       : API_PATH.auth.kakaoSignUp;
 
-  const response = await instance
-    .post(url, JSON.stringify(params))
-    .then((res) => res)
-    .catch(() => {});
+  const response = await instance.post(url, JSON.stringify(params));
 
   return response;
 };
@@ -76,10 +73,10 @@ export const socialLogin = async ({
       ? API_PATH.auth.googleLogin
       : API_PATH.auth.kakaoLogin;
 
-  const response = await instance
-    .post<SocialLoginDTO>(url, JSON.stringify(params))
-    .then((res) => res)
-    .catch(() => {});
+  const response = await instance.post<SocialLoginDTO>(
+    url,
+    JSON.stringify(params),
+  );
 
   return response;
 };

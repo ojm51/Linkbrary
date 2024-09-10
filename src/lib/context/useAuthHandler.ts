@@ -1,9 +1,10 @@
 import { AxiosError } from 'axios';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import { LoginParams, UserInfoDTO, getUserInfo } from '../api';
 import { getFromStorage, setToStorage } from '../storage';
 import { useLogin } from '../hooks';
+import { ModalContext, useModal } from './ModalProvider';
 
 interface UserInfo extends UserInfoDTO {
   accessToken: string;
@@ -21,12 +22,14 @@ export interface AuthContextType {
 const localStorageName = 'userInfo';
 
 export const useAuthHandler = () => {
+  const { openModal } = useModal();
+
   const loginMutate = useLogin();
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const [isLoggedin, setIsLoggedin] = useState<boolean>(false);
 
-  const login = async ({ email, password }: LoginParams) => {
-    await loginMutate.mutateAsync(
+  const login = ({ email, password }: LoginParams) => {
+    loginMutate.mutate(
       { email, password },
       {
         onSuccess: async (res) => {
@@ -47,21 +50,34 @@ export const useAuthHandler = () => {
               });
           }
         },
-        onError(error) {
+        onError: async (error) => {
           if (error instanceof AxiosError) {
             switch (error.status) {
               case 401:
-                /** @Todo 모달로 로그인 만료 나타내기 */
+                openModal({
+                  type: 'alert',
+                  key: 'loginError401',
+                  message: '로그인이 만료되었습니다. 다시 로그인해주세요.',
+                });
                 break;
               case 400:
-                /** @Todo 모달로 잘못된 정보 나타내기 */
+                const { message } = error.response?.data;
+                openModal({
+                  type: 'alert',
+                  key: 'loginError400',
+                  message,
+                });
                 break;
               default:
-                /** @Todo 모달로 알 수 없는 에러 나타내기  */
+                openModal({
+                  type: 'alert',
+                  key: 'loginError',
+                  message:
+                    '알 수 없는 에러입니다. 이 에러가 계속되는 경우 관리자에게 문의해주세요.',
+                });
                 break;
             }
           }
-          logout();
         },
       },
     );

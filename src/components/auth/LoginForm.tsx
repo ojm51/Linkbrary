@@ -2,12 +2,13 @@ import Image from 'next/image';
 import { useContext } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 
-import { AuthContext } from '@/lib/context';
+import { AuthContext, useModal } from '@/lib/context';
 import { usePasswordVisuality } from '@/lib/hooks';
 import { CommonButton, CommonInputWithError } from '../common';
 
 export const LoginForm = () => {
   const { login } = useContext(AuthContext);
+  const { openModal } = useModal();
   const {
     visible: passwordVisible,
     visibleIcon: passwordVisibleIcon,
