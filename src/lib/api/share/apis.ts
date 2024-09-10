@@ -8,21 +8,13 @@ import {
 
 const tempInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
-  timeout: 3000,
+  // timeout: 3000,
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
-export const getFolderListForSSG = async () => {
-  const response = await tempInstance.get<FolderTypes[]>(
-    API_PATH.folder.default,
-  );
-
-  return response.data ?? [];
-};
-
-export const getLinkListForSSG = async ({ folderId }: GetFolderParams) => {
+export const getLinkListForSSR = async ({ folderId }: GetFolderParams) => {
   const response = await tempInstance.get<LinkListResponseTypes>(
     API_PATH.link.category(folderId),
   );
@@ -30,7 +22,7 @@ export const getLinkListForSSG = async ({ folderId }: GetFolderParams) => {
   return response.data.list ?? [];
 };
 
-export const getFolder = async ({ folderId }: GetFolderParams) => {
+export const getFolderDetail = async ({ folderId }: GetFolderParams) => {
   const response = await tempInstance.get<FolderTypes>(
     API_PATH.folder.detail(folderId),
   );

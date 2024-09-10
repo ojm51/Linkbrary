@@ -1,51 +1,42 @@
-import { GetStaticPaths, GetStaticProps } from 'next';
+import { GetServerSidePropsContext } from 'next';
+import { getFolderDetail, getLinkListForSSR, LinkTypes } from '@/lib/api';
 import CardList from '@/components/favorite/CardList/CardList';
-import {
-  getFolder,
-  getFolderListForSSG,
-  getLinkListForSSG,
-  LinkTypes,
-} from '@/lib/api';
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  const folderList = await getFolderListForSSG();
+export const getServerSideProps = async (
+  context: GetServerSidePropsContext,
+) => {
+  const sharedFolderId = parseInt(context.params?.id as string, 10);
+  const linkList = await getLinkListForSSR({ folderId: sharedFolderId });
+  const sharedFolderName = (await getFolderDetail({ folderId: sharedFolderId }))
+    .name;
 
-  const paths = folderList.map((folder) => ({
-    params: { id: folder.id.toString() },
-  }));
-
-  return {
-    paths,
-    fallback: false,
-  };
-};
-
-export const getStaticProps: GetStaticProps = async (context) => {
-  const folderId = parseInt(context.params?.id as string, 10);
-  const linkList = await getLinkListForSSG({ folderId });
+  if (!sharedFolderId) {
+    return {
+      notFound: true,
+    };
+  }
 
   return {
     props: {
       linkList,
-      folderId,
+      sharedFolderName,
     },
   };
 };
 
 interface SharedProps {
   linkList: LinkTypes[];
-  folderId: number;
+  sharedFolderName: string;
 }
 
-const Shared = async ({ linkList, folderId }: SharedProps) => {
-  const sharedFolderName = (await getFolder({ folderId })).name;
-  console.log(linkList);
+const Shared = ({ linkList, sharedFolderName }: SharedProps) => {
+  console.log(linkList); // 린트 오류 해결을 위한 임시 로그
 
   return (
     <div>
       <div className="bg-[#F0F6FF]">
         <h1 className="font-pretendard text-[40px] font-semibold leading-[47.73px] text-center pb-10">
-          {sharedFolderName}
+          공유된 &quot;{sharedFolderName}&quot; 폴더
         </h1>
       </div>
       <div className="p-4">
