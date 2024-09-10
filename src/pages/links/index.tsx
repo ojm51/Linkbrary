@@ -1,3 +1,12 @@
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+import Link from 'next/link';
 import { FolderContext, FolderProvider } from '@/lib/context';
 import { AddLink, SearchBar, FolderList, FolderMenuList } from '@/components';
 import { instance } from '@/lib/api';
@@ -10,16 +19,7 @@ import {
 import Image from 'next/image';
 import star from '@/assets/icons/ic_star.svg';
 import starSelected from '@/assets/icons/ic_star_selected.svg';
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
 import { match } from 'ts-pattern';
-import Link from 'next/link';
 
 type TQueryResponse<T> =
   | undefined
@@ -191,6 +191,12 @@ const useLinksQueryAction = (
     const folder = allFoldersData.find(
       (folderData) => folderData.name === '전체',
     ) as TFolderDto;
+
+    if (!folder) {
+      console.error("Error: '전체' 폴더를 찾을 수 없습니다.");
+      return; // 폴더가 없을 경우 함수 실행을 중단
+    }
+
     const initQuery: TLinksQuery = {
       page: 1,
       pageSize: getPageSize(width),
@@ -535,59 +541,11 @@ const LinkPagination = () => {
   );
 };
 
-const Links = () => {
-  const { selectedFolder } = useContext(FolderContext);
-  const folderAction = useFolderAction();
-  const clientSizeAction = useClientSize();
-  const linksQueryAction = useLinksQueryAction(
-    clientSizeAction.data,
-    folderAction.data,
-  );
-  const linksAction = useLinksAction(linksQueryAction.data);
-
-  const value = useMemo(
-    () => ({
-      folderAction,
-      clientSizeAction,
-      linksQueryAction,
-      linksAction,
-    }),
-    [clientSizeAction, folderAction, linksAction, linksQueryAction],
-  );
-
-  return (
-    <FolderProvider>
-      <LinksContext.Provider value={value}>
-        <main className="select-none">
-          <div className="h-[220px] pt-[60px] bg-bg">
-            <AddLink />
-          </div>
-          <div className="max-w-[1060px] m-auto">
-            <div className="my-10">
-              <SearchBar />
-            </div>
-            <FolderList />
-            <div className="flex justify-between items-center">
-              <h3 className="font-semibold text-2xl text-black my-6 font-[Pretendard] not-italic leading-[normal]">
-                {selectedFolder.name || '전체'}
-              </h3>
-              <FolderMenuList />
-            </div>
-          </div>
-          <LinkComponent
-            isLoading={folderAction.isLoading || linksAction.isLoading}
-            isError={folderAction.isError || linksAction.isError}
-          />
-        </main>
-      </LinksContext.Provider>
-    </FolderProvider>
-  );
-};
-
 type LinkComponentProps = {
   isLoading: boolean;
   isError: boolean;
 };
+
 const LinkComponent = (props: LinkComponentProps) => {
   return match(props)
     .with({ isLoading: true }, () => (
@@ -610,6 +568,61 @@ const LinkComponent = (props: LinkComponentProps) => {
         <LinkPagination />
       </>
     ));
+};
+
+const MainContent = () => {
+  const { selectedFolder } = useContext(FolderContext);
+  const folderAction = useFolderAction();
+  const clientSizeAction = useClientSize();
+  const linksQueryAction = useLinksQueryAction(
+    clientSizeAction.data,
+    folderAction.data,
+  );
+  const linksAction = useLinksAction(linksQueryAction.data);
+
+  const value = useMemo(
+    () => ({
+      folderAction,
+      clientSizeAction,
+      linksQueryAction,
+      linksAction,
+    }),
+    [clientSizeAction, folderAction, linksAction, linksQueryAction],
+  );
+
+  return (
+    <LinksContext.Provider value={value}>
+      <main className="select-none">
+        <div className="h-[220px] pt-[60px] bg-bg">
+          <AddLink />
+        </div>
+        <div className="max-w-[1060px] m-auto">
+          <div className="my-10">
+            <SearchBar />
+          </div>
+          <FolderList />
+          <div className="flex justify-between items-center">
+            <h3 className="font-semibold text-2xl text-black my-6 font-[Pretendard] not-italic leading-[normal]">
+              {selectedFolder.name || '전체'}
+            </h3>
+            <FolderMenuList />
+          </div>
+        </div>
+        <LinkComponent
+          isLoading={folderAction.isLoading || linksAction.isLoading}
+          isError={folderAction.isError || linksAction.isError}
+        />
+      </main>
+    </LinksContext.Provider>
+  );
+};
+
+const Links = () => {
+  return (
+    <FolderProvider>
+      <MainContent />
+    </FolderProvider>
+  );
 };
 
 export default Links;
