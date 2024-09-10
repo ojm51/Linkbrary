@@ -7,6 +7,7 @@ export const AuthContext = createContext<AuthContextType>({
   login: () => {},
   logout: () => {},
   updateUserInfo: () => {},
+  updateIsLoggedIn: () => {},
 });
 
 interface AuthProviderProps {
@@ -14,7 +15,8 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
-  const { authProviderValue } = useAuthHandler();
+  const authProviderValue = useAuthHandler();
+
   return (
     <AuthContext.Provider value={authProviderValue}>
       {children}

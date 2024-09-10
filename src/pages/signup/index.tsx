@@ -1,17 +1,21 @@
 import Head from 'next/head';
-import { AuthHeader, SignUpForm } from '@/components';
+import { AuthHeader, SNSAuth, SignUpForm, AuthStyle as S } from '@/components';
+import { Routes } from '@/lib/route';
 
 const SignUp = () => {
   return (
     <>
       <Head>
-        <title>Linkbrary - 회원가입</title>
+        <title>회원가입 - Linkbrary</title>
       </Head>
-      <main className="w-screen h-screen bg-bg pt-[120px]">
-        <article className="flex max-w-[400px] flex-col justify-center items-center gap-[30px] m-auto">
-          <AuthHeader href="/login">로그인 하기</AuthHeader>
-          <SignUpForm />
-        </article>
+      <main className={S.BackGroundStyle}>
+        <div className={S.WrapperStyle}>
+          <section className={S.AuthorizeSectionStyle}>
+            <AuthHeader type="signup" href={Routes.LOGIN} />
+            <SignUpForm />
+          </section>
+          <SNSAuth type="signup" />
+        </div>
       </main>
     </>
   );
