@@ -135,6 +135,13 @@ const config: Config = {
         'card-image': 'url("/images/landingCard3-1.png")',
       },
     },
+    keyframes: {
+      shimmer: {
+        '100%': {
+          transform: 'translateX(100%)',
+        },
+      },
+    },
   },
   plugins: [require('tailwind-scrollbar-hide')],
 };
