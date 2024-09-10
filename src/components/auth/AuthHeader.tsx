@@ -13,11 +13,11 @@ interface AuthHeaderProps {
 
 export const AuthHeader = ({ type, href }: AuthHeaderProps) => {
   const phrase = match({ type })
-    .with({ type: 'login' }, () => ({
+    .with({ type: 'signup' }, () => ({
       direct: '로그인 하기',
       confirm: '이미 회원이신가요?',
     }))
-    .with({ type: 'signup' }, () => ({
+    .with({ type: 'login' }, () => ({
       direct: '회원가입 하기',
       confirm: '회원이 아니신가요?',
     }))
