@@ -8,7 +8,9 @@ import { FolderContext } from '@/lib/context';
 
 export const ShareFolder = () => {
   const { selectedFolder } = useContext(FolderContext);
-  const BASE_URL = window.location.href;
+  /** @TODO 적당한 base url 설정하기 - 배포용 주소로 */
+  // 공유되는 폴더 주소는 "~/shared/[id]"인데, window.location.href를 사용하면 "~/links/shared/[id]"로 되어서 404 에러가 뜸
+  const BASE_URL = `https://deploy-preview-40--dev-linkbrary.netlify.app`;
   const SHARING_URL = `${BASE_URL}/shared/${selectedFolder.id}`;
 
   const { Kakao, open } = window;
