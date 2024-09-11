@@ -15,3 +15,4 @@ export const ROUTE_CONTROL: Record<string, string[]> = {
   hasOnlyHeader: [],
   hasOnlyFooter: [],
 };
+
