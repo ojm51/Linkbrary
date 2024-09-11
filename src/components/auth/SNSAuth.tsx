@@ -7,8 +7,9 @@ import { match } from 'ts-pattern';
 import googleLogin from '@/assets/icons/sns/ic_google.svg';
 import kakaoLogin from '@/assets/icons/sns/ic_kakao.svg';
 
-import { API_PATH } from '@/lib/api';
+import { useModal } from '@/lib/context';
 import { useSNSLogin } from '@/lib/hooks';
+import { API_PATH } from '@/lib/api';
 import { Routes } from '@/lib/route';
 
 interface SNSLoginProps {
@@ -60,6 +61,7 @@ const withSocialAuthHandler = (
   WrappedComponent: ComponentType<SNSLoginProps>,
 ) => {
   return ({ type }: SocialLoginProps) => {
+    const { openModal } = useModal();
     const router = useRouter();
     const searchParams = useSearchParams();
     const kakaoCode = searchParams.get('code');
@@ -90,10 +92,18 @@ const withSocialAuthHandler = (
       }))
       .otherwise(() => ({
         handleGoogleLogin: () => {
-          /** @Todo 모달로 에러처리 */
+          openModal({
+            type: 'alert',
+            key: 'SNSGoogleError',
+            message: '잘못된 소셜 로그인 로직 타입입니다.(Google)',
+          });
         },
         handleKakaoLogin: () => {
-          /** @Todo 모달로 에러처리 */
+          openModal({
+            type: 'alert',
+            key: 'SNSKakaoError',
+            message: '잘못된 소셜 로그인 로직 타입입니다.(Kakao)',
+          });
         },
       }));
 
@@ -102,7 +112,7 @@ const withSocialAuthHandler = (
         kakaoMutate.mutate({ token: kakaoCode });
         router.push(Routes.LOGIN);
       }
-    }, [kakaoCode]);
+    }, []);
 
     return <WrappedComponent {...handleSocialLogin} />;
   };
