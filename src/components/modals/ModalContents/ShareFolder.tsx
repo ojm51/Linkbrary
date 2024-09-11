@@ -5,6 +5,7 @@ import facebookIcon from '@/assets/images/facebook.png';
 import copyLinkIcon from '@/assets/images/copyLink.png';
 // import defaultShareImage from '@/assets/images/defaultImage.png';
 import { FolderContext } from '@/lib/context';
+import { CommonButton } from '@/components';
 
 export const ShareFolder = () => {
   const { selectedFolder } = useContext(FolderContext);
@@ -94,14 +95,18 @@ export const ShareFolder = () => {
             className="flex flex-col justify-center items-center gap-[10px]"
             key={shareMethod.id}
           >
-            <button type="button" onClick={shareMethod.onClick}>
+            <CommonButton
+              mode="default"
+              className=""
+              onClick={shareMethod.onClick}
+            >
               <Image
                 src={shareMethod.src}
                 alt={`${shareMethod.text} 아이콘`}
                 width={42}
                 height={42}
               />
-            </button>
+            </CommonButton>
             <p className="text-center text-[13px] text-[#373740] font-[Pretendard] not-italic leading-[15px]">
               {shareMethod.text}
             </p>
