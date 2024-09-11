@@ -1,14 +1,14 @@
 import Image from 'next/image';
-import { match } from 'ts-pattern';
 import { useRouter } from 'next/router';
 import { useSearchParams } from 'next/navigation';
 import { ComponentType, useEffect } from 'react';
+import { match } from 'ts-pattern';
 
 import googleLogin from '@/assets/icons/sns/ic_google.svg';
 import kakaoLogin from '@/assets/icons/sns/ic_kakao.svg';
 
-import { useSNSLogin } from '@/lib/hooks';
 import { API_PATH } from '@/lib/api';
+import { useSNSLogin } from '@/lib/hooks';
 import { Routes } from '@/lib/route';
 
 interface SNSLoginProps {
@@ -27,7 +27,7 @@ const SNSAuthComponent = ({
 
   return (
     <section className={sectionWrapper}>
-      <p className={textStyle}>소셜 로그인</p>
+      <p className={textStyle}>간편 로그인</p>
       <div className={iconContainer}>
         <Image
           onClick={handleGoogleLogin}
@@ -69,7 +69,11 @@ const withSocialAuthHandler = (
     const TSocialLogin: SocialLoginType = { type };
     const handleSocialLogin = match(TSocialLogin)
       .with({ type: 'login' }, () => ({
-        handleGoogleLogin: () => {},
+        handleGoogleLogin: () => {
+          if (window) {
+            window.location.assign(API_PATH.oauth.google.login);
+          }
+        },
         handleKakaoLogin: () => {
           if (window) {
             window.location.assign(API_PATH.oauth.kakao.login);

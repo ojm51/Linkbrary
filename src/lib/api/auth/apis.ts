@@ -47,7 +47,7 @@ export const socialSignUp = async ({
   const params = {
     name,
     token,
-    redirectUri: process.env.NEXT_PUBLIC_OAUTH_REDIRECT_URI,
+    redirectUri: process.env.NEXT_PUBLIC_OAUTH_SIGNUP_REDIRECT_URI,
   };
 
   const url =
