@@ -1,17 +1,18 @@
 import Image from 'next/image';
 import { FieldValues, useForm } from 'react-hook-form';
 
-import { usePasswordVisuality, useSignUp } from '@/lib/hooks';
+import { usePasswordVisuality, useSignUp, useValidateEmail } from '@/lib/hooks';
 
 import { CommonButton, CommonInputWithError } from '../common';
 
 export const SignUpForm = () => {
-  const signUpMutate = useSignUp({});
+  const signUpMutate = useSignUp();
+  const validateEmailMutate = useValidateEmail();
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
-    watch,
+    formState: { errors, isValid, isValidating, validatingFields },
+    setError,
   } = useForm({ mode: 'onBlur' });
 
   const {
@@ -46,6 +47,22 @@ export const SignUpForm = () => {
             value:
               /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i,
             message: '이메일 형식으로 작성해주세요.',
+          },
+          validate: {
+            email: async (value) => {
+              try {
+                const data = await validateEmailMutate.mutateAsync({
+                  email: value,
+                });
+                if (data.status === 200 && data.data?.isUsableEmail) {
+                  return true;
+                } else {
+                  throw new Error('중복된 이메일');
+                }
+              } catch (error) {
+                return '중복된 이메일입니다.';
+              }
+            },
           },
         })}
       >
@@ -114,11 +131,13 @@ export const SignUpForm = () => {
         }
         register={register('passwordConfirm', {
           required: '필수 항목입니다.',
-          validate: (passwordConfirm: string) => {
-            if (watch('password') !== passwordConfirm) {
-              return '비밀번호가 일치하지 않습니다.';
-            }
-            return true;
+          validate: {
+            passwordConfirm: (passwordConfirm: string, formValue) => {
+              if (formValue.password !== passwordConfirm) {
+                return '비밀번호가 일치하지 않습니다.';
+              }
+              return true;
+            },
           },
         })}
       >
