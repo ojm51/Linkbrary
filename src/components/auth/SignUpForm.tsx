@@ -25,9 +25,9 @@ export const SignUpForm = () => {
     handleVisible: handlePasswordConfirmVisible,
   } = usePasswordVisuality();
 
-  const onSubmit = async (values: FieldValues) => {
+  const onSubmit = (values: FieldValues) => {
     const { email, name, password } = values;
-    await signUpMutate.mutateAsync({ email, name, password });
+    signUpMutate.mutate({ email, name, password });
   };
 
   const formClassName =

@@ -16,6 +16,7 @@ import {
   useQueryClient,
 } from '@tanstack/react-query';
 import Image from 'next/image';
+import Link from 'next/link';
 import star from '@/assets/icons/ic_star.svg';
 import starSelected from '@/assets/icons/ic_star_selected.svg';
 import kebabIcon from '@/assets/icons/ic_kebab.svg';
@@ -34,7 +35,6 @@ import {
   useState,
 } from 'react';
 import { match } from 'ts-pattern';
-import Link from 'next/link';
 
 type TQueryResponse<T> =
   | undefined
@@ -248,6 +248,12 @@ const useLinksQueryAction = (
     const folder = allFoldersData.find(
       (folderData) => folderData.name === '전체',
     ) as TFolderDto;
+
+    if (!folder) {
+      console.error("Error: '전체' 폴더를 찾을 수 없습니다.");
+      return; // 폴더가 없을 경우 함수 실행을 중단
+    }
+
     const initQuery: TLinksQuery = {
       page: 1,
       pageSize: getPageSize(width),
