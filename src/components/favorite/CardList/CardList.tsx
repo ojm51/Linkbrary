@@ -1,199 +1,31 @@
 import React, { useState, useMemo, useEffect } from 'react';
+import { getFavoriteLinkList, FavoriteLinkTypes } from '@/lib/api';
 import Card from './Card';
 
-// Assuming `CardList` is imported from a data source or defined in the same file
-const CardList = [
-  {
-    id: 1,
-    favorite: false,
-    url: 'naver.com',
-    title: '네이버',
-    imageSource:
-      'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FCNxUY%2Fbtqw7dnElRU%2FHuVZgvpT6J8n4aEYFathEk%2Fimg.jpg',
-    description: '네이버에서 모든 것을 만나보세요.',
-    createAt: '2024-08-30T07:56:21.621Z',
-  },
-  {
-    id: 2,
-    favorite: true,
-    url: 'naver.com',
-    title:
-      '국회는 국민의 보통·평등·직접·비밀선거에 의하여 선출된 국회의원으로 구성한다. 이 헌법시행 당시에 이 헌법에 의하여 새로 설치될 기관의 권한에 속하는 직무를 행하고 있는 기관은 이 헌법에 의하여 새로운 기관이 설치될 때까지 존속하며 그 직무를 행한다.',
-    imageSource:
-      'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FCNxUY%2Fbtqw7dnElRU%2FHuVZgvpT6J8n4aEYFathEk%2Fimg.jpg',
-    description: '네이버에서 모든 것을 만나보세요.',
-    createAt: '2024-08-30T07:56:21.621Z',
-  },
-  {
-    id: 3,
-    favorite: true,
-    url: 'naver.com',
-    title: '네이버3',
-    imageSource:
-      'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FCNxUY%2Fbtqw7dnElRU%2FHuVZgvpT6J8n4aEYFathEk%2Fimg.jpg',
-    description: '네이버에서 모든 것을 만나보세요.',
-    createAt: '2024-08-30T07:56:21.621Z',
-  },
-  {
-    id: 4,
-    favorite: true,
-    url: 'naver.com',
-    title: '네이버4',
-    imageSource:
-      'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FCNxUY%2Fbtqw7dnElRU%2FHuVZgvpT6J8n4aEYFathEk%2Fimg.jpg',
-    description: '네이버에서 모든 것을 만나보세요.',
-    createAt: '2024-08-30T07:56:21.621Z',
-  },
-  {
-    id: 5,
-    favorite: true,
-    url: 'naver.com',
-    title: '네이버5',
-    imageSource:
-      'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FCNxUY%2Fbtqw7dnElRU%2FHuVZgvpT6J8n4aEYFathEk%2Fimg.jpg',
-    description: '네이버에서 모든 것을 만나보세요.',
-    createAt: '2024-08-30T07:56:21.621Z',
-  },
-  {
-    id: 6,
-    favorite: false,
-    url: 'naver.com',
-    title: '네이버6',
-    imageSource:
-      'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FCNxUY%2Fbtqw7dnElRU%2FHuVZgvpT6J8n4aEYFathEk%2Fimg.jpg',
-    description: '네이버에서 모든 것을 만나보세요.',
-    createAt: '2024-08-30T07:56:21.621Z',
-  },
-  {
-    id: 7,
-    favorite: true,
-    url: 'naver.com',
-    title: '네이버7',
-    imageSource:
-      'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FCNxUY%2Fbtqw7dnElRU%2FHuVZgvpT6J8n4aEYFathEk%2Fimg.jpg',
-    description: '네이버에서 모든 것을 만나보세요.',
-    createAt: '2024-08-30T07:56:21.621Z',
-  },
-  {
-    id: 8,
-    favorite: false,
-    url: 'naver.com',
-    title: '네이버8',
-    imageSource:
-      'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FCNxUY%2Fbtqw7dnElRU%2FHuVZgvpT6J8n4aEYFathEk%2Fimg.jpg',
-    description: '네이버에서 모든 것을 만나보세요.',
-    createAt: '2024-08-30T07:56:21.621Z',
-  },
-  {
-    id: 9,
-    favorite: true,
-    url: 'naver.com',
-    title: '네이버9',
-    imageSource:
-      'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FCNxUY%2Fbtqw7dnElRU%2FHuVZgvpT6J8n4aEYFathEk%2Fimg.jpg',
-    description: '네이버에서 모든 것을 만나보세요.',
-    createAt: '2024-08-30T07:56:21.621Z',
-  },
-  {
-    id: 10,
-    favorite: false,
-    url: 'naver.com',
-    title: '네이버10',
-    imageSource:
-      'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FCNxUY%2Fbtqw7dnElRU%2FHuVZgvpT6J8n4aEYFathEk%2Fimg.jpg',
-    description: '네이버에서 모든 것을 만나보세요.',
-    createAt: '2024-08-30T07:56:21.621Z',
-  },
-  {
-    id: 11,
-    favorite: true,
-    url: 'naver.com',
-    title: '네이버11',
-    imageSource:
-      'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FCNxUY%2Fbtqw7dnElRU%2FHuVZgvpT6J8n4aEYFathEk%2Fimg.jpg',
-    description: '네이버에서 모든 것을 만나보세요.',
-    createAt: '2024-08-30T07:56:21.621Z',
-  },
-  {
-    id: 12,
-    favorite: true,
-    url: 'naver.com',
-    title: '네이버12',
-    imageSource:
-      'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FCNxUY%2Fbtqw7dnElRU%2FHuVZgvpT6J8n4aEYFathEk%2Fimg.jpg',
-    description: '네이버에서 모든 것을 만나보세요.',
-    createAt: '2024-08-30T07:56:21.621Z',
-  },
-  {
-    id: 13,
-    favorite: true,
-    url: 'naver.com',
-    title: '네이버13',
-    imageSource:
-      'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FCNxUY%2Fbtqw7dnElRU%2FHuVZgvpT6J8n4aEYFathEk%2Fimg.jpg',
-    description: '네이버에서 모든 것을 만나보세요.',
-    createAt: '2024-08-30T07:56:21.621Z',
-  },
-  {
-    id: 14,
-    favorite: true,
-    url: 'naver.com',
-    title: '네이버14',
-    imageSource:
-      'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FCNxUY%2Fbtqw7dnElRU%2FHuVZgvpT6J8n4aEYFathEk%2Fimg.jpg',
-    description: '네이버에서 모든 것을 만나보세요.',
-    createAt: '2024-08-30T07:56:21.621Z',
-  },
-  {
-    id: 15,
-    favorite: true,
-    url: 'naver.com',
-    title: '네이버15',
-    imageSource:
-      'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FCNxUY%2Fbtqw7dnElRU%2FHuVZgvpT6J8n4aEYFathEk%2Fimg.jpg',
-    description: '네이버에서 모든 것을 만나보세요.',
-    createAt: '2024-08-30T07:56:21.621Z',
-  },
-  {
-    id: 16,
-    favorite: true,
-    url: 'naver.com',
-    title: '네이버16',
-    imageSource:
-      'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FCNxUY%2Fbtqw7dnElRU%2FHuVZgvpT6J8n4aEYFathEk%2Fimg.jpg',
-    description: '네이버에서 모든 것을 만나보세요.',
-    createAt: '2024-08-30T07:56:21.621Z',
-  },
-  {
-    id: 17,
-    favorite: true,
-    url: 'naver.com',
-    title: '네이버17',
-    imageSource:
-      'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FCNxUY%2Fbtqw7dnElRU%2FHuVZgvpT6J8n4aEYFathEk%2Fimg.jpg',
-    description: '네이버에서 모든 것을 만나보세요.',
-    createAt: '2024-08-30T07:56:21.621Z',
-  },
-  {
-    id: 18,
-    favorite: true,
-    url: 'naver.com',
-    title: '네이버18',
-    imageSource:
-      'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FCNxUY%2Fbtqw7dnElRU%2FHuVZgvpT6J8n4aEYFathEk%2Fimg.jpg',
-    description: '네이버에서 모든 것을 만나보세요.',
-    createAt: '2024-08-30T07:56:21.621Z',
-  },
-];
-
 const CardsPerPageDesktop = 9; // 데스크톱에서 한 페이지당 카드 수 (3x3)
-const CardsPerPageTablet = 6; // 테이블릿에서 한 페이지당 카드 수 (2x3)
+const CardsPerPageTablet = 6; // 태블릿에서 한 페이지당 카드 수 (2x3)
 const CardsPerPageMobile = 9; // 모바일에서 한 페이지당 카드 수 (1x9)
 
 const CardListPage: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [cardsPerPage, setCardsPerPage] = useState(CardsPerPageDesktop);
+  const [favoriteCards, setFavoriteCards] = useState<FavoriteLinkTypes[]>([]); // API에서 불러온 데이터 저장
 
+  // API에서 데이터를 불러오는 useEffect
+  useEffect(() => {
+    const fetchFavoriteCards = async () => {
+      try {
+        const data = await getFavoriteLinkList(); // API 호출
+        setFavoriteCards(data.list); // 받아온 데이터를 상태에 저장
+      } catch (error) {
+        console.error('Failed to fetch favorite cards:', error);
+      }
+    };
+
+    fetchFavoriteCards();
+  }, []);
+
+  // 화면 크기에 따른 페이지당 카드 수 설정
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 1024) {
@@ -206,24 +38,23 @@ const CardListPage: React.FC = () => {
     };
     window.addEventListener('resize', handleResize);
 
-    handleResize();
+    handleResize(); // 초기 실행
 
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // 현재 페이지에 표시할 카드 리스트 계산
   const cardsToDisplay = useMemo(() => {
-    const favoriteCards = CardList.filter((card) => card.favorite);
-
     const startIndex = (currentPage - 1) * cardsPerPage;
     const endIndex = startIndex + cardsPerPage;
 
-    return favoriteCards.slice(startIndex, endIndex);
-  }, [currentPage, cardsPerPage]);
+    return favoriteCards.slice(startIndex, endIndex); // API에서 불러온 카드 사용
+  }, [currentPage, cardsPerPage, favoriteCards]);
 
-  const totalPages = Math.ceil(
-    CardList.filter((card) => card.favorite).length / cardsPerPage,
-  );
+  // 총 페이지 수 계산
+  const totalPages = Math.ceil(favoriteCards.length / cardsPerPage);
 
+  // 페이지 변경 핸들러
   const handlePageChange = (page: number) => {
     if (page >= 1 && page <= totalPages) {
       setCurrentPage(page);
