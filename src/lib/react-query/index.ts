@@ -1,3 +1,3 @@
 export * from './types';
 export * from './link';
-export * from './folder'
+export * from './folder';

@@ -1,8 +1,8 @@
-import { getPagination, getTotalPages } from "@/lib/utils/links";
-import { useLinksContextSelector } from "../providers";
-import { useEffect, useRef } from "react";
-import { PageArrow } from "./link-pagenation/page.arrow";
-import { PageNumber } from "./link-pagenation/page.number";
+import { getPagination, getTotalPages } from '@/lib/utils/links';
+import { useEffect, useRef } from 'react';
+import { useLinksContextSelector } from '../providers';
+import { PageArrow } from './link-pagenation/page.arrow';
+import { PageNumber } from './link-pagenation/page.number';
 
 export const LinkPagination = () => {
   const ulRef = useRef<HTMLUListElement>(null);

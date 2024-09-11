@@ -1,6 +1,6 @@
-import { TLinkDto } from "@/lib/react-query";
-import { CardHeader } from "./link-card.header";
-import { CardBody } from "./link-card.body";
+import { TLinkDto } from '@/lib/react-query';
+import { CardHeader } from './link-card.header';
+import { CardBody } from './link-card.body';
 
 type LinkCardProps = {
   data: TLinkDto;

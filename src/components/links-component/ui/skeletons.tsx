@@ -1,11 +1,11 @@
-import { getPageSize } from "@/lib/utils/links";
-import { useLinksContextSelector } from "../providers";
+import { getPageSize } from '@/lib/utils/links';
+import { useLinksContextSelector } from '../providers';
 
 const shimmer =
   'before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:bg-gradient-to-r before:from-transparent before:via-white/60 before:to-transparent';
 const pageStyle =
   'relative box-content w-7 h-7 p-2 text-center rounded-lg bg-gray-200 text-lg leading-relaxed';
-  
+
 const LinkCardSkeleton = () => {
   const cardStyle = 'w-full h-5 bg-gray-200 rounded-2xl';
   return (

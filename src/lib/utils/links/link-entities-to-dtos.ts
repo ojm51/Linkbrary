@@ -1,4 +1,4 @@
-import { TLink, TLinkDto } from "@/lib/react-query";
+import { TLink, TLinkDto } from '@/lib/react-query';
 
 const TIME_UNITS = [
   { value: 31536000, text: 'years' },

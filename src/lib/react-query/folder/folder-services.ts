@@ -1,6 +1,6 @@
-import { QueryFunctionContext } from "@tanstack/react-query";
-import { TQueryResponse } from "../types";
-import { instance } from "@/lib/api";
+import { QueryFunctionContext } from '@tanstack/react-query';
+import { instance } from '@/lib/api';
+import { TQueryResponse } from '../types';
 
 export type TFolder = {
   id: number;
@@ -23,4 +23,3 @@ export const folderServices = ({ signal }: QueryFunctionContext) => ({
     return { data };
   },
 });
-

@@ -1,5 +1,5 @@
-import { queryOptions } from "@tanstack/react-query";
-import { folderServices } from "./folder-services";
+import { queryOptions } from '@tanstack/react-query';
+import { folderServices } from './folder-services';
 
 export const folderOptions = {
   all: () => {

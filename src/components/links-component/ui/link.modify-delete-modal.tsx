@@ -117,7 +117,7 @@ const DeleteModalBody = ({ currentLink }: { currentLink?: TLinkDto }) => {
         <div>요청 처리 중...</div>
       ) : (
         <CommonButton mode="default" onClick={onClick}>
-          링크수정
+          링크삭제
         </CommonButton>
       )}
     </>

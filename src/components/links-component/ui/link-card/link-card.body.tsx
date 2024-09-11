@@ -1,5 +1,5 @@
-import { TLinkDto } from "@/lib/react-query";
-import { DropBoxComponent } from "./link-card.dropbox";
+import { TLinkDto } from '@/lib/react-query';
+import { DropBoxComponent } from './link-card.dropbox';
 
 export const CardBody = ({
   id,

@@ -1,4 +1,10 @@
-import { createContext, PropsWithChildren, useEffect, useMemo, useReducer } from 'react';
+import {
+  createContext,
+  PropsWithChildren,
+  useEffect,
+  useMemo,
+  useReducer,
+} from 'react';
 import { useLinksContextSelector } from '../context';
 
 export type TDropBoxState = {
@@ -50,7 +56,9 @@ const dropBoxReducer = (state: TDropBoxState, action: TDropBoxActions) => {
       return state;
   }
 };
-export const DropBoxStoreContext = createContext<DropBoxStore | undefined>(undefined);
+export const DropBoxStoreContext = createContext<DropBoxStore | undefined>(
+  undefined,
+);
 export const DropBoxStoreProvider = ({ children }: PropsWithChildren) => {
   const { linksAction } = useLinksContextSelector();
   const list = linksAction.data?.data.list;

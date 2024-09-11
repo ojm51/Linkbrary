@@ -1,10 +1,11 @@
+import { AddLink, SearchBar, FolderList, FolderMenuList } from '@/components';
 import {
-  AddLink,
-  SearchBar,
-  FolderList,
-  FolderMenuList,
-} from '@/components';
-import { DropBoxStoreProvider, LinkComponent, LinksContextProvider, ModalStoreProvider, ModifyAndDeleteModal } from '@/components/links-component';
+  DropBoxStoreProvider,
+  LinkComponent,
+  LinksContextProvider,
+  ModalStoreProvider,
+  ModifyAndDeleteModal,
+} from '@/components/links-component';
 
 const Links = () => {
   return (

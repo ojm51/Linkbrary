@@ -1,6 +1,6 @@
-import { TLinkDto } from "@/lib/react-query";
-import { useLinksContextSelector } from "../../providers";
-import { LinkCard } from "./link-card";
+import { TLinkDto } from '@/lib/react-query';
+import { useLinksContextSelector } from '../../providers';
+import { LinkCard } from './link-card';
 
 export const LinkCards = () => {
   const { linksAction } = useLinksContextSelector();

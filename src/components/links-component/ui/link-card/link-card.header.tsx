@@ -1,6 +1,6 @@
-import { TLinkDto } from "@/lib/react-query";
-import Image from "next/image";
-import Link from "next/link";
+import { TLinkDto } from '@/lib/react-query';
+import Image from 'next/image';
+import Link from 'next/link';
 import star from '@/assets/icons/ic_star.svg';
 import starSelected from '@/assets/icons/ic_star_selected.svg';
 import emptyImg from '@/assets/images/empty.jpeg';

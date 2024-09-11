@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import kebabIcon from '@/assets/icons/ic_kebab.svg';
-import DropBox from '../link-dropbox';
 import { TLinkDto } from '@/lib/react-query';
 import { useDropBoxStore } from '@/lib/hooks/links-component';
+import DropBox from '../link-dropbox';
 import { TDropBoxOpen, useModalStore } from '../../providers';
 
 export const DropBoxComponent = ({ id }: Pick<TLinkDto, 'id'>) => {

@@ -1,4 +1,9 @@
-import { useClientSize, useFolderAction, useLinksAction, useLinksQueryAction } from "@/lib/hooks/links-component";
+import {
+  useClientSize,
+  useFolderAction,
+  useLinksAction,
+  useLinksQueryAction,
+} from '@/lib/hooks/links-component';
 
 export type FolderAction = ReturnType<typeof useFolderAction>;
 export type ClientSizeAction = ReturnType<typeof useClientSize>;
