@@ -25,34 +25,31 @@ const Home = () => {
 
   const { isLoginAccessible } = useLoginAccessibility();
 
+  const keyTextGradientClassName =
+    'bg-gradient-text-blue-to-pink text-transparent bg-clip-text';
+
   return (
     <main>
-      <section className="flex flex-col justify-center items-center bg-bg pt-[30px] mb-[10px] overflow-hidden md:pt-[70px] md:mb-[70px]">
+      <section className="flex flex-col justify-center items-center bg-bg pt-8 mb-3 overflow-hidden md:pt-16 md:mb-16">
         {/** @Todo tailwindcss 공통부분 변수로 수정 */}
         <div
           className="flex items-center justify-center"
           data-aos="zoom-out-up"
           data-aos-duration="1500"
         >
-          <div className="h-[45px] overflow-hidden pt-[6px] md:h-[77px]">
-            <ul className="flex flex-col gap-[15px] font-bold text-[32px] md:text-[64px] key-title-slide">
-              <li className="bg-gradient-text-blue-to-pink text-transparent bg-clip-text">
-                세상의 모든 정보
-              </li>
-              <li className="bg-gradient-text-blue-to-pink text-transparent bg-clip-text">
-                우리의 모든 정보
-              </li>
-              <li className="bg-gradient-text-blue-to-pink text-transparent bg-clip-text">
-                나만의 모든 정보
-              </li>
+          <div className="h-[2.813rem] overflow-hidden pt-[0.375rem] md:h-[4.813rem]">
+            <ul className="flex flex-col gap-[0.938rem] font-bold text-[2rem] md:text-[4rem] key-title-slide">
+              <li className={keyTextGradientClassName}>세상의 모든 정보</li>
+              <li className={keyTextGradientClassName}>우리의 모든 정보</li>
+              <li className={keyTextGradientClassName}>나만의 모든 정보</li>
             </ul>
           </div>
-          <span className="font-bold text-[32px] ml-[5px] md:text-[64px]">
+          <span className="font-bold text-[2rem] ml-[0.313rem] md:text-[4rem]">
             를
           </span>
         </div>
         <p
-          className="font-bold text-[32px] text-center mb-[24px] md:mb-[40px] leading-[1.2] md:text-[64px]"
+          className="font-bold text-[2rem] text-center mb-6 md:mb-[2.5rem] leading-[1.2] md:text-[4rem]"
           data-aos="zoom-out-up"
           data-aos-duration="1500"
         >
@@ -60,21 +57,21 @@ const Home = () => {
           <br className="block lg:hidden" /> 관리해 보세요
         </p>
         <div
-          className="mb-[24px] md:mb-[40px]"
+          className="mb-6 md:mb-10"
           data-aos="zoom-out-up"
           data-aos-duration="1500"
           data-aos-delay="200"
         >
           <Link
             href={isLoginAccessible ? '/links' : '/login'}
-            className="bg-gradient-color flex items-center justify-center rounded-[8px] text-white w-[200px] h-[37px] text-sm md:w-[350px] md:h-[53px] md:text-lg "
+            className="bg-gradient-color flex items-center justify-center rounded-lg text-white w-[12.5rem] h-[2.313rem] text-sm md:w-[21.875rem] md:h-[3.313rem] md:text-lg"
           >
             링크 추가하기
           </Link>
         </div>
 
         <Image
-          className="w-full max-w-[302px] h-[178px] lg:max-w-[1119px] lg:h-[659p] md:max-w-[698px] md:h-auto"
+          className="w-full max-w-[18.875rem] h-[11.125rem] lg:max-w-[69.938rem] lg:h-[41.188rem] md:max-w-[43.625rem] md:h-auto"
           src={KeyVisualImage}
           alt="키비주얼 이미지"
           data-aos="zoom-out-up"
@@ -83,8 +80,8 @@ const Home = () => {
         />
       </section>
 
-      <section className="py-[40px] px-[20px] md:py-[50px]">
-        <div className="w-full max-w-[998px] mx-auto flex flex-col justify-between items-center gap-[24px] md:flex-row lg:gap-[157px] md:gap-[50px]">
+      <section className="py-10 px-5 md:py-[3.125rem]">
+        <div className="w-full max-w-[62.375rem] mx-auto flex flex-col justify-between items-center gap-6 md:flex-row lg:gap-[9.813rem] md:gap-[125rem]">
           <div>
             <h3
               className="title-common"
@@ -100,7 +97,7 @@ const Home = () => {
               <br className="hidden md:block" /> 저장하세요
             </h3>
             <p
-              className="leading-[1.3] max-w-[325px] text-[15px] md:text-base md:max-w-fit"
+              className="leading-[1.3] max-w-[20.313rem] text-[0.938rem] md:text-base md:max-w-fit"
               data-aos="fade-right"
               data-aos-anchor-placement="top-bottom"
               data-aos-duration="1500"
@@ -114,7 +111,7 @@ const Home = () => {
             </p>
           </div>
           <div
-            className="relative flex justify-center items-center w-[325px] h-[265px] lg:w-[550px] lg:h-[450px] md:w-[385px] md:h-[315px] bg-bg rounded-[15px] overflow-hidden"
+            className="relative flex justify-center items-center w-[20.313rem] h-[16.563rem] lg:w-[34.375rem] lg:h-[28.125rem] md:w-[24.063rem] md:h-[19.688rem] bg-bg rounded-[0.938rem] overflow-hidden"
             data-aos="fade-left"
             data-aos-duration="1500"
             data-aos-delay="500"
@@ -145,9 +142,9 @@ const Home = () => {
                 />
               </SwiperSlide>
               <SwiperSlide className="relative">
-                <span className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-51%] w-[135px] h-[135px] border-2 border-solid border-primary rounded-[11px] lg:translate-x-[-55%] lg:w-[215px] lg:h-[214px] md:translate-x-[-50%] md:w-[160px] md:h-[160px]" />
+                <span className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-51%] w-[8.438rem] h-[438rem] border-2 border-solid border-primary rounded-[11px] lg:translate-x-[-55%] lg:w-[13.438rem] lg:h-[13.375rem] md:translate-x-[-50%] md:w-[10rem] md:h-[10rem]" />
                 <Image
-                  className="absolute bottom-0 right-0 w-[30px] h-[30px] lg:w-[46px] lg:h-[46px] lg:right-[20px] md:w-[38px] md:h-[38px]"
+                  className="absolute bottom-0 right-0 w-[1.875rem] h-[1.875rem] lg:w-[2.875rem] lg:h-[2.875rem] lg:right-5 md:w-[2.375rem] md:h-[2.375rem]"
                   src={DownloadIcon}
                   alt="다운로드 아이콘"
                 />
@@ -171,15 +168,15 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="py-[40px] px-[20px] md:py-[70px]">
-        <div className="w-full max-w-[998px] mx-auto flex flex-col justify-between items-center gap-[24px] lg:gap-[157px] md:flex-row md:gap-[50px]">
+      <section className="py-10 px-5 md:py-[4.375rem]">
+        <div className="w-full max-w-[62.375rem] mx-auto flex flex-col justify-between items-center gap-6 lg:gap-[9.813rem] md:flex-row md:gap-[3.125rem]">
           <div
-            className="flex justify-center items-center order-2 w-[325px] h-[265px] bg-bg rounded-[15px] overflow-hidden md:order-1 lg:w-[550px] lg:h-[450px] md:w-[385px] md:h-[315px]"
+            className="flex justify-center items-center order-2 w-[20.313rem] h-[16.563rem] bg-bg rounded-[0.938rem] overflow-hidden md:order-1 lg:w-[34.475rem] lg:h-[28.125rem] md:w-[24.063rem] md:h-[19.688rem]"
             data-aos="fade-right"
             data-aos-duration="1500"
           >
             <Image
-              className="card-rotate mt-[25px] w-[250px] lg:w-[414px] lg:h-[270px] md:w-[300px]"
+              className="card-rotate mt-[1.563rem] w-[15.625rem] lg:w-[25.875rem] lg:h-[16.875rem] md:w-[18.75rem]"
               src={FolderNameImage}
               alt="폴더 이름 변경하기 모달 이미지"
             />
@@ -200,7 +197,7 @@ const Home = () => {
               하세요
             </h3>
             <p
-              className="leading-[1.3] max-w-[325px] text-[15px] md:text-base md:max-w-fit"
+              className="leading-[1.3] max-w-[20.313rem] text-[0.938rem] md:text-base md:max-w-fit"
               data-aos="fade-left"
               data-aos-anchor-placement="top-bottom"
               data-aos-duration="1500"
@@ -214,9 +211,9 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="py-[40px] px-[20px] md:py-[70px]">
-        <div className="w-full max-w-[998px] mx-auto flex flex-col justify-between items-center gap-[24px] md:flex-row lg:gap-[157px] md:gap-[50px]">
-          <div className="max-w-[325px] md:max-w-fit">
+      <section className="py-10 px-5 md:py-[4.375rem]">
+        <div className="w-full max-w-[62.375rem] mx-auto flex flex-col justify-between items-center gap-6 lg:gap-[9.813rem] md:flex-row md:gap-[3.125rem]">
+          <div className="max-w-[20.313rem] md:max-w-fit">
             <h3
               className="title-common"
               data-aos="fade-right"
@@ -232,7 +229,7 @@ const Home = () => {
               해 보세요.
             </h3>
             <p
-              className="leading-[1.3] text-[15px] md:text-base"
+              className="leading-[1.3] text-[0.938rem] md:text-base"
               data-aos="fade-right"
               data-aos-anchor-placement="top-bottom"
               data-aos-duration="1500"
@@ -246,12 +243,12 @@ const Home = () => {
             </p>
           </div>
           <div
-            className="flex justify-center items-center w-[325px] h-[265px] bg-card-image bg-cover bg-no-repeat bg-center rounded-[15px] overflow-hidden lg:w-[550px] lg:h-[450px] md:w-[385px] md:h-[315px]"
+            className="flex justify-center items-center w-[20.313rem] h-[16.563rem] bg-card-image bg-cover bg-no-repeat bg-center rounded-[0.938rem] overflow-hidden lg:w-[34.375rem] lg:h-[28.125rem] md:w-[24.063rem] md:h-[19.688rem]"
             data-aos="fade-left"
             data-aos-duration="1500"
           >
             <Image
-              className="card-rotate-delay w-[250px] mt-[25px] lg:w-[414px] lg:h-[270px] md:w-[300px]"
+              className="card-rotate-delay w-[15.625rem] mt-[1.563rem] lg:w-[25.875rem] lg:h-[16.875rem] md:w-[18.75rem]"
               src={FolderShareImage}
               alt="폴더 공유하기 모달 이미지"
             />
@@ -259,20 +256,20 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="py-[40px] px-[20px] mb-[40px] md:py-[70px] md:mb-[120px]">
-        <div className="w-full max-w-[998px] mx-auto flex flex-col justify-between items-center gap-[24px] md:flex-row lg:gap-[157px] md:gap-[50px]">
+      <section className="py-10 px-5 mb-10 md:py-[4.375rem] md:mb-[7.5rem]">
+        <div className="w-full max-w-[62.375rem] mx-auto flex flex-col justify-between items-center gap-6 md:flex-row lg:gap-[9.813rem] md:gap-[3.125rem]">
           <div
-            className="flex justify-center items-center order-2 w-[325px] h-[265px] relative bg-bg rounded-[15px] overflow-hidden md:order-1 lg:w-[550px] lg:h-[450px] md:w-[385px] md:h-[315px]"
+            className="flex justify-center items-center order-2 w-[20.313rem] h-[16.563rem] relative bg-bg rounded-[0.938rem] overflow-hidden md:order-1 lg:w-[34.375rem] lg:h-[28.125rem] md:w-[24.063rem] md:h-[19.688rem]"
             data-aos="fade-right"
             data-aos-duration="1500"
           >
             <Image
-              className="card-scale absolute top-[30px] left-[35px] md:top-[55px] md:left-[60px]"
+              className="card-scale absolute top-[1.875rem] left-[2.188rem] md:top-[3.438rem] md:left-[3.75rem]"
               src={SearchCardImage}
               alt="링크 검색하기 이미지"
             />
           </div>
-          <div className="w-full order-1 md:order-2 max-w-[325px] md:max-w-fit">
+          <div className="w-full order-1 md:order-2 max-w-[20.313rem] md:max-w-fit">
             <h3
               className="title-common"
               data-aos="fade-left"
