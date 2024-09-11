@@ -5,9 +5,9 @@ import {
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query';
-
 import { Layout } from '@/components';
 import { AuthProvider, ModalProvider } from '@/lib/context';
+
 
 import '@/styles/globals.css';
 import '@/styles/landingEffect.css';

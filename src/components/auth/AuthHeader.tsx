@@ -4,6 +4,7 @@ import { CommonButton } from '@/components';
 
 import Logo from '@/assets/images/logo/logo@2x.png';
 import { RoutesType } from '@/lib/route';
+
 import { match } from 'ts-pattern';
 
 interface AuthHeaderProps {
