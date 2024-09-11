@@ -17,7 +17,7 @@ export const FolderMenu = ({ src, text, modalType }: FolderMenuProps) => {
     useContext(FolderContext);
 
   const [newFolderName, setNewFolderName] = useState('');
-  const getInputValue = (e: ChangeEvent<HTMLInputElement>) => {
+  const getInputValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewFolderName(e.target.value);
   };
 
