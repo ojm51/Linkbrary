@@ -4,10 +4,8 @@ import { useSearchParams } from 'next/navigation';
 import { ComponentType, useEffect } from 'react';
 import { match } from 'ts-pattern';
 
-
 import googleLogin from '@/assets/icons/sns/ic_google.svg';
 import kakaoLogin from '@/assets/icons/sns/ic_kakao.svg';
-
 
 import { API_PATH } from '@/lib/api';
 import { useSNSLogin } from '@/lib/hooks';
