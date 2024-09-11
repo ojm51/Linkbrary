@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { FieldValues, useForm } from 'react-hook-form';
 
+import { useModal } from '@/lib/context';
 import { usePasswordVisuality, useSignUp, useValidateEmail } from '@/lib/hooks';
 
 import { CommonButton, CommonInputWithError } from '../common';
@@ -8,11 +9,11 @@ import { CommonButton, CommonInputWithError } from '../common';
 export const SignUpForm = () => {
   const signUpMutate = useSignUp();
   const validateEmailMutate = useValidateEmail();
+  const { openModal } = useModal();
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid, isValidating, validatingFields },
-    setError,
+    formState: { errors, isValid },
   } = useForm({ mode: 'onBlur' });
 
   const {
@@ -56,10 +57,14 @@ export const SignUpForm = () => {
                 });
                 if (data.status === 200 && data.data?.isUsableEmail) {
                   return true;
-                } else {
-                  throw new Error('중복된 이메일');
                 }
-              } catch (error) {
+                return '중복된 이메일입니다.';
+              } catch {
+                openModal({
+                  type: 'alert',
+                  key: 'emailValidateError',
+                  message: '이메일 검증에 실패했습니다. 다시 시도해주세요.',
+                });
                 return '중복된 이메일입니다.';
               }
             },
