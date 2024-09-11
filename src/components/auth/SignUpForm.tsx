@@ -5,6 +5,7 @@ import { useModal } from '@/lib/context';
 import { usePasswordVisuality, useSignUp, useValidateEmail } from '@/lib/hooks';
 
 import { CommonButton, CommonInputWithError } from '../common';
+import { AxiosError } from 'axios';
 
 export const SignUpForm = () => {
   const signUpMutate = useSignUp();
@@ -59,12 +60,16 @@ export const SignUpForm = () => {
                   return true;
                 }
                 return '중복된 이메일입니다.';
-              } catch {
-                openModal({
-                  type: 'alert',
-                  key: 'emailValidateError',
-                  message: '이메일 검증에 실패했습니다. 다시 시도해주세요.',
-                });
+              } catch (error) {
+                if (error instanceof AxiosError) {
+                  if (error.response?.status !== 409) {
+                    openModal({
+                      type: 'alert',
+                      key: 'emailValidateError',
+                      message: '이메일 검증에 실패했습니다. 다시 시도해주세요.',
+                    });
+                  }
+                }
                 return '중복된 이메일입니다.';
               }
             },
