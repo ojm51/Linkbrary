@@ -20,6 +20,7 @@ import Image from 'next/image';
 import star from '@/assets/icons/ic_star.svg';
 import starSelected from '@/assets/icons/ic_star_selected.svg';
 import { match } from 'ts-pattern';
+import { linkSearch } from '@/lib/api/search/api';
 
 type TQueryResponse<T> =
   | undefined
@@ -329,19 +330,34 @@ const LinkPaginationSkeleton = () => {
   );
 };
 
-const LinkCards = () => {
+type SearchLinkDataProps = {
+  filteredLinks: SearchLinkData[];
+  searchResult: string;
+};
+
+const LinkCards = ({ filteredLinks, searchResult }: SearchLinkDataProps) => {
   const { linksAction } = useLinksContextSelector();
+
+  const allLinks = linksAction.data?.data.list || [];
+
+  const displayLinks =
+    searchResult.trim() === '' ? allLinks : linkEntitiesToDtos(filteredLinks);
+
   return (
     <section className="p-8 lg:container lg:mx-auto">
-      <ul className="grid grid-flow-row auto-rows-fr grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {linksAction.data?.data.list.map((card) => {
-          return (
+      {displayLinks.length > 0 ? (
+        <ul className="grid grid-flow-row auto-rows-fr grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {displayLinks.map((card) => (
             <li key={card.id}>
               <LinkCard data={card} />
             </li>
-          );
-        })}
-      </ul>
+          ))}
+        </ul>
+      ) : (
+        <h2 className="text-center font-bold text-lg my-5 md:text-3xl md:my-10">
+          검색된 내용이 없습니다.
+        </h2>
+      )}
     </section>
   );
 };
@@ -541,7 +557,7 @@ const LinkPagination = () => {
   );
 };
 
-type LinkComponentProps = {
+type LinkComponentProps = SearchLinkDataProps & {
   isLoading: boolean;
   isError: boolean;
 };
@@ -564,11 +580,24 @@ const LinkComponent = (props: LinkComponentProps) => {
     ))
     .otherwise(() => (
       <>
-        <LinkCards />
+        <LinkCards
+          filteredLinks={props.filteredLinks}
+          searchResult={props.searchResult}
+        />
         <LinkPagination />
       </>
     ));
 };
+
+interface SearchLinkData {
+  id: number;
+  title: string;
+  url: string;
+  description: string;
+  imageSource: string;
+  favorite: boolean;
+  createdAt: string;
+}
 
 const MainContent = () => {
   const { selectedFolder } = useContext(FolderContext);
@@ -579,6 +608,40 @@ const MainContent = () => {
     folderAction.data,
   );
   const linksAction = useLinksAction(linksQueryAction.data);
+  const [searchValue, setSearchValue] = useState<string>('');
+  const [searchResult, setSearchResult] = useState<string>('');
+  const [searchLinks, setSearchLinks] = useState<SearchLinkData[]>([]);
+  const [filteredLinks, setFilteredLinks] = useState<SearchLinkData[]>([]);
+
+  const fetchLinks = async () => {
+    try {
+      const links = await linkSearch();
+      setSearchLinks(links.data.list);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleSearch = () => {
+    const keyword = searchValue.toLowerCase();
+    const filter = searchLinks.filter(
+      (searchLink) =>
+        searchLink.url.toLowerCase().includes(keyword) ||
+        searchLink.title.toLowerCase().includes(keyword) ||
+        searchLink.description.toLowerCase().includes(keyword),
+    );
+    setFilteredLinks(filter);
+  };
+
+  useEffect(() => {
+    fetchLinks();
+  }, []);
+
+  const handlerSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setSearchResult(searchValue);
+    handleSearch();
+  };
 
   const value = useMemo(
     () => ({
@@ -589,7 +652,6 @@ const MainContent = () => {
     }),
     [clientSizeAction, folderAction, linksAction, linksQueryAction],
   );
-
   return (
     <LinksContext.Provider value={value}>
       <main className="select-none">
@@ -598,8 +660,21 @@ const MainContent = () => {
         </div>
         <div className="max-w-[1060px] m-auto">
           <div className="my-10">
-            <SearchBar />
+            <SearchBar
+              searchValue={searchValue}
+              setSearchValue={setSearchValue}
+              setSearchResult={setSearchResult}
+              handlerSearchSubmit={handlerSearchSubmit}
+            />
           </div>
+          {searchResult && (
+            <h2 className="text-lg font-bold mb-5 md:mb-10 md:text-3xl">
+              {searchResult}
+              <span className="text-secondary-60">
+                에 대한 검색 결과입니다.
+              </span>
+            </h2>
+          )}
           <FolderList />
           <div className="flex justify-between items-center">
             <h3 className="font-semibold text-2xl text-black my-6 font-[Pretendard] not-italic leading-[normal]">
@@ -611,6 +686,8 @@ const MainContent = () => {
         <LinkComponent
           isLoading={folderAction.isLoading || linksAction.isLoading}
           isError={folderAction.isError || linksAction.isError}
+          filteredLinks={filteredLinks}
+          searchResult={searchResult}
         />
       </main>
     </LinksContext.Provider>
