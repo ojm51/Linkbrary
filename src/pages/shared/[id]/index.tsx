@@ -46,8 +46,8 @@ const Shared = ({ linkList, sharedFolderName }: SharedProps) => {
             />
           </Link>
         </nav>
-        <header className="h-44 pt-[3rem] text-center md:h-[13.75rem] md:pt-[3.75rem]">
-          <h1 className="font-[Pretendard] text-[1.5rem] font-semibold leading-[2.9831rem] md:text-[2.5rem]">
+        <header>
+          <h1 className="font-[Pretendard] text-[1.5rem] font-semibold leading-[2.9831rem] text-center pb-10 md:text-[2.5rem]">
             공유된{' '}
             <span className="font-bold">&quot;{sharedFolderName}&quot;</span>{' '}
             폴더
@@ -55,7 +55,7 @@ const Shared = ({ linkList, sharedFolderName }: SharedProps) => {
         </header>
       </div>
       <main className="flex justify-center items-center p-4">
-        <CardList isSharedPage={true} linkList={linkList} />
+        <CardList isSharedPage linkList={linkList} />
       </main>
     </>
   );
