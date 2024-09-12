@@ -12,7 +12,6 @@ import { useContext } from 'react';
 const MainContent = () => {
   const { selectedFolder } = useContext(FolderContext);
 
-  /** @TODO 기본적으로 '전체' 폴더가 선택되게 하기 */
   return (
     <main className="select-none">
       <div className="h-[220px] pt-[60px] bg-bg">
