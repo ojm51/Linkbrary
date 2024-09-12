@@ -28,6 +28,7 @@ export const LinkCard = ({ data }: LinkCardProps) => {
       />
       <CardBody
         id={id}
+        title={title}
         createdAt={createdAt}
         description={description}
         relativeTime={relativeTime}

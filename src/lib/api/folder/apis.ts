@@ -51,6 +51,5 @@ export const getLinkList = async ({ folderId }: GetFolderParams) => {
 export const addLink = async ({ url, folderId }: PostLinkParams) => {
   const params = { url, folderId };
   const response = await instance.post(API_PATH.link.default, params);
-
   return response.data ?? [];
 };
