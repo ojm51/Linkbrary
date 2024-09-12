@@ -27,7 +27,7 @@ const App = ({ Component, pageProps }: AppProps) => {
         <ModalProvider>
           <AuthProvider>
             <Layout>
-              <div className="custom-footer-height">
+              <div className="min-h-custom-footer-height">
                 <Component {...pageProps} />
               </div>
             </Layout>
