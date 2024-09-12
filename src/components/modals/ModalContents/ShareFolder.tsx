@@ -3,15 +3,22 @@ import Image from 'next/image';
 import kakaoIcon from '@/assets/images/kakaoTalk.png';
 import facebookIcon from '@/assets/images/facebook.png';
 import copyLinkIcon from '@/assets/images/copyLink.png';
-// import defaultShareImage from '@/assets/images/defaultImage.png';
 import { FolderContext } from '@/lib/context';
 import { CommonButton } from '@/components';
+
+declare global {
+  interface Window {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    Kakao: any;
+  }
+}
 
 export const ShareFolder = () => {
   const { selectedFolder } = useContext(FolderContext);
   /** @TODO 적당한 base url 설정하기 - 배포용 주소로 */
   // 공유되는 폴더 주소는 "~/shared/[id]"인데, window.location.href를 사용하면 "~/links/shared/[id]"로 되어서 404 에러가 뜸
-  const BASE_URL = `https://deploy-preview-40--dev-linkbrary.netlify.app`;
+  // const BASE_URL = `https://deploy-preview-40--dev-linkbrary.netlify.app`;
+  const BASE_URL = `http://localhost:3000`;
   const SHARING_URL = `${BASE_URL}/shared/${selectedFolder.id}`;
 
   const { Kakao, open } = window;
@@ -24,20 +31,22 @@ export const ShareFolder = () => {
     initializeKakao();
   }, [initializeKakao]);
 
-  // TODO: 디폴트 이미지 어케 넣음?
+  /** @TODO 폴더 공유 시 보일 디폴트 이미지 추가하기 */
   const kakaoTalkShare = () => {
-    Kakao.Share.sendDefault({
-      objectType: 'feed',
-      content: {
-        title: `공유된 "${selectedFolder.name}" 폴더`,
-        description: `"${selectedFolder.name}" 폴더에 저장된 링크 목록입니다`,
-        imageUrl: '@/assets/images/defaultImage.png',
-        link: {
-          mobileWebUrl: SHARING_URL,
-          webUrl: SHARING_URL,
+    if (Kakao && Kakao.Share) {
+      Kakao.Share.sendDefault({
+        objectType: 'feed',
+        content: {
+          title: `공유된 "${selectedFolder.name}" 폴더`,
+          description: `"${selectedFolder.name}" 폴더에 저장된 링크 목록입니다`,
+          imageUrl: '/src/assets/images/sharingDefaultImage.png',
+          link: {
+            mobileWebUrl: SHARING_URL,
+            webUrl: SHARING_URL,
+          },
         },
-      },
-    });
+      });
+    }
   };
 
   const facebookShare = () => {

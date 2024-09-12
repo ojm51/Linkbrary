@@ -20,6 +20,7 @@ export const FolderList = () => {
 
   const fetchFolderList = async () => {
     const data = await getFolderList();
+    /** @TODO 폴더 리스트 역순으로 바꾸기 */
     setFolderList(data);
   };
   useEffect(() => {
