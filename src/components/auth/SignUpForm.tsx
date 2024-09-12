@@ -1,11 +1,11 @@
 import Image from 'next/image';
+import { AxiosError } from 'axios';
 import { FieldValues, useForm } from 'react-hook-form';
 
 import { useModal } from '@/lib/context';
 import { usePasswordVisuality, useSignUp, useValidateEmail } from '@/lib/hooks';
 
 import { CommonButton, CommonInputWithError } from '../common';
-import { AxiosError } from 'axios';
 
 export const SignUpForm = () => {
   const signUpMutate = useSignUp();
@@ -15,8 +15,8 @@ export const SignUpForm = () => {
     register,
     handleSubmit,
     formState: { errors, isValid },
-  } = useForm({ mode: 'onBlur' });
-
+    setError,
+  } = useForm({ mode: 'all' });
   const {
     visible: passwordVisible,
     visibleIcon: passwordVisibleIcon,
@@ -28,11 +28,30 @@ export const SignUpForm = () => {
     handleVisible: handlePasswordConfirmVisible,
   } = usePasswordVisuality();
 
-  const onSubmit = (values: FieldValues) => {
+  const onSubmit = async (values: FieldValues) => {
     const { email, name, password } = values;
-    signUpMutate.mutate({ email, name, password });
+    try {
+      const data = await validateEmailMutate.mutateAsync(email);
+      if (data) {
+        if (data.status === 200 && data.data?.isUsableEmail) {
+          signUpMutate.mutate({ email, name, password });
+        } else {
+          setError('email', { message: '중복된 이메일입니다.' });
+        }
+      }
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        if (error.response?.status !== 409) {
+          openModal({
+            type: 'alert',
+            key: 'emailValidateError',
+            message: '이메일 검증에 실패했습니다. 다시 시도해주세요.',
+          });
+        }
+      }
+      setError('email', { message: '중복된 이메일입니다.' });
+    }
   };
-
   const formClassName =
     'w-full flex flex-col justify-center items-start gap-[12px]';
   const iconClassName = 'absolute top-6 right-4 cursor-pointer';
@@ -49,30 +68,6 @@ export const SignUpForm = () => {
             value:
               /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i,
             message: '이메일 형식으로 작성해주세요.',
-          },
-          validate: {
-            email: async (value) => {
-              try {
-                const data = await validateEmailMutate.mutateAsync({
-                  email: value,
-                });
-                if (data.status === 200 && data.data?.isUsableEmail) {
-                  return true;
-                }
-                return '중복된 이메일입니다.';
-              } catch (error) {
-                if (error instanceof AxiosError) {
-                  if (error.response?.status !== 409) {
-                    openModal({
-                      type: 'alert',
-                      key: 'emailValidateError',
-                      message: '이메일 검증에 실패했습니다. 다시 시도해주세요.',
-                    });
-                  }
-                }
-                return '중복된 이메일입니다.';
-              }
-            },
           },
         })}
       >
@@ -95,7 +90,6 @@ export const SignUpForm = () => {
       >
         이름
       </CommonInputWithError>
-
       <CommonInputWithError
         htmlfor="password"
         placeholder="대/소문자, 숫자, 특수문자(!@#$%^&*) 포함 8자 이상"
@@ -120,11 +114,11 @@ export const SignUpForm = () => {
             value: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#$%^&*]).*$/i,
             message: '영문(대/소), 숫자, 특수문자(!@#$%^&*)를 포함해주세요.',
           },
+          deps: 'passwordConfirm',
         })}
       >
         비밀번호
       </CommonInputWithError>
-
       <CommonInputWithError
         htmlfor="passwordConfirm"
         placeholder="비밀번호를 다시 한 번 입력해주세요."
@@ -140,21 +134,21 @@ export const SignUpForm = () => {
           />
         }
         register={register('passwordConfirm', {
-          required: '필수 항목입니다.',
-          validate: {
-            passwordConfirm: (passwordConfirm: string, formValue) => {
-              if (formValue.password !== passwordConfirm) {
-                return '비밀번호가 일치하지 않습니다.';
-              }
-              return true;
-            },
+          validate: (passwordConfirm: string, formValue) => {
+            if (formValue.password !== passwordConfirm) {
+              return '비밀번호가 일치하지 않습니다.';
+            }
+            return true;
           },
+          deps: 'password',
         })}
       >
         비밀번호 확인
       </CommonInputWithError>
-
-      <CommonButton mode="submit" disabled={!isValid}>
+      <CommonButton
+        mode="submit"
+        disabled={validateEmailMutate.isPending || !isValid}
+      >
         회원가입
       </CommonButton>
     </form>
