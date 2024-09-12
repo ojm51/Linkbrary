@@ -32,22 +32,22 @@ const Faq = () => {
 
   return (
     <>
-      <section className="bg-bg h-[88px] pt-[10px] text-center mb-[20px] md:mb-[100px] md:h-[128px] md:pt-[20px]">
-        <h2 className="text-[32px] font-bold md:text-[40px]">🤔 FAQ</h2>
+      <section className="bg-bg h-[5.5rem] pt-[0.625rem] text-center mb-5 md:mb-[6.25rem] md:h-32 md:pt-5">
+        <h2 className="text-[2rem] font-bold md:text-[2.5rem]">🤔 FAQ</h2>
       </section>
-      <section className="px-[20px] mb-[120px]">
-        <div className="w-full max-w-[1060px] mx-auto">
+      <section className="px-5 mb-[7.5rem]">
+        <div className="w-full max-w-[66.25rem] mx-auto">
           <ul>
             {FAQ_CONTENTS.map((faq) => {
               return (
-                <li key={faq.id} className="mb-[20px]">
+                <li key={faq.id} className="mb-5">
                   <button
                     type="button"
-                    className={`relative flex justify-between items-center w-full min-h-[70px] pl-[60px] pr-[20px] text-base font-bold rounded-[11px] bg-white border-solid  border-2 cursor-pointer hover:text-primary hover:border-primary md:min-h-[80px] md:text-lg ${isFaqActive === faq.id ? 'text-primary border-primary' : 'border-gray-200'}`}
+                    className={`relative flex justify-between items-center w-full min-h-[4.375rem] pl-[3.75rem] pr-5 text-base font-bold rounded-[11px] bg-white border-solid  border-2 cursor-pointer hover:text-primary hover:border-primary md:min-h-[80px] md:text-lg ${isFaqActive === faq.id ? 'text-primary border-primary' : 'border-gray-200'}`}
                     onClick={() => handleFaqToggle(faq.id)}
                   >
                     <i
-                      className={`absolute top-[50%] translate-y-[-50%] left-[20px] text-[20px] font-medium md:text-[26px] ${isFaqActive === faq.id && 'text-primary'}`}
+                      className={`absolute top-[50%] translate-y-[-50%] left-5 text-xl font-medium md:text-[1.625rem] ${isFaqActive === faq.id && 'text-primary'}`}
                     >
                       Q
                     </i>
@@ -57,12 +57,12 @@ const Faq = () => {
                     </i>
                   </button>
                   <p
-                    className={`relative transition-all duration-500 ease-out overflow-hidden text-sm md:text-base ${isFaqActive === faq.id ? 'h-[154px] md:h-[204px]' : 'h-0'}`}
+                    className={`relative transition-all duration-500 ease-out overflow-hidden text-sm md:text-base ${isFaqActive === faq.id ? 'h-[9.625rem] md:h-[12.75rem]' : 'h-0'}`}
                   >
-                    <i className="absolute top-[20px] left-[23px] text-[20px] font-medium text-secondary-60 md:text-[26px]">
+                    <i className="absolute top-5 left-[1.438rem] text-xl font-medium text-secondary-60 md:text-[1.625rem]">
                       A
                     </i>
-                    <span className="block min-h-[150px]  rounded-[11px] border-gray-200 border-2 border-solid bg-gray-100 p-[20px] pl-[60px] md:min-h-[200px]">
+                    <span className="block min-h-[9.375rem] rounded-[11px] border-gray-200 border-2 border-solid bg-gray-100 p-5 pl-[3.75rem] md:min-h-[12.5rem]">
                       {faq.q}
                     </span>
                   </p>

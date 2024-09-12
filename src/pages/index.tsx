@@ -43,7 +43,6 @@ const Home = () => {
   return (
     <main>
       <section className="flex flex-col justify-center items-center bg-bg pt-8 mb-3 overflow-hidden md:pt-16 md:mb-16">
-        {/** @Todo tailwindcss 공통부분 변수로 수정 */}
         <div
           className="flex items-center justify-center"
           data-aos="zoom-out-up"
