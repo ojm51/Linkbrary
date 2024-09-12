@@ -41,7 +41,7 @@ export const FolderList = () => {
   const listWrapperRef = useHorizontalScroll();
 
   return (
-    <div className="flex justify-between items-center w-full">
+    <div className="flex justify-between items-center gap-3 w-full">
       <ul
         className="flex justify-start items-center gap-2 overflow-x-auto whitespace-nowrap scrollbar-hide"
         ref={listWrapperRef}
@@ -55,7 +55,7 @@ export const FolderList = () => {
 
       <CommonButton
         mode="default"
-        className="flex justify-center items-center gap-1 font-medium text-primary text-base font-[Pretendard] not-italic leading-[normal]"
+        className="flex justify-center items-center gap-1 font-medium text-primary text-base whitespace-nowrap font-[Pretendard] not-italic leading-[normal]"
         onClick={handleCloseModal}
       >
         폴더 추가
