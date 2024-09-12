@@ -5,9 +5,9 @@ import { useLinksContextSelector } from '../providers';
 import { LinkCards } from './link-card';
 
 export const LinkComponent = () => {
-  const { folderAction, linksAction } = useLinksContextSelector();
-  const isLoading = folderAction.isLoading || linksAction.isLoading;
-  const isError = folderAction.isError || linksAction.isError;
+  const { linksAction } = useLinksContextSelector();
+  const { isLoading } = linksAction;
+  const { isError } = linksAction;
   const zeroLength = linksAction.data?.data.list.length === 0;
   return match({ zeroLength, isLoading, isError })
     .with({ isLoading: true }, () => (
