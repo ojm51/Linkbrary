@@ -14,8 +14,8 @@ import Modal from './link-modal';
 
 export const ModifyAndDeleteModal = () => {
   const { state, closeModal } = useModalStore();
-  const { folderAction, linksAction } = useLinksContextSelector();
-  const isLoading = folderAction.isLoading || linksAction.isLoading;
+  const { linksAction } = useLinksContextSelector();
+  const { isLoading } = linksAction;
   if (!state.mode || isLoading) return undefined;
   const currentLink = linksAction.data?.data.list.find(
     (item: TLinkDto) => item.id === state.linkId,
