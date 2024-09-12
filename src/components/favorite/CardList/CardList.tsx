@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { getFavoriteLinkList, FavoriteLinkTypes } from '@/lib/api';
+import { getFavoriteLinkList, FavoriteLinkTypes, LinkTypes } from '@/lib/api';
 import Card from './Card';
 import SkeletonCard from './SkeletonCard';
 
@@ -7,7 +7,15 @@ const CardsPerPageDesktop = 9;
 const CardsPerPageTablet = 6;
 const CardsPerPageMobile = 9;
 
-const CardListPage: React.FC = () => {
+interface CardListPageProps {
+  isSharedPage: boolean;
+  linkList?: LinkTypes[];
+}
+
+const CardListPage = ({
+  isSharedPage = false,
+  linkList,
+}: CardListPageProps) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [cardsPerPage, setCardsPerPage] = useState(CardsPerPageDesktop);
   const [favoriteCards, setFavoriteCards] = useState<FavoriteLinkTypes[]>([]);
@@ -17,8 +25,12 @@ const CardListPage: React.FC = () => {
   useEffect(() => {
     const fetchFavoriteCards = async () => {
       try {
-        const data = await getFavoriteLinkList();
-        setFavoriteCards(data.list);
+        if (isSharedPage) {
+          setFavoriteCards(linkList ?? []);
+        } else {
+          const data = await getFavoriteLinkList();
+          setFavoriteCards(data.list);
+        }
         setFetchError(false);
       } catch (error) {
         console.error('Failed to fetch favorite cards:', error);
