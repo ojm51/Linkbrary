@@ -24,11 +24,11 @@ const Header = () => {
 
   return (
     <header className="bg-bg">
-      <div className="w-full flex justify-between items-center mx-auto max-w-[365px] h-[60px] px-[30px] md:px-[20px] md:max-w-[840px] md:h-[90px] lg:max-w-[1560px] ">
+      <div className="w-full flex justify-between items-center mx-auto max-w-[22.81rem] h-[3.75rem] px-[1.875rem] md:px-5 md:max-w-[52.5rem] md:h-[5.625rem] lg:max-w-[97.5rem] ">
         <h1>
           <Link href="/">
             <Image
-              className="w-[89px] h-[16px] md:w-[133px] md:h-[24px]"
+              className="w-[5.563rem] h-4 md:w-[8.313rem] md:h-6"
               src={HeaderLogoImage}
               alt="linkbrary"
             />
@@ -42,7 +42,7 @@ const Header = () => {
                 {/** @Todo 해당 영역 보여지기전에 텀 수정 */}
                 <Link
                   href="/favorite"
-                  className="flex items-center justify-center w-[70px] h-[30px] border border-solid border-primary rounded-[4px] text-[12px] md:w-[93px] mr-[16px] md:h-[37px] md:text-sm md:mr-[24px]"
+                  className="flex items-center justify-center w-[4.375rem] h-[1.875rem] border border-solid border-primary rounded-[0.25rem] text-xs md:w-[5.813rem] mr-4 md:h-[2.313rem] md:text-sm md:mr-6"
                 >
                   ⭐️ 즐겨찾기
                 </Link>
@@ -55,7 +55,7 @@ const Header = () => {
                     }}
                   >
                     <Image
-                      className="mr-[6px]"
+                      className="mr-[0.375rem]"
                       width={28}
                       height={28}
                       src={ProfileImage}
@@ -63,9 +63,9 @@ const Header = () => {
                     />
                     <span className="hidden md:block">{userInfo?.name}</span>
                   </button>
-                  <ul className="absolute left-[50%] translate-x-[-50%] bottom-[-45px]">
+                  <ul className="absolute left-[50%] translate-x-[-50%] bottom-[-2.813rem]">
                     <li
-                      className={`w-[80px] h-[35px] text-center leading-[35px] text-[14px] bg-white rounded-[4px] border border-solid border-primary transition-opacity duration-1000 ${logoutView ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+                      className={`w-20 h-[2.188rem] text-center leading-[2.188rem] text-sm bg-white rounded-[0.25rem] border border-solid border-primary transition-opacity duration-1000 ${logoutView ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
                     >
                       <button
                         type="button"
@@ -83,7 +83,7 @@ const Header = () => {
             .with(false, () => (
               <Link
                 href="/login"
-                className="bg-gradient-color flex items-center justify-center w-[80px] h-[37px] rounded-[8px] text-sm text-white md:w-[128px] md:h-[53px] md:text-lg"
+                className="bg-gradient-color flex items-center justify-center w-20 h-[2.313rem] rounded-lg text-sm text-white md:w-32 md:h-[3.313rem] md:text-lg"
               >
                 로그인
               </Link>

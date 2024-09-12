@@ -11,6 +11,12 @@ export const linkOptions = {
       enabled: !!query,
     });
   },
+  favorite: () => {
+    return {
+      mutationFn: (query: { id: number; favorite: boolean }) =>
+        linkServices.favorite(query),
+    };
+  },
   modify: () => {
     return {
       mutationFn: (query: { id: number; url: string }) =>

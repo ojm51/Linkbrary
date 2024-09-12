@@ -1,19 +1,22 @@
 import Image from 'next/image';
+import { AxiosError } from 'axios';
 import { FieldValues, useForm } from 'react-hook-form';
 
-import { usePasswordVisuality, useSignUp } from '@/lib/hooks';
+import { useModal } from '@/lib/context';
+import { usePasswordVisuality, useSignUp, useValidateEmail } from '@/lib/hooks';
 
 import { CommonButton, CommonInputWithError } from '../common';
 
 export const SignUpForm = () => {
-  const signUpMutate = useSignUp({});
+  const signUpMutate = useSignUp();
+  const validateEmailMutate = useValidateEmail();
+  const { openModal } = useModal();
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
-    watch,
-  } = useForm({ mode: 'onBlur' });
-
+    setError,
+  } = useForm({ mode: 'all' });
   const {
     visible: passwordVisible,
     visibleIcon: passwordVisibleIcon,
@@ -25,11 +28,36 @@ export const SignUpForm = () => {
     handleVisible: handlePasswordConfirmVisible,
   } = usePasswordVisuality();
 
-  const onSubmit = (values: FieldValues) => {
+  const onSubmit = async (values: FieldValues) => {
     const { email, name, password } = values;
-    signUpMutate.mutate({ email, name, password });
+    try {
+      const data = await validateEmailMutate.mutateAsync(email);
+      if (data) {
+        if (data.status === 200 && data.data?.isUsableEmail) {
+          signUpMutate.mutate({ email, name, password });
+        } else {
+          setError('email', { message: '중복된 이메일입니다.' });
+        }
+      }
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        if (error.response?.status === 409) {
+          setError('email', { message: '중복된 이메일입니다.' });
+          openModal({
+            type: 'alert',
+            key: 'emailValidateError',
+            message: '중복된 이메일입니다.',
+          });
+          return;
+        }
+      }
+      openModal({
+        type: 'alert',
+        key: 'emailValidateError',
+        message: '알 수 없는 에러입니다. 계속되면 관리자에게 문의해주세요.',
+      });
+    }
   };
-
   const formClassName =
     'w-full flex flex-col justify-center items-start gap-[12px]';
   const iconClassName = 'absolute top-6 right-4 cursor-pointer';
@@ -68,7 +96,6 @@ export const SignUpForm = () => {
       >
         이름
       </CommonInputWithError>
-
       <CommonInputWithError
         htmlfor="password"
         placeholder="대/소문자, 숫자, 특수문자(!@#$%^&*) 포함 8자 이상"
@@ -93,11 +120,11 @@ export const SignUpForm = () => {
             value: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#$%^&*]).*$/i,
             message: '영문(대/소), 숫자, 특수문자(!@#$%^&*)를 포함해주세요.',
           },
+          deps: 'passwordConfirm',
         })}
       >
         비밀번호
       </CommonInputWithError>
-
       <CommonInputWithError
         htmlfor="passwordConfirm"
         placeholder="비밀번호를 다시 한 번 입력해주세요."
@@ -113,19 +140,21 @@ export const SignUpForm = () => {
           />
         }
         register={register('passwordConfirm', {
-          required: '필수 항목입니다.',
-          validate: (passwordConfirm: string) => {
-            if (watch('password') !== passwordConfirm) {
+          validate: (passwordConfirm: string, formValue) => {
+            if (formValue.password !== passwordConfirm) {
               return '비밀번호가 일치하지 않습니다.';
             }
             return true;
           },
+          deps: 'password',
         })}
       >
         비밀번호 확인
       </CommonInputWithError>
-
-      <CommonButton mode="submit" disabled={!isValid}>
+      <CommonButton
+        mode="submit"
+        disabled={validateEmailMutate.isPending || !isValid}
+      >
         회원가입
       </CommonButton>
     </form>
