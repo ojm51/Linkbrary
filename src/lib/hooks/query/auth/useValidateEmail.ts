@@ -5,6 +5,6 @@ import { MUTATION_KEY } from '../config';
 export const useValidateEmail = () => {
   return useMutation({
     mutationKey: [MUTATION_KEY.validateEmail],
-    mutationFn: validateEmail,
+    mutationFn: (email: string) => validateEmail({ email }),
   });
 };

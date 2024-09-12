@@ -3,32 +3,40 @@ import Image from 'next/image';
 import kakaoIcon from '@/assets/images/kakaoTalk.png';
 import facebookIcon from '@/assets/images/facebook.png';
 import copyLinkIcon from '@/assets/images/copyLink.png';
-// import defaultShareImage from '@/assets/images/defaultImage.png';
 import { FolderContext } from '@/lib/context';
+import { CommonButton } from '@/components';
 
 export const ShareFolder = () => {
   const { selectedFolder } = useContext(FolderContext);
-  const BASE_URL = 'http://localhost:3000';
+  /** @TODO 적당한 base url 설정하기 - 배포용 주소로 */
+  // 공유되는 폴더 주소는 "~/shared/[id]"인데, window.location.href를 사용하면 "~/links/shared/[id]"로 되어서 404 에러가 뜸
+  // const BASE_URL = `https://deploy-preview-40--dev-linkbrary.netlify.app`;
+  const BASE_URL = `http://localhost:3000`;
   const SHARING_URL = `${BASE_URL}/shared/${selectedFolder.id}`;
 
   const { Kakao, open } = window;
   const initializeKakao = useCallback(() => {
     if (Kakao && !Kakao.isInitialized()) {
-      Kakao.init(process.env.NEXT_PUBLIC_KAKAO_API_KEY);
+      Kakao.init(process.env.NEXT_PUBLIC_KAKAO_JAVASCRIPT_API_KEY);
     }
   }, []);
   useEffect(() => {
     initializeKakao();
   }, [initializeKakao]);
 
-  // TODO: 디폴트 이미지 어케 넣음?
+  /** @TODO 폴더 공유 시 보일 디폴트 이미지 추가하기 */
   const kakaoTalkShare = () => {
+    if (!window.Kakao || !window.Kakao.isInitialized()) {
+      alert('카카오톡 공유 기능이 아직 초기화되지 않았습니다.');
+      return;
+    }
+
     Kakao.Share.sendDefault({
       objectType: 'feed',
       content: {
         title: `공유된 "${selectedFolder.name}" 폴더`,
         description: `"${selectedFolder.name}" 폴더에 저장된 링크 목록입니다`,
-        imageUrl: '@/assets/images/defaultImage.png',
+        imageUrl: '/src/assets/images/sharingDefaultImage.png',
         link: {
           mobileWebUrl: SHARING_URL,
           webUrl: SHARING_URL,
@@ -37,7 +45,6 @@ export const ShareFolder = () => {
     });
   };
 
-  // TODO: 왜 안 되지?
   const facebookShare = () => {
     return open(`http://www.facebook.com/sharer/sharer.php?u=${SHARING_URL}`);
   };
@@ -93,14 +100,18 @@ export const ShareFolder = () => {
             className="flex flex-col justify-center items-center gap-[10px]"
             key={shareMethod.id}
           >
-            <button type="button" onClick={shareMethod.onClick}>
+            <CommonButton
+              mode="default"
+              className=""
+              onClick={shareMethod.onClick}
+            >
               <Image
                 src={shareMethod.src}
                 alt={`${shareMethod.text} 아이콘`}
                 width={42}
                 height={42}
               />
-            </button>
+            </CommonButton>
             <p className="text-center text-[13px] text-[#373740] font-[Pretendard] not-italic leading-[15px]">
               {shareMethod.text}
             </p>

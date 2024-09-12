@@ -16,13 +16,16 @@ export const AddLink = () => {
     setUrl(e.target.value);
   };
 
+  /** @TODO 링크 추가 시 목록에 바로 반영되게 하기 */
+  /** @TODO 내용이 있는 경우에만 추가하기 버튼 활성화하기 */
+  /** @TODO 링크가 추가되는 동안 추가하기 버튼에 로딩바 보이기 */
   const handleAddLinkButtonClick = async () => {
     await addLink({ url, folderId });
     // TODO: 400 에러(이미 존재하는 링크, 올바르지 않은 링크)/성공 처리, 내용이 있을 때만 버튼 활성화, 요청이 성공하면 인풋 초기화
     alert('링크가 추가되었습니다!');
   };
 
-  // TODO: 디폴트는 '전체' 폴더에 추가 + 선택된 폴더에도 추가
+  /** @TODO 전체 폴더 및 현재 선택된 폴더에 링크 추가하기 */
   const folderId = selectedFolder.id;
 
   return (

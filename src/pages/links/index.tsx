@@ -6,34 +6,47 @@ import {
   ModalStoreProvider,
   ModifyAndDeleteModal,
 } from '@/components/links-component';
+import { FolderContext, FolderProvider } from '@/lib/context';
+import { useContext } from 'react';
+
+const MainContent = () => {
+  const { selectedFolder } = useContext(FolderContext);
+
+  /** @TODO 기본적으로 '전체' 폴더가 선택되게 하기 */
+  return (
+    <main className="select-none">
+      <div className="h-[220px] pt-[60px] bg-bg">
+        <AddLink />
+      </div>
+      <div className="max-w-[1060px] m-auto">
+        <div className="my-10">
+          <SearchBar />
+        </div>
+        <FolderList />
+        <div className="flex justify-between items-center">
+          <h3 className="font-semibold text-2xl text-black my-6 font-[Pretendard] not-italic leading-[normal]">
+            {selectedFolder.name}
+          </h3>
+          <FolderMenuList />
+        </div>
+      </div>
+      <LinkComponent />
+    </main>
+  );
+};
 
 const Links = () => {
   return (
-    <LinksContextProvider>
-      <DropBoxStoreProvider>
-        <ModalStoreProvider>
-          <ModifyAndDeleteModal />
-          <main className="select-none">
-            <div className="h-[220px] pt-[60px] bg-bg">
-              <AddLink />4
-            </div>
-            <div className="max-w-[1060px] m-auto">
-              <div className="my-10">
-                <SearchBar />
-              </div>
-              <FolderList />
-              <div className="flex justify-between items-center">
-                <h3 className="font-semibold text-2xl text-black my-6 font-[Pretendard] not-italic leading-[normal]">
-                  title
-                </h3>
-                <FolderMenuList />
-              </div>
-            </div>
-            <LinkComponent />
-          </main>
-        </ModalStoreProvider>
-      </DropBoxStoreProvider>
-    </LinksContextProvider>
+    <FolderProvider>
+      <LinksContextProvider>
+        <DropBoxStoreProvider>
+          <ModalStoreProvider>
+            <ModifyAndDeleteModal />
+            <MainContent />
+          </ModalStoreProvider>
+        </DropBoxStoreProvider>
+      </LinksContextProvider>
+    </FolderProvider>
   );
 };
 
