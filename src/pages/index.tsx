@@ -26,7 +26,19 @@ const Home = () => {
   const { isLoginAccessible } = useLoginAccessibility();
 
   const keyTextGradientClassName =
-    'bg-gradient-text-blue-to-pink text-transparent bg-clip-text';
+    'bg-gradient-text-blue-to-pink text-transparent bg-clip-text'; // 키비주얼 상하 슬라이드 텍스트
+  const sectionClassName = 'py-10 px-5';
+  const cardSectionLayoutClassName =
+    'w-full max-w-[62.375rem] mx-auto flex flex-col justify-between items-center gap-6 md:flex-row lg:gap-[9.813rem] md:gap-[3.125rem]';
+  const cardImageBackClassName =
+    'relative flex justify-center items-center w-[20.313rem] h-[16.563rem] lg:w-[34.375rem] lg:h-[28.125rem] md:w-[24.063rem] md:h-[19.688rem] rounded-[0.938rem] overflow-hidden';
+  const cardRotateImageClassName =
+    'mt-[1.563rem] w-[15.625rem] lg:w-[25.875rem] lg:h-[16.875rem] md:w-[18.75rem]';
+  const cardGradientTextClassName = 'text-transparent bg-clip-text';
+  const cardTitleTextClassName =
+    'font-bold mb-[0.625rem] md:leading-[1.2] text-2xl md:text-5xl';
+  const carTextLayoutClassName =
+    'w-full max-w-[20.313rem] leading-[1.3] text-[0.938rem] md:text-base md:max-w-fit';
 
   return (
     <main>
@@ -38,7 +50,7 @@ const Home = () => {
           data-aos-duration="1500"
         >
           <div className="h-[2.813rem] overflow-hidden pt-[0.375rem] md:h-[4.813rem]">
-            <ul className="flex flex-col gap-[0.938rem] font-bold text-[2rem] md:text-[4rem] key-title-slide">
+            <ul className="flex flex-col gap-[0.938rem] font-bold text-[2rem] md:text-[4rem] animate-textSlideMo md:animate-textSlide">
               <li className={keyTextGradientClassName}>세상의 모든 정보</li>
               <li className={keyTextGradientClassName}>우리의 모든 정보</li>
               <li className={keyTextGradientClassName}>나만의 모든 정보</li>
@@ -80,24 +92,25 @@ const Home = () => {
         />
       </section>
 
-      <section className="py-10 px-5 md:py-[3.125rem]">
-        <div className="w-full max-w-[62.375rem] mx-auto flex flex-col justify-between items-center gap-6 md:flex-row lg:gap-[9.813rem] md:gap-[125rem]">
-          <div>
+      <section className={`${sectionClassName} md:py-[3.125rem]`}>
+        <div className={cardSectionLayoutClassName}>
+          <div className={carTextLayoutClassName}>
             <h3
-              className="title-common"
+              className={cardTitleTextClassName}
               data-aos="fade-right"
               data-aos-anchor-placement="top-bottom"
               data-aos-duration="1500"
               data-aos-delay="500"
             >
-              <span className="bg-gradient-text-red-to-blue text-transparent bg-clip-text">
+              <span
+                className={`bg-gradient-text-red-to-blue ${cardGradientTextClassName}`}
+              >
                 원하는 링크
               </span>
               를
               <br className="hidden md:block" /> 저장하세요
             </h3>
             <p
-              className="leading-[1.3] max-w-[20.313rem] text-[0.938rem] md:text-base md:max-w-fit"
               data-aos="fade-right"
               data-aos-anchor-placement="top-bottom"
               data-aos-duration="1500"
@@ -111,7 +124,7 @@ const Home = () => {
             </p>
           </div>
           <div
-            className="relative flex justify-center items-center w-[20.313rem] h-[16.563rem] lg:w-[34.375rem] lg:h-[28.125rem] md:w-[24.063rem] md:h-[19.688rem] bg-bg rounded-[0.938rem] overflow-hidden"
+            className={`bg-bg ${cardImageBackClassName}`}
             data-aos="fade-left"
             data-aos-duration="1500"
             data-aos-delay="500"
@@ -168,22 +181,22 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="py-10 px-5 md:py-[4.375rem]">
-        <div className="w-full max-w-[62.375rem] mx-auto flex flex-col justify-between items-center gap-6 lg:gap-[9.813rem] md:flex-row md:gap-[3.125rem]">
+      <section className={`${sectionClassName} md:py-[4.375rem]`}>
+        <div className={cardSectionLayoutClassName}>
           <div
-            className="flex justify-center items-center order-2 w-[20.313rem] h-[16.563rem] bg-bg rounded-[0.938rem] overflow-hidden md:order-1 lg:w-[34.475rem] lg:h-[28.125rem] md:w-[24.063rem] md:h-[19.688rem]"
+            className={`order-2 bg-bg ${cardImageBackClassName}`}
             data-aos="fade-right"
             data-aos-duration="1500"
           >
             <Image
-              className="card-rotate mt-[1.563rem] w-[15.625rem] lg:w-[25.875rem] lg:h-[16.875rem] md:w-[18.75rem]"
+              className={`animate-cardRotate ${cardRotateImageClassName}`}
               src={FolderNameImage}
               alt="폴더 이름 변경하기 모달 이미지"
             />
           </div>
-          <div className="order-1 md:order-2">
+          <div className={`order-1 md:order-2 ${carTextLayoutClassName}`}>
             <h3
-              className="title-common"
+              className={cardTitleTextClassName}
               data-aos="fade-left"
               data-aos-anchor-placement="top-bottom"
               data-aos-duration="1500"
@@ -191,13 +204,14 @@ const Home = () => {
             >
               링크를 폴더로&nbsp;
               <br className="hidden md:block" />
-              <span className="bg-gradient-text-blue-to-yellow text-transparent bg-clip-text">
+              <span
+                className={`bg-gradient-text-blue-to-yellow ${cardGradientTextClassName}`}
+              >
                 관리
               </span>
               하세요
             </h3>
             <p
-              className="leading-[1.3] max-w-[20.313rem] text-[0.938rem] md:text-base md:max-w-fit"
               data-aos="fade-left"
               data-aos-anchor-placement="top-bottom"
               data-aos-duration="1500"
@@ -211,11 +225,11 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="py-10 px-5 md:py-[4.375rem]">
-        <div className="w-full max-w-[62.375rem] mx-auto flex flex-col justify-between items-center gap-6 lg:gap-[9.813rem] md:flex-row md:gap-[3.125rem]">
-          <div className="max-w-[20.313rem] md:max-w-fit">
+      <section className={`${sectionClassName} md:py-[4.375rem]`}>
+        <div className={cardSectionLayoutClassName}>
+          <div className={carTextLayoutClassName}>
             <h3
-              className="title-common"
+              className={cardTitleTextClassName}
               data-aos="fade-right"
               data-aos-anchor-placement="top-bottom"
               data-aos-duration="1500"
@@ -223,13 +237,14 @@ const Home = () => {
             >
               저장한 링크를&nbsp;
               <br className="hidden md:block" />
-              <span className="bg-gradient-text-blue-to-skyblue text-transparent bg-clip-text">
+              <span
+                className={`bg-gradient-text-blue-to-skyblue ${cardGradientTextClassName}`}
+              >
                 공유
               </span>
               해 보세요.
             </h3>
             <p
-              className="leading-[1.3] text-[0.938rem] md:text-base"
               data-aos="fade-right"
               data-aos-anchor-placement="top-bottom"
               data-aos-duration="1500"
@@ -243,12 +258,12 @@ const Home = () => {
             </p>
           </div>
           <div
-            className="flex justify-center items-center w-[20.313rem] h-[16.563rem] bg-card-image bg-cover bg-no-repeat bg-center rounded-[0.938rem] overflow-hidden lg:w-[34.375rem] lg:h-[28.125rem] md:w-[24.063rem] md:h-[19.688rem]"
+            className={`bg-card-image bg-cover bg-no-repeat bg-center ${cardImageBackClassName}`}
             data-aos="fade-left"
             data-aos-duration="1500"
           >
             <Image
-              className="card-rotate-delay w-[15.625rem] mt-[1.563rem] lg:w-[25.875rem] lg:h-[16.875rem] md:w-[18.75rem]"
+              className={`animate-cardRotateDelay ${cardRotateImageClassName}`}
               src={FolderShareImage}
               alt="폴더 공유하기 모달 이미지"
             />
@@ -256,22 +271,24 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="py-10 px-5 mb-10 md:py-[4.375rem] md:mb-[7.5rem]">
-        <div className="w-full max-w-[62.375rem] mx-auto flex flex-col justify-between items-center gap-6 md:flex-row lg:gap-[9.813rem] md:gap-[3.125rem]">
+      <section
+        className={`${sectionClassName} mb-10 md:py-[4.375rem] md:mb-[7.5rem]`}
+      >
+        <div className={cardSectionLayoutClassName}>
           <div
-            className="flex justify-center items-center order-2 w-[20.313rem] h-[16.563rem] relative bg-bg rounded-[0.938rem] overflow-hidden md:order-1 lg:w-[34.375rem] lg:h-[28.125rem] md:w-[24.063rem] md:h-[19.688rem]"
+            className={`order-2 bg-bg ${cardImageBackClassName}`}
             data-aos="fade-right"
             data-aos-duration="1500"
           >
             <Image
-              className="card-scale absolute top-[1.875rem] left-[2.188rem] md:top-[3.438rem] md:left-[3.75rem]"
+              className="animate-cardScale absolute top-[1.875rem] left-[2.188rem] md:top-[3.438rem] md:left-[3.75rem]"
               src={SearchCardImage}
               alt="링크 검색하기 이미지"
             />
           </div>
-          <div className="w-full order-1 md:order-2 max-w-[20.313rem] md:max-w-fit">
+          <div className={`order-1 md:order-2 ${carTextLayoutClassName}`}>
             <h3
-              className="title-common"
+              className={cardTitleTextClassName}
               data-aos="fade-left"
               data-aos-anchor-placement="top-bottom"
               data-aos-duration="1500"
@@ -279,13 +296,14 @@ const Home = () => {
             >
               저장한 링크를&nbsp;
               <br className="hidden md:block" />
-              <span className="bg-gradient-text-skyblue-to-blue text-transparent bg-clip-text">
+              <span
+                className={`bg-gradient-text-skyblue-to-blue ${cardGradientTextClassName}`}
+              >
                 검색
               </span>
               해 보세요.
             </h3>
             <p
-              className="leading-[1.3] text-gray-600"
               data-aos="fade-left"
               data-aos-anchor-placement="top-bottom"
               data-aos-duration="1500"
