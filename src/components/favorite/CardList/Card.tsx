@@ -18,7 +18,7 @@ const Card: React.FC<CardProps> = ({ card }) => {
 
   return (
     <div
-      className="border rounded-lg overflow-hidden shadow-lg cursor-pointer"
+      className="border rounded-lg overflow-hidden shadow-lg cursor-pointer transition-transform duration-300 transform hover:scale-105 hover:shadow-xl"
       onClick={() => window.open(`https://${card.url}`, '_blank')}
     >
       <img
