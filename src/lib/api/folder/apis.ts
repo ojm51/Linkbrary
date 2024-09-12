@@ -58,5 +58,5 @@ export const addLink = async ({
   const response = await instance.post<TLink>(API_PATH.link.default, params);
   const { data } = response;
   const [dto] = linkEntitiesToDtos([data]);
-  return { data: dto } ?? [];
+  return { data: dto };
 };

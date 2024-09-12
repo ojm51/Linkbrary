@@ -8,13 +8,13 @@ const CardsPerPageTablet = 6;
 const CardsPerPageMobile = 9;
 
 interface CardListPageProps {
-  isSharedPage: boolean;
+  isSharedPage?: boolean;
   linkList?: LinkTypes[];
 }
 
 const CardListPage = ({
   isSharedPage = false,
-  linkList,
+  linkList = [],
 }: CardListPageProps) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [cardsPerPage, setCardsPerPage] = useState(CardsPerPageDesktop);
@@ -26,7 +26,7 @@ const CardListPage = ({
     const fetchFavoriteCards = async () => {
       try {
         if (isSharedPage) {
-          setFavoriteCards(linkList ?? []);
+          setFavoriteCards(linkList);
         } else {
           const data = await getFavoriteLinkList();
           setFavoriteCards(data.list);
