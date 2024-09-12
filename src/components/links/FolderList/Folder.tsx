@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { FolderContext } from '@/lib/context';
 import { FolderTypes } from '@/lib/api';
+import { CommonButton } from '@/components';
 
 interface FolderProps {
   folder: FolderTypes;
@@ -15,11 +16,12 @@ export const Folder = ({ folder }: FolderProps) => {
   }`;
 
   return (
-    <button
+    <CommonButton
+      mode="default"
       className={folderButtonClassNames}
       onClick={() => setSelectedFolder(folder)}
     >
       {folder.name}
-    </button>
+    </CommonButton>
   );
 };

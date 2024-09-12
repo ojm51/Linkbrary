@@ -9,7 +9,6 @@ import { Layout } from '@/components';
 import { AuthProvider, ModalProvider } from '@/lib/context';
 
 import '@/styles/globals.css';
-import '@/styles/landingEffect.css';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 declare global {
@@ -27,7 +26,7 @@ const App = ({ Component, pageProps }: AppProps) => {
         <ModalProvider>
           <AuthProvider>
             <Layout>
-              <div className="custom-footer-height">
+              <div className="min-h-custom-footer-height">
                 <Component {...pageProps} />
               </div>
             </Layout>
