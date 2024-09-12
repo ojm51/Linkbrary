@@ -41,12 +41,12 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="w-full h-[160px] pt-[32px] bg-black">
-      <div className="flex flex-wrap justify-between items-center w-full px-[30px] md:px-[20px] mx-auto md:max-w-[1750px] md:flex-nowrap">
-        <p className="order-3 mt-[60px] w-full text-[#676767] md:max-w-[120px] md:mt-0 md:order-1">
+    <footer className="w-full h-40 pt-8 bg-black">
+      <div className="flex flex-wrap justify-between items-center w-full px-[1.875rem] md:px-5 mx-auto md:max-w-[109.375rem] md:flex-nowrap">
+        <p className="order-3 mt-[3.75rem] w-full text-[#676767] md:max-w-[7.5rem] md:mt-0 md:order-1">
           ©codeit - 2023
         </p>
-        <div className="flex justify-start items-center gap-[30px] w-[50%] md:w-auto md:order-2">
+        <div className="flex justify-start items-center gap-[1.875rem] w-[50%] md:w-auto md:order-2">
           <Link href="/privacy" className="text-[#cfcfcf]">
             Privacy Policy
           </Link>
@@ -54,7 +54,7 @@ const Footer = () => {
             FAQ
           </Link>
         </div>
-        <ul className="flex justify-end items-center gap-[12px] w-full max-w-[50%] md:max-w-[120px] md:order-3">
+        <ul className="flex justify-end items-center gap-3 w-full max-w-[50%] md:max-w-[7.5rem] md:order-3">
           {SNS_LISTS.map((sns) => {
             return (
               <li key={sns.id}>

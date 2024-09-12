@@ -135,12 +135,57 @@ const config: Config = {
         'card-image': 'url("/images/landingCard3-1.png")',
       },
     },
+    minHeight: {
+      /* 컨텐츠 높이와 상관없이 footer 하단 고정 */
+      'custom-footer-height': 'calc(100vh - 250px)',
+    },
     keyframes: {
       shimmer: {
         '100%': {
           transform: 'translateX(100%)',
         },
       },
+      textSlide: {
+        /* 키비주얼 텍스트 상하 슬라이드 애니메이션(pc, tab) */
+        '0%': { marginTop: '0' },
+        '25%': { marginTop: '-79px' },
+        '35%': { marginTop: '-79px' },
+        '60%': { marginTop: '-158px' },
+        '70%': { marginTop: '-158px' },
+        '90%': { marginTop: '0' },
+        '100%': { marginTop: '0' },
+      },
+      textSlideMo: {
+        /* 키비주얼 텍스트 상하 슬라이드 애니메이션(mo) */
+        '0%': { marginTop: '0' },
+        '25%': { marginTop: '-47px' },
+        '35%': { marginTop: '-47px' },
+        '60%': { marginTop: '-94px' },
+        '70%': { marginTop: '-94px' },
+        '90%': { marginTop: '0' },
+        '100%': { marginTop: '0' },
+      },
+      cardRotate: {
+        /* 랜딩 페이지 카드 rotate 애니메이션 */
+        '0%': { transform: 'rotateY(0deg)' },
+        '50%': { transform: 'rotateY(360deg)' },
+        '100%': { transform: 'rotateY(360deg)' },
+      },
+      cardScale: {
+        /* 랜딩 페이지 카드 scale애니메이션 */
+        '0%': { transform: 'scale(1)' },
+        '40%': { transform: 'scale(1.4)' },
+        '60%': { transform: 'scale(1.4)' },
+        '80%': { transform: 'scale(1)' },
+        '100%': { transform: 'scale(1)' },
+      },
+    },
+    animation: {
+      textSlide: 'textSlide 6s ease-in-out infinite',
+      textSlideMo: 'textSlideMo 6s ease-in-out infinite',
+      cardRotate: 'cardRotate 4s ease-in-out infinite',
+      cardRotateDelay: 'cardRotate 4s ease-in-out infinite 2s',
+      cardScale: 'cardScale 5s linear infinite',
     },
   },
   plugins: [require('tailwind-scrollbar-hide')],
