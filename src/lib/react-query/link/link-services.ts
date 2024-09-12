@@ -58,11 +58,19 @@ export const linkServices = {
     const dtos = linkEntitiesToDtos(list);
     return { data: { list: dtos, totalCount } };
   },
+  favorite: async (query: { id: number; favorite: boolean }) => {
+    const response = await instance.put<TLink>(`/links/${query?.id}/favorite`, {
+      favorite: query?.favorite,
+    });
+    const { data } = response;
+    const [dto] = linkEntitiesToDtos([data]);
+    return { data: dto };
+  },
   modify: async (query: {
     id: number;
     url: string;
   }): Promise<TMutationResponse<TLinkDto>> => {
-    const response = await instance.put(`/links/${query?.id}`, {
+    const response = await instance.put<TLink>(`/links/${query?.id}`, {
       url: query?.url,
     });
     const { data } = response;

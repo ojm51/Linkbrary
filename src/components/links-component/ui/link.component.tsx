@@ -1,8 +1,8 @@
 import { match } from 'ts-pattern';
 import { LinkCardsSkeleton, LinkPaginationSkeleton } from './skeletons';
-import { LinkCards } from './link-card/link-cards';
 import { LinkPagination } from './link.pagination';
 import { useLinksContextSelector } from '../providers';
+import { LinkCards } from './link-card';
 
 export const LinkComponent = () => {
   const { folderAction, linksAction } = useLinksContextSelector();
