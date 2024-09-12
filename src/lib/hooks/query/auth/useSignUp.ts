@@ -6,28 +6,18 @@ import { signUp } from '@/lib/api/';
 import { useModal } from '@/lib/context';
 import { MUTATION_KEY } from '../config';
 
-interface SignUpHookParams {
-  onSuccess?: () => void;
-  onError?: (error: Error) => void;
-}
-
-export const useSignUp = ({
-  onSuccess = () => {},
-  onError = () => {},
-}: SignUpHookParams) => {
+export const useSignUp = () => {
   const { openModal } = useModal();
   const router = useRouter();
+
   return useMutation({
     mutationKey: [MUTATION_KEY.signUp],
     mutationFn: signUp,
     onSuccess() {
       /** @Todo default folder 만들기 */
-
-      onSuccess();
       router.push('/login');
     },
     onError(error) {
-      onError(error);
       if (error instanceof AxiosError) {
         if (error.status === 400) {
           openModal({

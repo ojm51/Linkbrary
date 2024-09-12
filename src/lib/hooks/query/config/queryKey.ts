@@ -5,6 +5,7 @@ export const MUTATION_KEY = {
   kakaoLogin: 'kakao-login',
   googleSignUp: 'google-sign-up',
   kakaoSignUp: 'kakao-sign-up',
+  validateEmail: 'vaildate-email',
 };
 
 export const QUERY_KEY = {
