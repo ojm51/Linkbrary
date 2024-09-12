@@ -27,25 +27,33 @@ export const AddLink = () => {
     setUrl(e.target.value);
   };
 
-  /** @TODO 링크 추가 시 목록에 바로 반영되게 하기 */
-  /** @TODO 내용이 있는 경우에만 추가하기 버튼 활성화하기 */
-  /** @TODO 링크가 추가되는 동안 추가하기 버튼에 로딩바 보이기 */
-  const handleAddLinkButtonClick = async () => {
-    const data = await addLink({ url, folderId });
-    const oldList = currentQueryData?.data.list as TLinkDto[];
-    const newQueryData = {
-      data: {
-        totalCount: currentQueryData?.data.totalCount,
-        list: [...oldList, data?.data],
-      },
-    } as TQueryResponse<TLinksResponse<TLinkDto[]>>;
-    queryClient.setQueryData(currentQuerykey, newQueryData);
-    // TODO: 400 에러(이미 존재하는 링크, 올바르지 않은 링크)/성공 처리, 내용이 있을 때만 버튼 활성화, 요청이 성공하면 인풋 초기화
-    alert('링크가 추가되었습니다!');
-  };
-
-  /** @TODO 전체 폴더 및 현재 선택된 폴더에 링크 추가하기 */
   const folderId = selectedFolder.id;
+
+  /** @TODO 내용이 있는 경우에만 추가하기 버튼 활성화하기 */
+  /** @TODO 링크가 추가되는 동안 추가하기 버튼에 로딩 스피너 보이기 */
+  const handleAddLinkButtonClick = async () => {
+    if (!url.trim()) {
+      alert('링크를 입력해주세요!');
+      return;
+    }
+
+    try {
+      const data = await addLink({ url, folderId });
+      const oldList = currentQueryData?.data.list as TLinkDto[];
+      const newQueryData = {
+        data: {
+          totalCount: currentQueryData?.data.totalCount,
+          list: [...oldList, data?.data],
+        },
+      } as TQueryResponse<TLinksResponse<TLinkDto[]>>;
+      queryClient.setQueryData(currentQuerykey, newQueryData);
+
+      alert('링크가 추가되었습니다!');
+      setUrl('');
+    } catch (error) {
+      alert('이미 존재하는 링크 또는 올바르지 않은 링크입니다!');
+    }
+  };
 
   return (
     <div className="m-auto max-w-[800px] h-auto px-5 py-4 flex justify-between items-center rounded-[15px] bg-white border border-solid border-primary">
