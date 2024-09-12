@@ -19,7 +19,7 @@ const CardListPage: React.FC = () => {
       try {
         const data = await getFavoriteLinkList();
         setFavoriteCards(data.list);
-        setFetchError(false); // Clear any previous errors
+        setFetchError(false);
       } catch (error) {
         console.error('Failed to fetch favorite cards:', error);
         setFetchError(true);
@@ -67,8 +67,8 @@ const CardListPage: React.FC = () => {
     if (loading) {
       return (
         <div className={`${getGridClassName()} pb-[100px]`}>
-          {Array.from({ length: CardsPerPageDesktop }).map((_, index) => (
-            <SkeletonCard key={index} />
+          {[...new Array(CardsPerPageDesktop)].map(() => (
+            <SkeletonCard key={`skeleton-${Math.random()}`} />
           ))}
         </div>
       );
@@ -119,7 +119,7 @@ const CardListPage: React.FC = () => {
                 ? 'bg-[#F7F7F7] text-gray-400'
                 : 'bg-[#F7F7F7] text-gray-700'
             }`}
-            aria-label="Previous Page"
+            aria-label="이전 페이지"
           >
             <svg
               width="8"
@@ -138,17 +138,22 @@ const CardListPage: React.FC = () => {
             </svg>
           </button>
 
-          {Array.from({ length: totalPages }, (_, index) => (
-            <button
-              key={index + 1}
-              onClick={() => handlePageChange(index + 1)}
-              className={`px-[20px] py-[20px] mx-[2px] rounded bg-[#F7F7F7] ${
-                currentPage === index + 1 ? 'text-[#1F1F1F]' : 'text-[#C4C4C4]'
-              } font-pretendard text-2lg font-semibold leading-26`}
-            >
-              {index + 1}
-            </button>
-          ))}
+          {[...new Array(totalPages)].map((_, i) => {
+            const pageNumber = i + 1;
+            return (
+              <button
+                key={pageNumber}
+                onClick={() => handlePageChange(pageNumber)}
+                className={`px-[20px] py-[20px] mx-[2px] rounded bg-[#F7F7F7] ${
+                  currentPage === pageNumber
+                    ? 'text-[#1F1F1F]'
+                    : 'text-[#C4C4C4]'
+                } font-pretendard text-2lg font-semibold leading-26`}
+              >
+                {pageNumber}
+              </button>
+            );
+          })}
 
           <button
             onClick={() => handlePageChange(currentPage + 1)}
@@ -158,7 +163,7 @@ const CardListPage: React.FC = () => {
                 ? 'bg-[#F7F7F7] text-gray-400'
                 : 'bg-[#F7F7F7] text-gray-700'
             }`}
-            aria-label="Next Page"
+            aria-label="다음 페이지"
           >
             <svg
               width="8"
