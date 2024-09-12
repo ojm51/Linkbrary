@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const instance = axios.create({
-  baseURL: 'https://linkbrary-api.vercel.app/8-1',
+  baseURL: process.env.NEXT_PUBLIC_BASE_URL,
   timeout: 3000,
   headers: {
     'Content-Type': 'application/json',
