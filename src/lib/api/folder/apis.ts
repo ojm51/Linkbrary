@@ -1,3 +1,5 @@
+import { TLink, TLinkDto, TQueryResponse } from '@/lib/react-query';
+import { linkEntitiesToDtos } from '@/lib/utils/links';
 import { API_PATH, instance } from '../config';
 import {
   DeleteFolderParams,
@@ -48,8 +50,13 @@ export const getLinkList = async ({ folderId }: GetFolderParams) => {
   return response.data ?? [];
 };
 
-export const addLink = async ({ url, folderId }: PostLinkParams) => {
+export const addLink = async ({
+  url,
+  folderId,
+}: PostLinkParams): Promise<TQueryResponse<TLinkDto>> => {
   const params = { url, folderId };
-  const response = await instance.post(API_PATH.link.default, params);
-  return response.data ?? [];
+  const response = await instance.post<TLink>(API_PATH.link.default, params);
+  const { data } = response;
+  const [dto] = linkEntitiesToDtos([data]);
+  return { data: dto } ?? [];
 };
