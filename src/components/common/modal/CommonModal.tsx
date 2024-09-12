@@ -1,6 +1,7 @@
 import { ComponentPropsWithoutRef } from 'react';
 import Image from 'next/image';
 import closeIcon from '@/assets/images/close.png';
+import { CommonButton } from '@/components';
 
 interface CommonModalProps extends ComponentPropsWithoutRef<'div'> {
   closeModal: () => void;
@@ -16,13 +17,13 @@ export const CommonModal = ({ closeModal, children }: CommonModalProps) => {
         className="w-[360px] relative px-10 py-8 bg-white rounded-[15px] border solid border-[#ccd5e3]"
         onClick={(e) => e.stopPropagation()}
       >
-        <button
+        <CommonButton
+          mode="default"
           className="absolute top-4 right-4"
-          type="button"
           onClick={closeModal}
         >
           <Image src={closeIcon} alt="닫기 아이콘" width={24} height={24} />
-        </button>
+        </CommonButton>
         {children}
       </section>
     </div>

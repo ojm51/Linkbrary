@@ -1,6 +1,6 @@
-import { ChangeEvent, useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 import Image from 'next/image';
-import { CommonModal, ModalRenderer } from '@/components';
+import { CommonButton, CommonModal, ModalRenderer } from '@/components';
 import { FolderContext } from '@/lib/context';
 import { deleteFolder, getFolderList, updateFolder } from '@/lib/api';
 
@@ -17,7 +17,7 @@ export const FolderMenu = ({ src, text, modalType }: FolderMenuProps) => {
     useContext(FolderContext);
 
   const [newFolderName, setNewFolderName] = useState('');
-  const getInputValue = (e: ChangeEvent<HTMLInputElement>) => {
+  const getInputValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewFolderName(e.target.value);
   };
 
@@ -80,13 +80,14 @@ export const FolderMenu = ({ src, text, modalType }: FolderMenuProps) => {
 
   return (
     <>
-      <button
+      <CommonButton
+        mode="default"
         className="flex justify-center items-center gap-1 text-[14px] font-semibold text-secondary-60 font-[Pretendard] not-italic leading-[normal]"
         onClick={handleCloseModal}
       >
         <Image src={src} alt={`${text} 아이콘`} width={18} height={18} />
         {text}
-      </button>
+      </CommonButton>
       {showModal && (
         <CommonModal closeModal={handleCloseModal}>{renderModal()}</CommonModal>
       )}
