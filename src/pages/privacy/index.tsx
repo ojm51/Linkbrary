@@ -1,3 +1,5 @@
+import { TopTitle } from '@/components/landingPage/index';
+
 const PrivacyPolicy = () => {
   const privacySubTitleClassName =
     'text-base font-bold mb-[0.625rem] md:text-lg';
@@ -5,12 +7,7 @@ const PrivacyPolicy = () => {
 
   return (
     <>
-      {/** @Todo 상단 타이틀 영역 faq와 같이 컴포넌트로 구현 */}
-      <section className="bg-bg h-[5.5rem] pt-[0.625rem] text-center mb-5 md:mb-[6.25rem] md:h-32 md:pt-5">
-        <h2 className="text-[2rem] font-bold md:text-[2.5rem]">
-          📋 PRIVACY POLICY
-        </h2>
-      </section>
+      <TopTitle>📋 PRIVACY POLICY</TopTitle>
       <section className="px-5 mb-[7.5rem]">
         <div className="w-full max-w-[66.25rem] mx-auto">
           <h2 className="font-bold border-b-2 border-solid border-gray-300 pb-[0.625rem] mb-5 text-xl md:text-[1.5rem]">

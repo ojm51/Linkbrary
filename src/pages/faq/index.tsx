@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { TopTitle } from '@/components/landingPage/index';
 
 type FaqType = {
   id: number;
@@ -32,9 +33,7 @@ const Faq = () => {
 
   return (
     <>
-      <section className="bg-bg h-[5.5rem] pt-[0.625rem] text-center mb-5 md:mb-[6.25rem] md:h-32 md:pt-5">
-        <h2 className="text-[2rem] font-bold md:text-[2.5rem]">🤔 FAQ</h2>
-      </section>
+      <TopTitle>🤔 FAQ</TopTitle>
       <section className="px-5 mb-[7.5rem]">
         <div className="w-full max-w-[66.25rem] mx-auto">
           <ul>

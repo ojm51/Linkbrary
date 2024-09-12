@@ -9,7 +9,6 @@ import { Layout } from '@/components';
 import { AuthProvider, ModalProvider } from '@/lib/context';
 
 import '@/styles/globals.css';
-import '@/styles/landingEffect.css';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 declare global {
