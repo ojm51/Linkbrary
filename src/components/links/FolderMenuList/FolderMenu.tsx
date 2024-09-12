@@ -1,4 +1,4 @@
-import { ChangeEvent, useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 import Image from 'next/image';
 import { CommonButton, CommonModal, ModalRenderer } from '@/components';
 import { FolderContext } from '@/lib/context';

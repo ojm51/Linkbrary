@@ -1,8 +1,8 @@
 import { linkOptions, TLinkDto } from '@/lib/react-query';
-import { LinkCard } from './link-card';
 import { useContext } from 'react';
 import { FolderContext } from '@/lib/context';
 import { useQuery } from '@tanstack/react-query';
+import { LinkCard } from './link-card';
 
 export const LinkCards = () => {
   const { selectedFolder } = useContext(FolderContext);
