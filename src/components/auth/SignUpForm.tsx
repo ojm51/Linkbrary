@@ -47,9 +47,16 @@ export const SignUpForm = () => {
             key: 'emailValidateError',
             message: '이메일 검증에 실패했습니다. 다시 시도해주세요.',
           });
+        } else {
+          setError('email', { message: '중복된 이메일입니다.' });
         }
+      } else {
+        openModal({
+          type: 'alert',
+          key: 'emailValidateError',
+          message: '알 수 없는 에러입니다. 계속되면 관리자에게 문의해주세요.',
+        });
       }
-      setError('email', { message: '중복된 이메일입니다.' });
     }
   };
   const formClassName =
