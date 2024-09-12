@@ -11,6 +11,7 @@ import starSelected from '@/assets/icons/ic_star_selected.svg';
 import emptyImg from '@/assets/images/empty.jpeg';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { debounce } from '@/lib/react';
+import { validateLink } from '@/lib/utils/links';
 import { useLinksContextSelector } from '../../providers';
 
 export const CardHeader = ({
@@ -52,9 +53,10 @@ export const CardHeader = ({
   const debouncedHandleClick = debounce(() => {
     mutationAction.mutate({ id, favorite: !favorite });
   }, 300);
+  const startHttp = validateLink(url);
   return (
     <div className="relative">
-      <Link href={url} target="_blank">
+      <Link href={`${startHttp ? url : `https://${url}`}`} target="_blank">
         <div className="relative w-full h-0 pt-[56.25%]">
           <Image
             priority
