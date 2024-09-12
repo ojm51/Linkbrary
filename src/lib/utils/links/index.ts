@@ -1,3 +1,4 @@
+export { validateLink } from './varidate-link';
 export { getPagination } from './get-pagination';
 export { getTotalPages } from './get-total-pages';
 export { getPageSize } from './get-page-size';

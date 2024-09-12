@@ -16,7 +16,7 @@ export const getFolderList = async () => {
 
 export const addFolder = async ({ folderName }: PostFolderParams) => {
   const params = { name: folderName };
-  const response = await instance.post<FolderTypes[]>(
+  const response = await instance.post<FolderTypes>(
     API_PATH.folder.default,
     params,
   );
