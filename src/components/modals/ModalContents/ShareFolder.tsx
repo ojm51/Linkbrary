@@ -6,13 +6,6 @@ import copyLinkIcon from '@/assets/images/copyLink.png';
 import { FolderContext } from '@/lib/context';
 import { CommonButton } from '@/components';
 
-declare global {
-  interface Window {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    Kakao: any;
-  }
-}
-
 export const ShareFolder = () => {
   const { selectedFolder } = useContext(FolderContext);
   /** @TODO 적당한 base url 설정하기 - 배포용 주소로 */
