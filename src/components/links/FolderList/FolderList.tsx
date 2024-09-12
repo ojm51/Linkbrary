@@ -18,9 +18,9 @@ export const FolderList = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const handleCloseModal = () => setShowModal((prev) => !prev);
 
+  /** @TODO 폴더 리스트 역순으로 바꾸기 */
   const fetchFolderList = async () => {
     const data = await getFolderList();
-    /** @TODO 폴더 리스트 역순으로 바꾸기 */
     setFolderList(data);
   };
   useEffect(() => {
