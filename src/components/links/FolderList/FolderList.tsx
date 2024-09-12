@@ -18,7 +18,6 @@ export const FolderList = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const handleCloseModal = () => setShowModal((prev) => !prev);
 
-  /** @TODO 폴더 리스트 역순으로 바꾸기 */
   const fetchFolderList = async () => {
     const data = await getFolderList();
     setFolderList(data);
@@ -40,8 +39,11 @@ export const FolderList = () => {
 
   const listWrapperRef = useHorizontalScroll();
 
+  const folder = { createdAt: '', id: 0, name: '전체' };
+
   return (
-    <div className="flex justify-between items-center gap-3 w-full">
+    <div className="flex justify-between items-center gap-4 w-full">
+      <Folder folder={folder} />
       <ul
         className="flex justify-start items-center gap-2 overflow-x-auto whitespace-nowrap scrollbar-hide"
         ref={listWrapperRef}

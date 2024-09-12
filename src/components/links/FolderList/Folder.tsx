@@ -11,7 +11,7 @@ export const Folder = ({ folder }: FolderProps) => {
   const { selectedFolder, setSelectedFolder } = useContext(FolderContext);
 
   const isActive = selectedFolder.name === folder.name;
-  const folderButtonClassNames = `px-3 py-2 border border-solid border-primary rounded-[5px] font-normal text-base font-[Pretendard] not-italic leading-[normal] ${
+  const folderButtonClassNames = `px-3 py-2 border border-solid border-primary rounded-[5px] whitespace-nowrap font-normal text-base font-[Pretendard] not-italic leading-[normal] ${
     isActive ? 'bg-primary text-white' : 'hover:bg-[#e7effb]'
   }`;
 

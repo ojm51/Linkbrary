@@ -36,6 +36,10 @@ export const AddLink = () => {
       alert('링크를 입력해주세요!');
       return;
     }
+    if (!folderId) {
+      alert('폴더를 선택해주세요!');
+      return;
+    }
 
     try {
       const data = await addLink({ url, folderId });
