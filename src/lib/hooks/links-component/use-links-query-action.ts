@@ -13,17 +13,14 @@ export const useLinksQueryAction = (
   const initializer = (width: number, initFolder: FolderTypes) => {
     // '전체' 폴더가 없을 경우 함수 실행을 중단
     if (!initFolder) {
-      console.error("Error: '전체' 폴더를 찾을 수 없습니다.");
       return;
     }
-
     const initQuery: TLinksQuery = {
       page: 1,
       pageSize: getPageSize(width),
       keyword: '',
       folderId: initFolder.id,
     };
-
     setlinksQuery(initQuery);
   };
 
