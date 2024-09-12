@@ -26,20 +26,23 @@ export const ShareFolder = () => {
 
   /** @TODO 폴더 공유 시 보일 디폴트 이미지 추가하기 */
   const kakaoTalkShare = () => {
-    if (Kakao && Kakao.Share) {
-      Kakao.Share.sendDefault({
-        objectType: 'feed',
-        content: {
-          title: `공유된 "${selectedFolder.name}" 폴더`,
-          description: `"${selectedFolder.name}" 폴더에 저장된 링크 목록입니다`,
-          imageUrl: '/src/assets/images/sharingDefaultImage.png',
-          link: {
-            mobileWebUrl: SHARING_URL,
-            webUrl: SHARING_URL,
-          },
-        },
-      });
+    if (!window.Kakao || !window.Kakao.isInitialized()) {
+      alert('카카오톡 공유 기능이 아직 초기화되지 않았습니다.');
+      return;
     }
+
+    Kakao.Share.sendDefault({
+      objectType: 'feed',
+      content: {
+        title: `공유된 "${selectedFolder.name}" 폴더`,
+        description: `"${selectedFolder.name}" 폴더에 저장된 링크 목록입니다`,
+        imageUrl: '/src/assets/images/sharingDefaultImage.png',
+        link: {
+          mobileWebUrl: SHARING_URL,
+          webUrl: SHARING_URL,
+        },
+      },
+    });
   };
 
   const facebookShare = () => {
