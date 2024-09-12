@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import type { AppProps } from 'next/app';
+import Head from 'next/head';
 import {
   HydrationBoundary,
   QueryClient,
@@ -10,6 +11,8 @@ import { AuthProvider, ModalProvider } from '@/lib/context';
 
 import '@/styles/globals.css';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import ThumbnailImage from '@/assets/images/sharingDefaultImage.png';
+import Favicon from '@/assets/icons/favicon/favicon.ico';
 
 declare global {
   interface Window {
@@ -21,20 +24,36 @@ declare global {
 const App = ({ Component, pageProps }: AppProps) => {
   const [queryClient] = useState(() => new QueryClient());
   return (
-    <QueryClientProvider client={queryClient}>
-      <HydrationBoundary state={pageProps.dehydratedState}>
-        <ModalProvider>
-          <AuthProvider>
-            <Layout>
-              <div className="min-h-custom-footer-height">
-                <Component {...pageProps} />
-              </div>
-            </Layout>
-          </AuthProvider>
-        </ModalProvider>
-        <ReactQueryDevtools initialIsOpen={false} />
-      </HydrationBoundary>
-    </QueryClientProvider>
+    <>
+      <Head>
+        <title>Linkbrary</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="description" content="나만의 링크를 관리하는 Linkbrary" />
+        <meta property="og:title" content="Linkbrary" />
+        <meta
+          property="og:description"
+          content="나만의 링크를 관리하는 Linkbrary"
+        />
+        <meta property="og:image" content={ThumbnailImage.src} />
+        <meta property="og:url" content="" />
+        <link rel="icon" href={Favicon.src} />
+      </Head>
+
+      <QueryClientProvider client={queryClient}>
+        <HydrationBoundary state={pageProps.dehydratedState}>
+          <ModalProvider>
+            <AuthProvider>
+              <Layout>
+                <div className="min-h-custom-footer-height">
+                  <Component {...pageProps} />
+                </div>
+              </Layout>
+            </AuthProvider>
+          </ModalProvider>
+          <ReactQueryDevtools initialIsOpen={false} />
+        </HydrationBoundary>
+      </QueryClientProvider>
+    </>
   );
 };
 
