@@ -1,5 +1,5 @@
 import { match } from 'ts-pattern';
-import { SearchLinkData } from '@/lib/context';
+import { SearchLinkData } from '@/pages/links';
 import { LinkCardsSkeleton, LinkPaginationSkeleton } from './skeletons';
 import { LinkPagination } from './link.pagination';
 import { useLinksContextSelector } from '../providers';

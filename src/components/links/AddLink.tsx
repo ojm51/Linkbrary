@@ -4,13 +4,24 @@ import linkIcon from '@/assets/icons/ic_link.svg';
 import { CommonButton } from '@/components';
 import { addLink } from '@/lib/api';
 import { FolderContext } from '@/lib/context';
+import { useQueryClient } from '@tanstack/react-query';
+import {
+  linkOptions,
+  TLinkDto,
+  TLinksResponse,
+  TQueryResponse,
+} from '@/lib/react-query';
+import { useLinksContextSelector } from '../links-component';
 
 const addLinkButtonClassName =
   'shrink-0 px-4 py-[10px] rounded-lg bg-gradient-color text-[14px] font-semibold text-[#f5f5f5] font-[Pretendard] not-italic leading-[normal]';
 
 export const AddLink = () => {
   const { selectedFolder } = useContext(FolderContext);
-
+  const queryClient = useQueryClient();
+  const { linksQueryAction } = useLinksContextSelector();
+  const currentQuerykey = linkOptions.find(linksQueryAction.data).queryKey;
+  const currentQueryData = queryClient.getQueryData(currentQuerykey);
   const [url, setUrl] = useState('');
   const getInputValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUrl(e.target.value);
@@ -20,7 +31,15 @@ export const AddLink = () => {
   /** @TODO 내용이 있는 경우에만 추가하기 버튼 활성화하기 */
   /** @TODO 링크가 추가되는 동안 추가하기 버튼에 로딩바 보이기 */
   const handleAddLinkButtonClick = async () => {
-    await addLink({ url, folderId });
+    const data = await addLink({ url, folderId });
+    const oldList = currentQueryData?.data.list as TLinkDto[];
+    const newQueryData = {
+      data: {
+        totalCount: currentQueryData?.data.totalCount,
+        list: [...oldList, data?.data],
+      },
+    } as TQueryResponse<TLinksResponse<TLinkDto[]>>;
+    queryClient.setQueryData(currentQuerykey, newQueryData);
     // TODO: 400 에러(이미 존재하는 링크, 올바르지 않은 링크)/성공 처리, 내용이 있을 때만 버튼 활성화, 요청이 성공하면 인풋 초기화
     alert('링크가 추가되었습니다!');
   };

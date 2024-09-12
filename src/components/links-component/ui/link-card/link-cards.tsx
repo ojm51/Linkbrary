@@ -1,28 +1,16 @@
-import { linkOptions, TLinkDto } from '@/lib/react-query';
-import { useContext } from 'react';
-import { FolderContext } from '@/lib/context';
-import { useQuery } from '@tanstack/react-query';
+import { TLinkDto } from '@/lib/react-query';
 import { linkEntitiesToDtos } from '@/lib/utils/links';
 import { LinkCard } from './link-card';
+import { useLinksContextSelector } from '../../providers';
 import { LinkComponentProps } from '../link.component';
 
 export const LinkCards = ({ filterLinks, searchValue }: LinkComponentProps) => {
-  const { selectedFolder } = useContext(FolderContext);
-  const folderId = selectedFolder.id;
-  const query = {
-    folderId,
-    page: 1,
-    pageSize: 10,
-    keyword: '',
-  };
+  const { linksAction } = useLinksContextSelector();
 
-  const { data } = useQuery(linkOptions.find(query));
-  const linkList = data?.data?.list ?? [];
+  const allLinks = linksAction.data?.data.list ?? [];
 
   const viewLinks =
-    searchValue.trim() === '' ? linkList : linkEntitiesToDtos(filterLinks);
-
-  /** @TODO 저장된 링크가 없는 경우 화면 처리하기 */
+    searchValue.trim() === '' ? allLinks : linkEntitiesToDtos(filterLinks);
   return (
     <section className="p-8 lg:container lg:mx-auto">
       {viewLinks.length > 0 ? (
