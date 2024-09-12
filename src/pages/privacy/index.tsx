@@ -1,21 +1,22 @@
 const PrivacyPolicy = () => {
-  const privacySubTitleClassName = 'text-base font-bold mb-[10px] md:text-lg';
+  const privacySubTitleClassName =
+    'text-base font-bold mb-[0.625rem] md:text-lg';
   const privacyTextClassName = 'break-keep leading-[1.5] text-sm md:text-base';
 
   return (
     <>
       {/** @Todo 상단 타이틀 영역 faq와 같이 컴포넌트로 구현 */}
-      <section className="bg-bg h-[88px] pt-[10px] text-center mb-[20px] md:mb-[100px] md:h-[128px] md:pt-[20px]">
-        <h2 className="text-[32px] font-bold md:text-[40px]">
+      <section className="bg-bg h-[5.5rem] pt-[0.625rem] text-center mb-5 md:mb-[6.25rem] md:h-32 md:pt-5">
+        <h2 className="text-[2rem] font-bold md:text-[2.5rem]">
           📋 PRIVACY POLICY
         </h2>
       </section>
-      <section className="px-[20px] mb-[120px]">
-        <div className="w-full max-w-[1060px] mx-auto">
-          <h2 className="font-bold border-b-2 border-solid border-gray-300 pb-[10px] mb-[20px] text-[20px] md:text-[24px]">
+      <section className="px-5 mb-[7.5rem]">
+        <div className="w-full max-w-[66.25rem] mx-auto">
+          <h2 className="font-bold border-b-2 border-solid border-gray-300 pb-[0.625rem] mb-5 text-xl md:text-[1.5rem]">
             개인정보 보호 정책
           </h2>
-          <p className="leading-[1.2] mb-[40px] break-keep text-sm md:text-base">
+          <p className="leading-[1.2] mb-10 break-keep text-sm md:text-base">
             본 LinkBrary는 귀하의 개인정보보호를 매우 중요시하며, 개인정보보호법
             및 정보통신망 이용촉진 및 정보보호 등에 관한 법률을 준수하고
             있습니다.
@@ -25,7 +26,7 @@ const PrivacyPolicy = () => {
             조치가 취해지고 있는지 알려드립니다.
           </p>
 
-          <div className="mb-[40px]">
+          <div className="mb-10">
             <h3 className={privacySubTitleClassName}>제 1 조 총칙</h3>
             <p className={privacyTextClassName}>
               1. 개인정보란 살아 있는 개인에 관한 정보로서 성명, 주민등록번호 및
