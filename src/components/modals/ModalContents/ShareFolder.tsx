@@ -3,10 +3,11 @@ import Image from 'next/image';
 import kakaoIcon from '@/assets/images/kakaoTalk.png';
 import facebookIcon from '@/assets/images/facebook.png';
 import copyLinkIcon from '@/assets/images/copyLink.png';
-import { FolderContext } from '@/lib/context';
+import { FolderContext, useModal } from '@/lib/context';
 import { CommonButton } from '@/components';
 
 export const ShareFolder = () => {
+  const { openModal } = useModal();
   const { selectedFolder } = useContext(FolderContext);
   /** @TODO 적당한 base url 설정하기 - 배포용 주소로 */
   // const BASE_URL = `https://deploy-preview-40--dev-linkbrary.netlify.app`;
@@ -26,7 +27,11 @@ export const ShareFolder = () => {
   /** @TODO 폴더 공유 시 보일 디폴트 이미지 추가하기 */
   const kakaoTalkShare = () => {
     if (!window.Kakao || !window.Kakao.isInitialized()) {
-      alert('카카오톡 공유 기능이 아직 초기화되지 않았습니다.');
+      openModal({
+        type: 'alert',
+        key: 'kakaoInitError',
+        message: `카카오톡 공유 기능이 아직 초기화되지 않았습니다.`,
+      });
       return;
     }
 
@@ -50,17 +55,26 @@ export const ShareFolder = () => {
 
   const clipboardCopy = (): void => {
     if (!navigator.clipboard) {
-      alert('복사하기가 지원되지 않는 브라우저입니다.');
+      openModal({
+        type: 'alert',
+        key: 'invalidBrowserError',
+        message: `복사하기가 지원되지 않는 브라우저입니다.`,
+      });
       return;
     }
 
     navigator.clipboard
       .writeText(SHARING_URL)
       .then(() => {
+        /** @TODO 확인 모달 띄우기 */
         alert('클립보드에 복사되었습니다.');
       })
       .catch(() => {
-        alert('복사를 다시 시도해주세요.');
+        openModal({
+          type: 'alert',
+          key: 'copyError',
+          message: `복사를 다시 시도해주세요.`,
+        });
       });
   };
 
