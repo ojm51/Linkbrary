@@ -43,7 +43,7 @@ export const linkServices = {
     signal: AbortSignal,
   ): Promise<TQueryResponse<TLinksResponse<TLinkDto[]>>> => {
     const response = await instance.get<TLinksResponse<TLink[]>>(
-      `/folders/${query?.folderId}/links`,
+      query?.folderId ? `/folders/${query?.folderId}/links` : '/links',
       {
         params: {
           page: query?.page,

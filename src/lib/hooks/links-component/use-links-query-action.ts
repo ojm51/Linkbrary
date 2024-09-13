@@ -1,32 +1,26 @@
 import { useEffect, useState } from 'react';
-import { TFolderDto, TLinksQuery, TQueryResponse } from '@/lib/react-query';
+import { TLinksQuery } from '@/lib/react-query';
 import { getPageSize } from '@/lib/utils/links';
+import { FolderTypes } from '@/lib/api';
 import { TClientSize } from './use-client-size';
 
 export const useLinksQueryAction = (
   clientSize: TClientSize,
-  allFolders: TQueryResponse<TFolderDto[]>,
+  selectedFolder: FolderTypes,
 ) => {
   const [linksQuery, setlinksQuery] = useState<TLinksQuery>(undefined);
 
-  const initializer = (width: number, allFoldersData: TFolderDto[]) => {
-    const folder = allFoldersData.find(
-      (folderData) => folderData.name === '전체',
-    ) as TFolderDto;
-
+  const initializer = (width: number, initFolder: FolderTypes) => {
     // '전체' 폴더가 없을 경우 함수 실행을 중단
-    if (!folder) {
-      console.error("Error: '전체' 폴더를 찾을 수 없습니다.");
+    if (!initFolder) {
       return;
     }
-
     const initQuery: TLinksQuery = {
       page: 1,
       pageSize: getPageSize(width),
       keyword: '',
-      folderId: folder.id,
+      folderId: initFolder.id,
     };
-
     setlinksQuery(initQuery);
   };
 
@@ -42,10 +36,10 @@ export const useLinksQueryAction = (
   };
 
   useEffect(() => {
-    if (clientSize && allFolders) {
-      initializer(clientSize.width, allFolders.data);
+    if (clientSize && selectedFolder) {
+      initializer(clientSize.width, selectedFolder);
     }
-  }, [clientSize, allFolders]);
+  }, [clientSize, selectedFolder]);
 
   return { data: linksQuery, updator };
 };

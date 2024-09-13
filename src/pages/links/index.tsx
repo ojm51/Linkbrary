@@ -37,16 +37,16 @@ const MainContent = () => {
 
 const Links = () => {
   return (
-    <LinksContextProvider>
-      <DropBoxStoreProvider>
-        <FolderProvider>
+    <FolderProvider>
+      <LinksContextProvider>
+        <DropBoxStoreProvider>
           <ModalStoreProvider>
             <ModifyAndDeleteModal />
             <MainContent />
           </ModalStoreProvider>
-        </FolderProvider>
-      </DropBoxStoreProvider>
-    </LinksContextProvider>
+        </DropBoxStoreProvider>
+      </LinksContextProvider>
+    </FolderProvider>
   );
 };
 
