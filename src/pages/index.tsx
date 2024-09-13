@@ -84,6 +84,7 @@ const Home = () => {
         <Image
           className="w-full max-w-[18.875rem] h-auto lg:max-w-[69.938rem]  md:max-w-[43.625rem]"
           src={KeyVisualImage}
+          priority
           alt="키비주얼 이미지"
           data-aos="zoom-out-up"
           data-aos-duration="1500"
