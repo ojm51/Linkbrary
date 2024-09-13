@@ -11,7 +11,7 @@ import ProfileImage from '@/assets/images/profileImage.png';
 const Header = () => {
   const { logout } = useAuth();
   const [logoutView, setLogoutView] = useState<boolean>(false);
-  const route = useRouter();
+  const router = useRouter();
 
   const toggleProfileMenu = () => {
     setLogoutView(!logoutView);
@@ -20,6 +20,7 @@ const Header = () => {
   const handleUserLogout = () => {
     setLogoutView(false);
     logout();
+    router.push('/login');
   };
 
   const { isLoginAccessible, userInfo } = useLoginAccessibility();
@@ -42,7 +43,7 @@ const Header = () => {
             .with(true, () => (
               <>
                 {/** @Todo 해당 영역 보여지기전에 텀 수정 */}
-                {match(route.pathname === '/favorite')
+                {match(router.pathname === '/favorite')
                   .with(true, () => (
                     <Link
                       href="/links"
