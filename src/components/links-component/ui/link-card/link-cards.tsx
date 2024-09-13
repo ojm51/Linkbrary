@@ -8,7 +8,6 @@ export const LinkCards = ({ filterLinks, searchValue }: LinkComponentProps) => {
   const { linksAction } = useLinksContextSelector();
 
   const allLinks = linksAction.data?.data.list ?? [];
-  // console.log(searchValue);
 
   const viewLinks =
     searchValue.trim() === '' ? allLinks : linkEntitiesToDtos(filterLinks);
