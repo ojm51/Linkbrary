@@ -82,7 +82,7 @@ const Home = () => {
         </div>
 
         <Image
-          className="w-full max-w-[18.875rem] h-[11.125rem] lg:max-w-[69.938rem] lg:h-[41.188rem] md:max-w-[43.625rem] md:h-auto"
+          className="w-full max-w-[18.875rem] h-auto lg:max-w-[69.938rem]  md:max-w-[43.625rem]"
           src={KeyVisualImage}
           alt="키비주얼 이미지"
           data-aos="zoom-out-up"
