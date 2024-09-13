@@ -91,6 +91,7 @@ export const useAuthHandler = () => {
     setUserInfo(null);
     setIsLoggedin(false);
     localStorage.removeItem(localStorageName);
+    router.push(Routes.HOME);
   };
 
   const updateUserInfo = (newInfo: UserInfo) => {
