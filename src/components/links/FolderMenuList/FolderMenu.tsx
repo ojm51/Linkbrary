@@ -47,8 +47,7 @@ export const FolderMenu = ({ src, text, modalType }: FolderMenuProps) => {
       await deleteFolder({ folderId });
       fetchFolderList();
       setShowModal((prev) => !prev);
-      // TODO: 폴더 삭제 후 선택된 폴더를 전체 폴더로 초기화
-      //  setSelectedFolder();
+      setSelectedFolder({ createdAt: '', id: 0, name: '전체' });
     } catch (error) {
       console.log('폴더 삭제 중 오류가 발생했습니다:', error);
     }

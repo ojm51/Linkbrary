@@ -39,21 +39,25 @@ export const FolderList = () => {
 
   const listWrapperRef = useHorizontalScroll();
 
-  const folder = { createdAt: '', id: 0, name: '전체' };
+  const defaultAllFolder = { createdAt: '', id: 0, name: '전체' };
 
   return (
     <div className="flex justify-between items-center gap-4 w-full">
-      <Folder folder={folder} />
-      <ul
-        className="flex justify-start items-center gap-2 overflow-x-auto whitespace-nowrap scrollbar-hide"
-        ref={listWrapperRef}
-      >
-        {folderList.map((folder) => (
-          <li key={folder.id}>
-            <Folder folder={folder} />
-          </li>
-        ))}
-      </ul>
+      <div className="flex justify-start items-center gap-4 min-w-0">
+        <Folder folder={defaultAllFolder} />
+        <ul
+          items-center
+          min-w-max
+          className="flex justify-start items-center gap-2 overflow-x-auto whitespace-nowrap scrollbar-hide"
+          ref={listWrapperRef}
+        >
+          {folderList.map((folder) => (
+            <li key={folder.id}>
+              <Folder folder={folder} />
+            </li>
+          ))}
+        </ul>
+      </div>
 
       <CommonButton
         mode="default"
