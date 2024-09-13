@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
 import Image from 'next/image';
 import { CommonButton, CommonModal, ModalRenderer } from '@/components';
-import { FolderContext } from '@/lib/context';
+import { FolderContext, useModal } from '@/lib/context';
 import { deleteFolder, getFolderList, updateFolder } from '@/lib/api';
 
 type ModalType = 'add' | 'share' | 'changeName' | 'delete';
@@ -15,6 +15,7 @@ interface FolderMenuProps {
 export const FolderMenu = ({ src, text, modalType }: FolderMenuProps) => {
   const { setFolderList, selectedFolder, setSelectedFolder } =
     useContext(FolderContext);
+  const { openModal } = useModal();
 
   const [newFolderName, setNewFolderName] = useState('');
   const getInputValue = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,8 +37,12 @@ export const FolderMenu = ({ src, text, modalType }: FolderMenuProps) => {
       fetchFolderList();
       setShowModal((prev) => !prev);
       setSelectedFolder(newFolder);
-    } catch (error) {
-      console.log('폴더 이름 변경 중 오류가 발생했습니다:', error);
+    } catch {
+      openModal({
+        type: 'alert',
+        key: 'changeFolderNameError400',
+        message: `폴더 이름 변경 중 오류가 발생했습니다. 다시 시도해 주세요.`,
+      });
     }
   };
 
@@ -47,10 +52,13 @@ export const FolderMenu = ({ src, text, modalType }: FolderMenuProps) => {
       await deleteFolder({ folderId });
       fetchFolderList();
       setShowModal((prev) => !prev);
-      // TODO: 폴더 삭제 후 선택된 폴더를 전체 폴더로 초기화
-      //  setSelectedFolder();
-    } catch (error) {
-      console.log('폴더 삭제 중 오류가 발생했습니다:', error);
+      setSelectedFolder({ createdAt: '', id: 0, name: '전체' });
+    } catch {
+      openModal({
+        type: 'alert',
+        key: 'deleteFolderError400',
+        message: `폴더 삭제 중 오류가 발생했습니다. 다시 시도해 주세요.`,
+      });
     }
   };
 
@@ -82,7 +90,7 @@ export const FolderMenu = ({ src, text, modalType }: FolderMenuProps) => {
     <>
       <CommonButton
         mode="default"
-        className="flex justify-center items-center gap-1 text-[14px] font-semibold text-secondary-60 font-[Pretendard] not-italic leading-[normal]"
+        className="flex justify-center items-center gap-1 text-[0.875rem] font-semibold text-secondary-60 font-[Pretendard] not-italic leading-[normal]"
         onClick={handleCloseModal}
       >
         <Image src={src} alt={`${text} 아이콘`} width={18} height={18} />

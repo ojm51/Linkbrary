@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useMemo } from 'react';
 import { FolderContext } from '@/lib/context';
 import { FolderTypes } from '@/lib/api';
 import { CommonButton } from '@/components';
@@ -10,16 +10,22 @@ interface FolderProps {
 export const Folder = ({ folder }: FolderProps) => {
   const { selectedFolder, setSelectedFolder } = useContext(FolderContext);
 
-  const isActive = selectedFolder.name === folder.name;
-  const folderButtonClassNames = `px-3 py-2 border border-solid border-primary rounded-[5px] font-normal text-base font-[Pretendard] not-italic leading-[normal] ${
-    isActive ? 'bg-primary text-white' : 'hover:bg-[#e7effb]'
-  }`;
+  const isActive = selectedFolder.id === folder.id;
+  const folderButtonClassNames = useMemo(
+    () =>
+      `flex-shrink-0 px-3 py-2 border border-solid border-primary rounded-[5px] whitespace-nowrap font-normal text-base font-[Pretendard] not-italic leading-[normal] ${
+        isActive ? 'bg-primary text-white' : 'hover:bg-[#e7effb]'
+      }`,
+    [isActive],
+  );
 
   return (
     <CommonButton
       mode="default"
       className={folderButtonClassNames}
-      onClick={() => setSelectedFolder(folder)}
+      onClick={() =>
+        setSelectedFolder((prev) => (prev.id === folder.id ? prev : folder))
+      }
     >
       {folder.name}
     </CommonButton>

@@ -18,10 +18,10 @@ export const ChangeFolderName = ({
       <h3 className="text-xl font-bold text-[#373740] font-[Pretendard] not-italic leading-[normal] text-center">
         폴더 이름 변경
       </h3>
-      <h4 className="mt-2 mb-6 text-center text-[14px] font-normal text-secondary-60 font-[Pretendard] not-italic leading-[22px]">
+      <h4 className="mt-2 mb-6 text-center text-[0.875rem] font-normal text-secondary-60 font-[Pretendard] not-italic leading-[1.375rem]">
         {selectedFolder.name}
       </h4>
-      <div className="mt-6 mb-[15px]">
+      <div className="mt-6 mb-[0.9375rem]">
         <CommonInput placeholder="내용 입력" onChange={getInputValue} />
       </div>
       <CommonButton mode="default" onClick={handleChangeButtonClick}>
