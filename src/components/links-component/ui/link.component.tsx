@@ -1,10 +1,19 @@
 import { match } from 'ts-pattern';
+import { LinkSearchData } from '@/lib/api';
 import { LinkCardsSkeleton, LinkPaginationSkeleton } from './skeletons';
 import { LinkPagination } from './link.pagination';
 import { useLinksContextSelector } from '../providers';
 import { LinkCards } from './link-card';
 
-export const LinkComponent = () => {
+export interface LinkComponentProps {
+  filterLinks: LinkSearchData[];
+  searchValue: string;
+}
+
+export const LinkComponent = ({
+  filterLinks,
+  searchValue,
+}: LinkComponentProps) => {
   const { linksAction } = useLinksContextSelector();
   const { isLoading } = linksAction;
   const { isError } = linksAction;
@@ -32,7 +41,7 @@ export const LinkComponent = () => {
     ))
     .otherwise(() => (
       <>
-        <LinkCards />
+        <LinkCards filterLinks={filterLinks} searchValue={searchValue} />
         <LinkPagination />
       </>
     ));
