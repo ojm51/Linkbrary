@@ -3,18 +3,20 @@ import searchIcon from '@/assets/icons/ic_search.svg';
 import closeIcon from '@/assets/images/close.png';
 
 type SearchSubmit = (e: React.FormEvent<HTMLFormElement>) => void;
+type SearchOnChange = (e: React.ChangeEvent<HTMLInputElement>) => void;
 
 interface SearchBarProps {
   searchText: string;
   setSearchText: React.Dispatch<React.SetStateAction<string>>;
   searchSubmit: SearchSubmit;
+  searchOnChange: SearchOnChange;
 }
 
 export const SearchBar = ({
   searchText,
   setSearchText,
-  // setSearchValue,
   searchSubmit,
+  searchOnChange,
 }: SearchBarProps) => {
   const searchDelete = () => {
     setSearchText('');
@@ -30,9 +32,7 @@ export const SearchBar = ({
             type="text"
             value={searchText}
             placeholder="링크를 검색해 보세요"
-            onChange={(e) => {
-              setSearchText(e.target.value);
-            }}
+            onChange={searchOnChange}
           />
         </div>
       </form>

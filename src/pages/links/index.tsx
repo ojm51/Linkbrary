@@ -8,58 +8,43 @@ import {
   ModifyAndDeleteModal,
 } from '@/components/links-component';
 import { FolderContext, FolderProvider } from '@/lib/context';
-import { linkSearch } from '@/lib/api/search/api';
-
-export interface SearchLinkData {
-  id: number;
-  title: string;
-  url: string;
-  description: string;
-  imageSource: string;
-  favorite: boolean;
-  createdAt: string;
-}
+import { linkSearch, LinkSearchData } from '@/lib/api';
 
 const MainContent = () => {
   const { selectedFolder } = useContext(FolderContext);
   const [searchText, setSearchText] = useState<string>('');
+  /** @TODO debouncing 사용하여 onChange로 검색 가능하도록 하기  */
   const [searchValue, setSearchValue] = useState<string>('');
-  const [allLinks, setAllLinks] = useState<SearchLinkData[]>([]);
-  const [filterLinks, setFilterLinks] = useState<SearchLinkData[]>([]);
+  const [filterLinks, setFilterLinks] = useState<LinkSearchData[]>([]);
 
   const fetchLinks = async () => {
+    const option = {
+      page: 0,
+      pageSize: 0,
+      search: searchValue,
+    };
+
     try {
-      const links = await linkSearch();
-      setAllLinks(links.data.list);
+      const links = await linkSearch(option);
+      console.log(links.data.list);
+      setFilterLinks(links.data.list);
     } catch (error) {
       console.error(error);
     }
   };
 
-  const handleSearch = () => {
-    const keyword = searchValue.toLowerCase();
-    const filter = allLinks.filter(
-      (allLink) =>
-        allLink.url.toLowerCase().includes(keyword) ||
-        allLink.title.toLowerCase().includes(keyword) ||
-        allLink.description.toLowerCase().includes(keyword),
-    );
-    setFilterLinks(filter);
+  const searchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setSearchValue(searchText);
+  };
+
+  const searchOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchText(e.target.value);
   };
 
   useEffect(() => {
     fetchLinks();
-  }, []);
-
-  useEffect(() => {
-    handleSearch();
   }, [searchValue]);
-
-  const searchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setSearchValue(searchText);
-    handleSearch();
-  };
 
   /** @TODO 기본적으로 '전체' 폴더가 선택되게 하기 */
   return (
@@ -73,6 +58,7 @@ const MainContent = () => {
             searchText={searchText}
             setSearchText={setSearchText}
             searchSubmit={searchSubmit}
+            searchOnChange={searchOnChange}
           />
         </div>
         {searchValue && (

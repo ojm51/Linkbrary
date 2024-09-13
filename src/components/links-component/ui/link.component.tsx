@@ -1,12 +1,12 @@
 import { match } from 'ts-pattern';
-import { SearchLinkData } from '@/pages/links';
+import { LinkSearchData } from '@/lib/api';
 import { LinkCardsSkeleton, LinkPaginationSkeleton } from './skeletons';
 import { LinkPagination } from './link.pagination';
 import { useLinksContextSelector } from '../providers';
 import { LinkCards } from './link-card';
 
 export interface LinkComponentProps {
-  filterLinks: SearchLinkData[];
+  filterLinks: LinkSearchData[];
   searchValue: string;
 }
 
