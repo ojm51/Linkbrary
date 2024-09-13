@@ -17,6 +17,8 @@
     "plugin:@typescript-eslint/recommended"
   ],
   "rules": {
+    "global-require": "off",
+    "@typescript-eslint/no-require-imports": "off",
     "react/jsx-filename-extension": [1, { "extensions": [".ts", ".tsx"] }],
     "react/function-component-definition": [
       2,

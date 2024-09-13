@@ -4,3 +4,4 @@ export * from './folder';
 export * from './user';
 export * from './share';
 export * from './link';
+export * from './search';

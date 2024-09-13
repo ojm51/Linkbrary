@@ -1,6 +1,7 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { FolderContext, FolderProvider } from '@/lib/context';
 import { AddLink, SearchBar, FolderList, FolderMenuList } from '@/components';
+import { linkSearch, LinkSearchData } from '@/lib/api';
 import {
   DropBoxStoreProvider,
   LinkComponent,
@@ -11,6 +12,38 @@ import {
 
 const MainContent = () => {
   const { selectedFolder } = useContext(FolderContext);
+  const [searchText, setSearchText] = useState<string>('');
+  /** @TODO debouncing 사용하여 onChange로 검색 가능하도록 하기  */
+  const [searchValue, setSearchValue] = useState<string>('');
+  const [filterLinks, setFilterLinks] = useState<LinkSearchData[]>([]);
+
+  const fetchLinks = async () => {
+    const option = {
+      page: 0,
+      pageSize: 0,
+      search: searchValue,
+    };
+
+    try {
+      const links = await linkSearch(option);
+      setFilterLinks(links.data.list);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const searchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setSearchValue(searchText);
+  };
+
+  const searchOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchText(e.target.value);
+  };
+
+  useEffect(() => {
+    fetchLinks();
+  }, [searchValue]);
 
   return (
     <main className="select-none">
@@ -18,9 +51,20 @@ const MainContent = () => {
         <AddLink />
       </div>
       <div className="max-w-[66.25rem] mt-5 mx-8 md:mt-10 lg:mt-10 lg:m-auto">
-        <div className="mb-8 md:mb-10">
-          <SearchBar />
+        <div className="my-10 md:mb-10">
+          <SearchBar
+            searchText={searchText}
+            setSearchText={setSearchText}
+            searchSubmit={searchSubmit}
+            searchOnChange={searchOnChange}
+          />
         </div>
+        {searchValue && (
+          <h2 className="text-lg font-bold mb-5 md:mb-10 md:text-3xl">
+            {searchValue}
+            <span className="text-secondary-60">에 대한 검색 결과입니다.</span>
+          </h2>
+        )}
         <div className="mb-7 md:mb-6">
           <FolderList />
         </div>
@@ -30,7 +74,7 @@ const MainContent = () => {
           </h3>
           <FolderMenuList />
         </div>
-        <LinkComponent />
+        <LinkComponent filterLinks={filterLinks} searchValue={searchValue} />
       </div>
     </main>
   );
