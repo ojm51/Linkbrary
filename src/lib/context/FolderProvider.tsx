@@ -15,7 +15,7 @@ export const FolderContext = createContext<FolderContextType>({
   selectedFolder: {
     createdAt: '',
     id: 0,
-    name: '',
+    name: '전체',
   },
   setSelectedFolder: () => {},
 });

@@ -1,14 +1,15 @@
-import { useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import Image from 'next/image';
 import plusIcon from '@/assets/icons/ic_plus.svg';
 import { CommonModal, ModalRenderer, Folder, CommonButton } from '@/components';
 import { getFolderList, addFolder } from '@/lib/api';
-import { FolderContext } from '@/lib/context';
+import { FolderContext, useModal } from '@/lib/context';
 import { useHorizontalScroll } from '@/lib/hooks';
 
 export const FolderList = () => {
   const { folderList, setFolderList, setSelectedFolder } =
     useContext(FolderContext);
+  const { openModal } = useModal();
 
   const [folderName, setFolderName] = useState('');
   const getInputValue = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -18,11 +19,11 @@ export const FolderList = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const handleCloseModal = () => setShowModal((prev) => !prev);
 
-  /** @TODO 폴더 리스트 역순으로 바꾸기 */
-  const fetchFolderList = async () => {
+  const fetchFolderList = useCallback(async () => {
     const data = await getFolderList();
     setFolderList(data);
-  };
+  }, [setFolderList]);
+
   useEffect(() => {
     fetchFolderList();
   }, []);
@@ -30,28 +31,37 @@ export const FolderList = () => {
   const handleAddButtonClick = async () => {
     try {
       const newFolder = await addFolder({ folderName });
-      fetchFolderList();
+      setFolderList((prev) => [...prev, newFolder]);
       setShowModal((prev) => !prev);
       setSelectedFolder(newFolder);
-    } catch (error) {
-      console.log('폴더 추가 중 오류가 발생했습니다:', error);
+    } catch {
+      openModal({
+        type: 'alert',
+        key: 'addFolderError400',
+        message: `폴더 추가 중 오류가 발생했습니다. 다시 시도해 주세요.`,
+      });
     }
   };
 
   const listWrapperRef = useHorizontalScroll();
 
+  const defaultAllFolder = { createdAt: '', id: 0, name: '전체' };
+
   return (
-    <div className="flex justify-between items-center gap-3 w-full">
-      <ul
-        className="flex justify-start items-center gap-2 overflow-x-auto whitespace-nowrap scrollbar-hide"
-        ref={listWrapperRef}
-      >
-        {folderList.map((folder) => (
-          <li key={folder.id}>
-            <Folder folder={folder} />
-          </li>
-        ))}
-      </ul>
+    <div className="flex justify-between items-center gap-4 w-full">
+      <div className="flex justify-start items-center gap-4 min-w-0">
+        <Folder folder={defaultAllFolder} />
+        <ul
+          className="flex justify-start items-center gap-2 overflow-x-auto whitespace-nowrap scrollbar-hide"
+          ref={listWrapperRef}
+        >
+          {folderList.map((folder) => (
+            <li key={folder.id}>
+              <Folder folder={folder} />
+            </li>
+          ))}
+        </ul>
+      </div>
 
       <CommonButton
         mode="default"
