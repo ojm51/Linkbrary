@@ -36,7 +36,7 @@ const Shared = ({ linkList, sharedFolderName }: SharedProps) => {
   return (
     <div>
       <div className="bg-[#F0F6FF]">
-        <h1 className="font-pretendard text-[40px] font-semibold leading-[47.73px] text-center pb-10">
+        <h1 className="font-pretendard text-[2.5rem] font-semibold leading-[2.9831rem] text-center pb-10">
           공유된 &quot;{sharedFolderName}&quot; 폴더
         </h1>
       </div>

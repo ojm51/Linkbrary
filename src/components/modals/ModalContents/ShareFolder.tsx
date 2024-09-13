@@ -9,7 +9,6 @@ import { CommonButton } from '@/components';
 export const ShareFolder = () => {
   const { selectedFolder } = useContext(FolderContext);
   /** @TODO 적당한 base url 설정하기 - 배포용 주소로 */
-  // 공유되는 폴더 주소는 "~/shared/[id]"인데, window.location.href를 사용하면 "~/links/shared/[id]"로 되어서 404 에러가 뜸
   // const BASE_URL = `https://deploy-preview-40--dev-linkbrary.netlify.app`;
   const BASE_URL = `http://localhost:3000`;
   const SHARING_URL = `${BASE_URL}/shared/${selectedFolder.id}`;
@@ -91,13 +90,13 @@ export const ShareFolder = () => {
       <h3 className="text-xl font-bold text-[#373740] font-[Pretendard] not-italic leading-[normal] text-center">
         폴더 공유
       </h3>
-      <h4 className="mt-2 mb-6 text-center text-[14px] font-normal text-secondary-60 font-[Pretendard] not-italic leading-[22px]">
+      <h4 className="mt-2 mb-6 text-center text-[0.875rem] font-normal text-secondary-60 font-[Pretendard] not-italic leading-[1.375rem]">
         {selectedFolder.name}
       </h4>
       <ul className="flex justify-center items-center gap-8">
         {shareMethodList.map((shareMethod) => (
           <li
-            className="flex flex-col justify-center items-center gap-[10px]"
+            className="flex flex-col justify-center items-center gap-[0.625rem]"
             key={shareMethod.id}
           >
             <CommonButton
@@ -112,7 +111,7 @@ export const ShareFolder = () => {
                 height={42}
               />
             </CommonButton>
-            <p className="text-center text-[13px] text-[#373740] font-[Pretendard] not-italic leading-[15px]">
+            <p className="text-center text-[0.8125rem] text-[#373740] font-[Pretendard] not-italic leading-[0.9375rem]">
               {shareMethod.text}
             </p>
           </li>

@@ -81,7 +81,7 @@ export const FolderMenu = ({ src, text, modalType }: FolderMenuProps) => {
     <>
       <CommonButton
         mode="default"
-        className="flex justify-center items-center gap-1 text-[14px] font-semibold text-secondary-60 font-[Pretendard] not-italic leading-[normal]"
+        className="flex justify-center items-center gap-1 text-[0.875rem] font-semibold text-secondary-60 font-[Pretendard] not-italic leading-[normal]"
         onClick={handleCloseModal}
       >
         <Image src={src} alt={`${text} 아이콘`} width={18} height={18} />

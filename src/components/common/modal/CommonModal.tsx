@@ -14,7 +14,7 @@ export const CommonModal = ({ closeModal, children }: CommonModalProps) => {
       onClick={closeModal}
     >
       <section
-        className="w-[360px] relative px-10 py-8 bg-white rounded-[15px] border solid border-[#ccd5e3]"
+        className="w-[22.5rem] relative px-10 py-8 bg-white rounded-[15px] border solid border-[#ccd5e3]"
         onClick={(e) => e.stopPropagation()}
       >
         <CommonButton
