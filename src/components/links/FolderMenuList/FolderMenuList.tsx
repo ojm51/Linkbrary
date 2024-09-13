@@ -26,7 +26,7 @@ const menuList = [
 
 export const FolderMenuList = () => {
   return (
-    <ul className="flex justify-center items-center gap-3">
+    <ul className="flex justify-start items-center gap-3 md:items-center">
       {menuList.map((menu) => (
         <li key={menu.id}>
           <FolderMenu

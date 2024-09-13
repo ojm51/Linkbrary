@@ -8,7 +8,7 @@ export const useFolderHandler = () => {
   const [selectedFolder, setSelectedFolder] = useState<FolderTypes>({
     createdAt: '',
     id: 0,
-    name: '',
+    name: '전체',
   });
 
   const fetchFolderList = useCallback(async () => {
