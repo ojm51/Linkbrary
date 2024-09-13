@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 import Image from 'next/image';
 import Link from 'next/link';
 import { match } from 'ts-pattern';
@@ -10,6 +11,7 @@ import ProfileImage from '@/assets/images/profileImage.png';
 const Header = () => {
   const { logout } = useAuth();
   const [logoutView, setLogoutView] = useState<boolean>(false);
+  const route = useRouter();
 
   const toggleProfileMenu = () => {
     setLogoutView(!logoutView);
@@ -40,12 +42,25 @@ const Header = () => {
             .with(true, () => (
               <>
                 {/** @Todo 해당 영역 보여지기전에 텀 수정 */}
-                <Link
-                  href="/favorite"
-                  className="flex items-center justify-center w-[4.375rem] h-[1.875rem] border border-solid border-primary rounded-[0.25rem] text-xs md:w-[5.813rem] mr-4 md:h-[2.313rem] md:text-sm md:mr-6"
-                >
-                  ⭐️ 즐겨찾기
-                </Link>
+                {match(route.pathname === '/favorite')
+                  .with(true, () => (
+                    <Link
+                      href="/links"
+                      className="flex items-center justify-center w-[4.375rem] h-[1.875rem] border border-solid border-primary rounded-[0.25rem] text-xs md:w-[5.813rem] mr-4 md:h-[2.313rem] md:text-sm md:mr-6"
+                    >
+                      <span className="text-primary text-base">⏎</span>
+                      &nbsp;목록으로
+                    </Link>
+                  ))
+                  .with(false, () => (
+                    <Link
+                      href="/favorite"
+                      className="flex items-center justify-center w-[4.375rem] h-[1.875rem] border border-solid border-primary rounded-[0.25rem] text-xs md:w-[5.813rem] mr-4 md:h-[2.313rem] md:text-sm md:mr-6"
+                    >
+                      ⭐️ 즐겨찾기
+                    </Link>
+                  ))
+                  .exhaustive()}
                 <div className="relative ">
                   <button
                     type="button"
