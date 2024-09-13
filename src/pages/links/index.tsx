@@ -30,8 +30,8 @@ const MainContent = () => {
           </h3>
           <FolderMenuList />
         </div>
+        <LinkComponent />
       </div>
-      <LinkComponent />
     </main>
   );
 };
