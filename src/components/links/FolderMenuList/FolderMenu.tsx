@@ -37,7 +37,7 @@ export const FolderMenu = ({ src, text, modalType }: FolderMenuProps) => {
       fetchFolderList();
       setShowModal((prev) => !prev);
       setSelectedFolder(newFolder);
-    } catch (error) {
+    } catch {
       openModal({
         type: 'alert',
         key: 'changeFolderNameError400',
@@ -53,7 +53,7 @@ export const FolderMenu = ({ src, text, modalType }: FolderMenuProps) => {
       fetchFolderList();
       setShowModal((prev) => !prev);
       setSelectedFolder({ createdAt: '', id: 0, name: '전체' });
-    } catch (error) {
+    } catch {
       openModal({
         type: 'alert',
         key: 'deleteFolderError400',

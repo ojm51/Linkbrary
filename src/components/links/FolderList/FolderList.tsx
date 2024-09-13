@@ -34,7 +34,7 @@ export const FolderList = () => {
       setFolderList((prev) => [...prev, newFolder]);
       setShowModal((prev) => !prev);
       setSelectedFolder(newFolder);
-    } catch (error) {
+    } catch {
       openModal({
         type: 'alert',
         key: 'addFolderError400',
@@ -52,8 +52,6 @@ export const FolderList = () => {
       <div className="flex justify-start items-center gap-4 min-w-0">
         <Folder folder={defaultAllFolder} />
         <ul
-          items-center
-          min-w-max
           className="flex justify-start items-center gap-2 overflow-x-auto whitespace-nowrap scrollbar-hide"
           ref={listWrapperRef}
         >

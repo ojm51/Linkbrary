@@ -63,7 +63,7 @@ export const AddLink = () => {
       /** @TODO 확인 모달 띄우기 */
       alert('링크가 추가되었습니다!');
       setUrl('');
-    } catch (error) {
+    } catch {
       openModal({
         type: 'alert',
         key: 'addLinkError400',
