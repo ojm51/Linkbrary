@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { CommonButton, CommonModal, ModalRenderer } from '@/components';
 import { FolderContext, useModal } from '@/lib/context';
 import { deleteFolder, getFolderList, updateFolder } from '@/lib/api';
+import { useLinksContextSelector } from '@/components/links-component';
 
 type ModalType = 'add' | 'share' | 'changeName' | 'delete';
 
@@ -15,6 +16,9 @@ interface FolderMenuProps {
 export const FolderMenu = ({ src, text, modalType }: FolderMenuProps) => {
   const { setFolderList, selectedFolder, setSelectedFolder } =
     useContext(FolderContext);
+  const {
+    linksAction: { data: linkData },
+  } = useLinksContextSelector();
   const { openModal } = useModal();
 
   const [newFolderName, setNewFolderName] = useState('');
@@ -48,6 +52,17 @@ export const FolderMenu = ({ src, text, modalType }: FolderMenuProps) => {
 
   const handleDeleteButtonClick = async () => {
     const folderId = selectedFolder.id;
+    if (linkData && linkData.data.totalCount > 0) {
+      openModal({
+        type: 'alert',
+        key: 'notEmptyFolderDeleteError',
+        message: '링크가 들어있는 폴더는 삭제할 수 없습니다.',
+        onConfirm() {
+          setShowModal(false);
+        },
+      });
+      return;
+    }
     try {
       await deleteFolder({ folderId });
       fetchFolderList();
