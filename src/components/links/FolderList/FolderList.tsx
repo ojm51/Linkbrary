@@ -19,15 +19,6 @@ export const FolderList = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const handleCloseModal = () => setShowModal((prev) => !prev);
 
-  const fetchFolderList = useCallback(async () => {
-    const data = await getFolderList();
-    setFolderList(data);
-  }, [setFolderList]);
-
-  useEffect(() => {
-    fetchFolderList();
-  }, []);
-
   const handleAddButtonClick = async () => {
     try {
       const newFolder = await addFolder({ folderName });
