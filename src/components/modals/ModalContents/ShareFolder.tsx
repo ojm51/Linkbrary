@@ -10,8 +10,7 @@ export const ShareFolder = () => {
   const { openModal } = useModal();
   const { selectedFolder } = useContext(FolderContext);
   /** @TODO 적당한 base url 설정하기 - 배포용 주소로 */
-  // const BASE_URL = `https://deploy-preview-40--dev-linkbrary.netlify.app`;
-  const BASE_URL = `http://localhost:3000`;
+  const BASE_URL = `배포용 주소로`;
   const SHARING_URL = `${BASE_URL}/shared/${selectedFolder.id}`;
 
   const { Kakao, open } = window;
@@ -30,7 +29,7 @@ export const ShareFolder = () => {
       openModal({
         type: 'alert',
         key: 'kakaoInitError',
-        message: `카카오톡 공유 기능이 아직 초기화되지 않았습니다.`,
+        message: `카카오톡 공유하기에 실패하였습니다. 공유를 다시 시도해주세요.`,
       });
       return;
     }
@@ -66,8 +65,12 @@ export const ShareFolder = () => {
     navigator.clipboard
       .writeText(SHARING_URL)
       .then(() => {
-        /** @TODO 확인 모달 띄우기 */
-        alert('클립보드에 복사되었습니다.');
+        openModal({
+          type: 'alert',
+          key: 'addLinkSuccess',
+          title: '✅ 확인',
+          message: `클립보드에 복사되었습니다!`,
+        });
       })
       .catch(() => {
         openModal({
