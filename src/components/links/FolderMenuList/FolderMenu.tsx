@@ -35,6 +35,12 @@ export const FolderMenu = ({ src, text, modalType }: FolderMenuProps) => {
     try {
       const newFolder = await updateFolder({ newFolderName, folderId });
       fetchFolderList();
+      openModal({
+        type: 'alert',
+        key: 'changeFolderNameSuccess',
+        title: '✅ 확인',
+        message: `폴더 이름이 변경되었습니다!`,
+      });
       setShowModal((prev) => !prev);
       setSelectedFolder(newFolder);
     } catch {
@@ -51,6 +57,12 @@ export const FolderMenu = ({ src, text, modalType }: FolderMenuProps) => {
     try {
       await deleteFolder({ folderId });
       fetchFolderList();
+      openModal({
+        type: 'alert',
+        key: 'deleteFolderSuccess',
+        title: '✅ 확인',
+        message: `폴더가 삭제되었습니다!`,
+      });
       setShowModal((prev) => !prev);
       setSelectedFolder({ createdAt: '', id: 0, name: '전체' });
     } catch {

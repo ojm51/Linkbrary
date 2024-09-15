@@ -4,6 +4,7 @@ import { FolderContext, useModal } from '@/lib/context';
 export const useFolderShare = () => {
   const { openModal } = useModal();
   const { selectedFolder } = useContext(FolderContext);
+
   /** @TODO 적당한 base url 설정하기 - 배포용 주소로 */
   const BASE_URL = `http://localhost:3000/`;
   const SHARING_URL = `${BASE_URL}/shared/${selectedFolder.id}`;
