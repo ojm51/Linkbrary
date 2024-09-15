@@ -1,8 +1,8 @@
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import Image from 'next/image';
 import plusIcon from '@/assets/icons/ic_plus.svg';
 import { CommonModal, ModalRenderer, Folder, CommonButton } from '@/components';
-import { getFolderList, addFolder } from '@/lib/api';
+import { addFolder } from '@/lib/api';
 import { FolderContext, useModal } from '@/lib/context';
 import { useHorizontalScroll } from '@/lib/hooks';
 

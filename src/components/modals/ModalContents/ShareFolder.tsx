@@ -57,7 +57,7 @@ export const ShareFolder = () => {
       openModal({
         type: 'alert',
         key: 'invalidBrowserError',
-        message: `복사하기가 지원되지 않는 브라우저입니다.`,
+        message: `복사하기가 지원되지 않는 브라우저입니다. 크롬 또는 사파리와 같은 최신 브라우저를 사용해주세요.`,
       });
       return;
     }
