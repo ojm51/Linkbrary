@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import searchIcon from '@/assets/icons/ic_search.svg';
-import closeIcon from '@/assets/images/close.png';
+import closeIcon from '@/assets/icons/ic_close.svg';
 import { CommonButton } from '@/components';
 
 type SearchSubmit = (e: React.FormEvent<HTMLFormElement>) => void;
