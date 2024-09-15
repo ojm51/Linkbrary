@@ -24,6 +24,12 @@ export const FolderList = () => {
       const newFolder = await addFolder({ folderName });
       setFolderList((prev) => [...prev, newFolder]);
       setShowModal((prev) => !prev);
+      openModal({
+        type: 'alert',
+        key: 'addFolderSuccess',
+        title: '✅ 확인',
+        message: `폴더가 추가되었습니다!`,
+      });
       setSelectedFolder(newFolder);
     } catch {
       openModal({

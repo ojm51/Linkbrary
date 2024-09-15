@@ -89,7 +89,7 @@ const CardListPage = ({
     if (fetchError) {
       return (
         <div className="text-center py-10 text-gray-500">
-          즐겨찾기한 링크를 불러오는 데 실패했습니다.
+          {`${isSharedPage ? '공유된' : '즐겨찾기한'} 링크를 불러오는 데 실패했습니다.`}
         </div>
       );
     }
@@ -97,7 +97,7 @@ const CardListPage = ({
     if (favoriteCards.length === 0) {
       return (
         <div className="text-center py-10 text-gray-500">
-          즐겨찾기한 링크가 없습니다.
+          {`${isSharedPage ? '저장된' : '즐겨찾기한'} 링크가 없습니다.`}
         </div>
       );
     }
