@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import searchIcon from '@/assets/icons/ic_search.svg';
 import closeIcon from '@/assets/images/close.png';
+import { CommonButton } from '@/components';
 
 type SearchSubmit = (e: React.FormEvent<HTMLFormElement>) => void;
 type SearchOnChange = (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -37,9 +38,9 @@ export const SearchBar = ({
         </div>
       </form>
       {searchText && (
-        <button type="button" onClick={searchDelete}>
+        <CommonButton mode="default" className="" onClick={searchDelete}>
           <Image src={closeIcon} alt="삭제 아이콘" width={24} height={24} />
-        </button>
+        </CommonButton>
       )}
     </div>
   );
