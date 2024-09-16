@@ -1,6 +1,6 @@
 import { AxiosError } from 'axios';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { LoginParams, UserInfoDTO, getUserInfo } from '../api';
 import { getFromStorage, setToStorage } from '../storage';
@@ -37,7 +37,6 @@ export const useAuthHandler = () => {
         onSuccess: async (res) => {
           if (res?.data.accessToken) {
             const { accessToken } = res.data;
-            console.log(accessToken);
             await getUserInfo({ accessToken })
               .then((response) => {
                 if (response.data) {
@@ -112,12 +111,15 @@ export const useAuthHandler = () => {
     }
   }, []);
 
-  return {
-    userInfo,
-    isLoggedin,
-    login,
-    logout,
-    updateUserInfo,
-    updateIsLoggedIn,
-  };
+  const providerValue = useMemo(
+    () => ({
+      login,
+      logout,
+      updateUserInfo,
+      updateIsLoggedIn,
+    }),
+    [],
+  );
+
+  return { ...providerValue, userInfo, isLoggedin };
 };
