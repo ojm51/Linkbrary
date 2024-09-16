@@ -59,10 +59,18 @@ export const FolderList = () => {
 
   const handleAddButtonClick = async () => {
     try {
-      const newFolder = await addFolder({ folderName });
-      setFolderList((prev) => [...prev, newFolder]);
-      setShowModal((prev) => !prev);
-      setSelectedFolder(newFolder);
+      if (folderName === '전체') {
+        openModal({
+          type: 'alert',
+          key: 'addFolderNameError',
+          message: '"전체" 라는 이름의 폴더는 생성할 수 없습니다.',
+        });
+      } else {
+        const newFolder = await addFolder({ folderName });
+        setFolderList((prev) => [...prev, newFolder]);
+        setShowModal((prev) => !prev);
+        setSelectedFolder(newFolder);
+      }
     } catch {
       openModal({
         type: 'alert',
