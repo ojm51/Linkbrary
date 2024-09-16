@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import Image from 'next/image';
 import { CommonButton, CommonModal, ModalRenderer } from '@/components';
 import { useFolder, useModal } from '@/lib/context';
@@ -17,31 +17,34 @@ export const FolderMenu = ({ src, text, modalType }: FolderMenuProps) => {
   const { openModal } = useModal();
 
   const [newFolderName, setNewFolderName] = useState('');
+  const [showModal, setShowModal] = useState<boolean>(false);
+
   const getInputValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewFolderName(e.target.value);
   };
 
-  const [showModal, setShowModal] = useState<boolean>(false);
-  const handleCloseModal = () => setShowModal((prev) => !prev);
+  const toggleModal = () => setShowModal((prev) => !prev);
 
-  const fetchFolderList = async () => {
+  const fetchFolderList = useCallback(async () => {
     const data = await getFolderList();
     setFolderList(data);
-  };
+  }, []);
 
   const handleChangeButtonClick = async () => {
-    const folderId = selectedFolder.id;
     try {
-      const newFolder = await updateFolder({ newFolderName, folderId });
-      fetchFolderList();
+      const newFolder = await updateFolder({
+        newFolderName,
+        folderId: selectedFolder.id,
+      });
+      await fetchFolderList();
+      setSelectedFolder(newFolder);
       openModal({
         type: 'alert',
         key: 'changeFolderNameSuccess',
         title: '✅ 확인',
         message: `폴더 이름이 변경되었습니다!`,
       });
-      setShowModal((prev) => !prev);
-      setSelectedFolder(newFolder);
+      toggleModal();
     } catch {
       openModal({
         type: 'alert',
@@ -52,18 +55,17 @@ export const FolderMenu = ({ src, text, modalType }: FolderMenuProps) => {
   };
 
   const handleDeleteButtonClick = async () => {
-    const folderId = selectedFolder.id;
     try {
-      await deleteFolder({ folderId });
-      fetchFolderList();
+      await deleteFolder({ folderId: selectedFolder.id });
+      await fetchFolderList();
+      setSelectedFolder({ createdAt: '', id: 0, name: '전체' });
       openModal({
         type: 'alert',
         key: 'deleteFolderSuccess',
         title: '✅ 확인',
         message: `폴더가 삭제되었습니다!`,
       });
-      setShowModal((prev) => !prev);
-      setSelectedFolder({ createdAt: '', id: 0, name: '전체' });
+      toggleModal();
     } catch {
       openModal({
         type: 'alert',
@@ -102,13 +104,13 @@ export const FolderMenu = ({ src, text, modalType }: FolderMenuProps) => {
       <CommonButton
         mode="default"
         className="flex justify-center items-center gap-1 text-[0.875rem] font-semibold text-secondary-60 font-[Pretendard] not-italic leading-[normal]"
-        onClick={handleCloseModal}
+        onClick={toggleModal}
       >
         <Image src={src} alt={`${text} 아이콘`} width={18} height={18} />
         {text}
       </CommonButton>
       {showModal && (
-        <CommonModal closeModal={handleCloseModal}>{renderModal()}</CommonModal>
+        <CommonModal closeModal={toggleModal}>{renderModal()}</CommonModal>
       )}
     </>
   );
