@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useSearchParams } from 'next/navigation';
-import { ComponentType, useEffect } from 'react';
+import { ComponentType, useCallback, useEffect } from 'react';
 import { match } from 'ts-pattern';
 
 import googleLogin from '@/assets/icons/sns/ic_google.svg';
@@ -69,6 +69,12 @@ const withSocialAuthHandler = (
       socialProvider: 'kakao',
     });
     const TSocialLogin: SocialLoginType = { type };
+
+    const handleRedirect = useCallback((token: string) => {
+      kakaoMutate.mutate({ token });
+      router.push(Routes.LOGIN);
+    }, []);
+
     const handleSocialLogin = match(TSocialLogin)
       .with({ type: 'login' }, () => ({
         handleGoogleLogin: () => {
@@ -109,10 +115,9 @@ const withSocialAuthHandler = (
 
     useEffect(() => {
       if (kakaoCode) {
-        kakaoMutate.mutate({ token: kakaoCode });
-        router.push(Routes.LOGIN);
+        handleRedirect(kakaoCode);
       }
-    }, []);
+    }, [kakaoCode, handleRedirect]);
 
     return <WrappedComponent {...handleSocialLogin} />;
   };

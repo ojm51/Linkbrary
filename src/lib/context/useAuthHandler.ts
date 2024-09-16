@@ -8,7 +8,7 @@ import { useLogin } from '../hooks';
 import { Routes } from '../route';
 import { useModal } from './ModalProvider';
 
-interface UserInfo extends UserInfoDTO {
+export interface UserInfo extends UserInfoDTO {
   accessToken: string;
 }
 
@@ -37,6 +37,7 @@ export const useAuthHandler = () => {
         onSuccess: async (res) => {
           if (res?.data.accessToken) {
             const { accessToken } = res.data;
+            console.log(accessToken);
             await getUserInfo({ accessToken })
               .then((response) => {
                 if (response.data) {

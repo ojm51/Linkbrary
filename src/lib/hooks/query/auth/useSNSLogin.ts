@@ -1,17 +1,14 @@
 import { AxiosError } from 'axios';
-import { useRouter } from 'next/router';
 import { useMutation } from '@tanstack/react-query';
 
 import { SocialLoginParams, socialLogin } from '@/lib/api';
-import { useAuth, useModal } from '@/lib/context';
-import { Routes } from '@/lib/route';
+import { UserInfo, useAuth, useModal } from '@/lib/context';
 import { MUTATION_KEY } from '../config';
 
 export const useSNSLogin = ({
   socialProvider,
 }: Pick<SocialLoginParams, 'socialProvider'>) => {
   const { updateIsLoggedIn, updateUserInfo } = useAuth();
-  const router = useRouter();
   const { openModal } = useModal();
   return useMutation({
     mutationKey: [
@@ -23,19 +20,21 @@ export const useSNSLogin = ({
       socialLogin({ socialProvider, token }),
     onSuccess(res) {
       if (res) {
+        console.log(res);
+        const accessToken = res.data.access_token;
         const { id, email, name, imageSource, createdAt } = res.data.user;
-        const newUserInfo = {
+        console.log(accessToken);
+        const newUserInfo: UserInfo = {
           id,
           email,
           name,
           imageSource,
           createdAt,
-          accessToken: res.data.accessToken,
+          accessToken,
         };
-
+        console.log(newUserInfo);
         updateUserInfo(newUserInfo);
         updateIsLoggedIn(true);
-        router.push(Routes.HOME);
       }
     },
     onError(error) {
