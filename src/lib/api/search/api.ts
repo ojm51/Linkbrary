@@ -2,8 +2,8 @@ import { API_PATH, instance } from '../config';
 import { LinkSearchParams, LinkSearchType } from './types';
 
 export const linkSearch = async ({
-  page = 1,
-  pageSize = 9,
+  page = 0,
+  pageSize = 0,
   search = '',
 }: LinkSearchParams) => {
   const response = await instance.get<LinkSearchType>(API_PATH.link.default, {
