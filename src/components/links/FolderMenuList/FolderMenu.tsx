@@ -48,7 +48,7 @@ export const FolderMenu = ({ src, text, modalType }: FolderMenuProps) => {
         key: `preventDefaultFolder${modalType}`,
         message: `전체 폴더는 ${modalTypeText}할 수 없습니다.`,
       });
-      return null;
+      return;
     }
     if (modalType === 'share' && linkData && linkData.data.totalCount < 1) {
       openModal({
@@ -56,7 +56,7 @@ export const FolderMenu = ({ src, text, modalType }: FolderMenuProps) => {
         key: 'preventEmptyFolderShare',
         message: '폴더가 비어있습니다. 먼저 링크를 추가해주세요 😄',
       });
-      return null;
+      return;
     }
     setShowModal((prev) => !prev);
   };

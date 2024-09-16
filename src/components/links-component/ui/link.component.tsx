@@ -1,11 +1,11 @@
+import { AxiosError } from 'axios';
 import { match } from 'ts-pattern';
 import { LinkSearchData } from '@/lib/api';
+import { useModal } from '@/lib/context';
+import { useLinksContextSelector } from '../providers';
 import { LinkCardsSkeleton, LinkPaginationSkeleton } from './skeletons';
 import { LinkPagination } from './link.pagination';
-import { useLinksContextSelector } from '../providers';
 import { LinkCards } from './link-card';
-import { AxiosError } from 'axios';
-import { useModal } from '@/lib/context';
 
 export interface LinkComponentProps {
   filterLinks: LinkSearchData[];
