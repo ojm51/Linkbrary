@@ -22,7 +22,7 @@ const SNSAuthComponent = ({
   handleKakaoLogin,
 }: SNSLoginProps) => {
   const sectionWrapper =
-    'flex w-[400px] py-[12px] px-[24px] justify-between items-center rounded-[8px] border-[1px] bg-secondary-10';
+    'flex w-full py-3 px-6 justify-between items-center rounded-[8px] border-[1px] bg-secondary-10';
   const textStyle = 'font-[Pretendard] text-[14px] not-italic leading-[normal]';
   const iconContainer = 'flex items-start gap-[16px]';
 
@@ -78,9 +78,13 @@ const withSocialAuthHandler = (
     const handleSocialLogin = match(TSocialLogin)
       .with({ type: 'login' }, () => ({
         handleGoogleLogin: () => {
-          if (window) {
-            window.location.assign(API_PATH.oauth.google.login);
-          }
+          openModal({
+            type: 'alert',
+            key: 'SNSGoogleIsMissing',
+            title: '알림 🔊',
+            message: '구글 로그인은 아직 준비중입니다. 😅',
+            confirmPhrase: '이해하기 😉',
+          });
         },
         handleKakaoLogin: () => {
           if (window) {
@@ -89,7 +93,15 @@ const withSocialAuthHandler = (
         },
       }))
       .with({ type: 'signup' }, () => ({
-        handleGoogleLogin: () => {},
+        handleGoogleLogin: () => {
+          openModal({
+            type: 'alert',
+            key: 'SNSGoogleIsMissing',
+            title: '알림 🔊',
+            message: '구글 로그인은 아직 준비중입니다. 😅',
+            confirmPhrase: '이해하기 😉',
+          });
+        },
         handleKakaoLogin: () => {
           if (window) {
             window.location.assign(API_PATH.oauth.kakao.signup);
