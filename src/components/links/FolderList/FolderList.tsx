@@ -1,14 +1,13 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import plusIcon from '@/assets/icons/ic_plus.svg';
 import { CommonModal, ModalRenderer, Folder, CommonButton } from '@/components';
 import { addFolder } from '@/lib/api';
-import { FolderContext, useModal } from '@/lib/context';
+import { useFolder, useModal } from '@/lib/context';
 import { useHorizontalScroll } from '@/lib/hooks';
 
 export const FolderList = () => {
-  const { folderList, setFolderList, setSelectedFolder } =
-    useContext(FolderContext);
+  const { folderList, setFolderList, setSelectedFolder } = useFolder();
   const { openModal } = useModal();
 
   const [folderName, setFolderName] = useState('');
@@ -42,12 +41,12 @@ export const FolderList = () => {
 
   const listWrapperRef = useHorizontalScroll();
 
-  const defaultAllFolder = { createdAt: '', id: 0, name: '전체' };
+  const defaultFolderAll = { createdAt: '', id: 0, name: '전체' };
 
   return (
     <div className="flex justify-between items-center gap-4 w-full">
       <div className="flex justify-start items-center gap-4 min-w-0">
-        <Folder folder={defaultAllFolder} />
+        <Folder folder={defaultFolderAll} />
         <ul
           className="flex justify-start items-center gap-2 overflow-x-auto whitespace-nowrap scrollbar-hide"
           ref={listWrapperRef}

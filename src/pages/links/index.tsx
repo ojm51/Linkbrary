@@ -1,5 +1,5 @@
-import { useContext, useEffect, useState } from 'react';
-import { FolderContext, FolderProvider } from '@/lib/context';
+import { useEffect, useState } from 'react';
+import { FolderProvider, useFolder } from '@/lib/context';
 import { AddLink, SearchBar, FolderList, FolderMenuList } from '@/components';
 import { linkSearch, LinkSearchData } from '@/lib/api';
 import {
@@ -11,7 +11,7 @@ import {
 } from '@/components/links-component';
 
 const MainContent = () => {
-  const { selectedFolder } = useContext(FolderContext);
+  const { selectedFolder } = useFolder();
   const [searchText, setSearchText] = useState<string>('');
   /** @TODO debouncing 사용하여 onChange로 검색 가능하도록 하기  */
   const [searchValue, setSearchValue] = useState<string>('');

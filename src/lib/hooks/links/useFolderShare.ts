@@ -1,9 +1,9 @@
-import { useEffect, useCallback, useContext } from 'react';
-import { FolderContext, useModal } from '@/lib/context';
+import { useEffect, useCallback } from 'react';
+import { useFolder, useModal } from '@/lib/context';
 
 export const useFolderShare = () => {
   const { openModal } = useModal();
-  const { selectedFolder } = useContext(FolderContext);
+  const { selectedFolder } = useFolder();
 
   /** @TODO 적당한 base url 설정하기 - 배포용 주소로 */
   const BASE_URL = `http://localhost:3000/`;

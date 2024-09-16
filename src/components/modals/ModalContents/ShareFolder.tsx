@@ -1,15 +1,14 @@
-import { useContext } from 'react';
 import Image from 'next/image';
 import kakaoIcon from '@/assets/images/kakaoTalk.png';
 import facebookIcon from '@/assets/images/facebook.png';
 import copyLinkIcon from '@/assets/images/copyLink.png';
-import { FolderContext } from '@/lib/context';
+import { useFolder } from '@/lib/context';
 import { useFolderShare } from '@/lib/hooks';
 import { CommonButton } from '@/components';
 
 export const ShareFolder = () => {
   const { kakaoTalkShare, facebookShare, clipboardCopy } = useFolderShare();
-  const { selectedFolder } = useContext(FolderContext);
+  const { selectedFolder } = useFolder();
 
   const shareMethodList = [
     {

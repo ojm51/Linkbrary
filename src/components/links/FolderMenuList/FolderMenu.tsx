@@ -1,7 +1,7 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import { CommonButton, CommonModal, ModalRenderer } from '@/components';
-import { FolderContext, useModal } from '@/lib/context';
+import { useFolder, useModal } from '@/lib/context';
 import { deleteFolder, getFolderList, updateFolder } from '@/lib/api';
 
 type ModalType = 'add' | 'share' | 'changeName' | 'delete';
@@ -13,8 +13,7 @@ interface FolderMenuProps {
 }
 
 export const FolderMenu = ({ src, text, modalType }: FolderMenuProps) => {
-  const { setFolderList, selectedFolder, setSelectedFolder } =
-    useContext(FolderContext);
+  const { setFolderList, selectedFolder, setSelectedFolder } = useFolder();
   const { openModal } = useModal();
 
   const [newFolderName, setNewFolderName] = useState('');
