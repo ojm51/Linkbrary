@@ -1,5 +1,7 @@
+import { AxiosError } from 'axios';
 import React, { useState, useMemo, useEffect } from 'react';
 import { getFavoriteLinkList, FavoriteLinkTypes, LinkTypes } from '@/lib/api';
+import { useAuth, useModal } from '@/lib/context';
 import Card from './Card';
 import SkeletonCard from './SkeletonCard';
 
@@ -21,6 +23,8 @@ const CardListPage = ({
   const [favoriteCards, setFavoriteCards] = useState<FavoriteLinkTypes[]>([]);
   const [loading, setLoading] = useState(true);
   const [fetchError, setFetchError] = useState<boolean>(false);
+  const { logout } = useAuth();
+  const { openModal } = useModal();
 
   useEffect(() => {
     const fetchFavoriteCards = async () => {
@@ -33,6 +37,27 @@ const CardListPage = ({
         }
         setFetchError(false);
       } catch (error) {
+        if (error instanceof AxiosError) {
+          switch (error.status) {
+            case 401:
+              logout();
+              openModal({
+                type: 'alert',
+                key: 'expireToken',
+                message: '로그인이 만료되었습니다. 다시 로그인해주세요.',
+              });
+              break;
+
+            default:
+              openModal({
+                type: 'alert',
+                key: 'failedFavoriteCard',
+                message: `Failed to fetch favorite cards:${error.message}`,
+              });
+              break;
+          }
+          return;
+        }
         console.error('Failed to fetch favorite cards:', error);
         setFetchError(true);
       } finally {

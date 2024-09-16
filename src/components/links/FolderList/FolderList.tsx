@@ -1,14 +1,16 @@
+import { AxiosError } from 'axios';
 import { useCallback, useContext, useEffect, useState } from 'react';
 import Image from 'next/image';
 import plusIcon from '@/assets/icons/ic_plus.svg';
 import { CommonModal, ModalRenderer, Folder, CommonButton } from '@/components';
 import { getFolderList, addFolder } from '@/lib/api';
-import { FolderContext, useModal } from '@/lib/context';
+import { FolderContext, ModalType, useAuth, useModal } from '@/lib/context';
 import { useHorizontalScroll } from '@/lib/hooks';
 
 export const FolderList = () => {
   const { folderList, setFolderList, setSelectedFolder } =
     useContext(FolderContext);
+  const { logout } = useAuth();
   const { openModal } = useModal();
 
   const [folderName, setFolderName] = useState('');
@@ -20,8 +22,35 @@ export const FolderList = () => {
   const handleCloseModal = () => setShowModal((prev) => !prev);
 
   const fetchFolderList = useCallback(async () => {
-    const data = await getFolderList();
-    setFolderList(data);
+    try {
+      const data = await getFolderList();
+      setFolderList(data);
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        const modalOption: ModalType = {
+          type: 'alert',
+          key: 'linkSearchDefault',
+        };
+        switch (error.status) {
+          case 401:
+            modalOption.key = 'expireTokenError';
+            modalOption.message =
+              '로그인이 만료되었습니다. 다시 로그인해주세요.';
+            logout();
+            break;
+          case 400:
+            modalOption.key = 'httpRequestError';
+            modalOption.message = '잘못된 요청입니다. 요청 값을 확인해주세요.';
+            break;
+          default:
+            modalOption.key = 'linkSearchUnknownError';
+            modalOption.message =
+              '알 수 없는 에러입니다. 계속되는 경우 관리자에게 문의해주세요.';
+            break;
+        }
+        openModal(modalOption);
+      }
+    }
   }, [setFolderList]);
 
   useEffect(() => {
