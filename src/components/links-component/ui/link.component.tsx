@@ -28,14 +28,14 @@ export const LinkComponent = ({
     .with({ isLoading: false, isError: true }, () => (
       <section className="p-8 flex justify-center">
         <h1 className="text-2xl">
-          데이터를 불러오는 데 실패했습니다. 다시 시도해 주세요.
+          데이터를 불러오는 데 실패했습니다. 다시 시도해주세요.
         </h1>
       </section>
     ))
     .with({ zeroLength: true }, () => (
       <section className="p-8 flex justify-center">
         <h1 className="text-2xl">
-          데이터가 존재하지 않습니다. 링크를 추가해 주세요.
+          데이터가 존재하지 않습니다. 링크를 추가해주세요.
         </h1>
       </section>
     ))

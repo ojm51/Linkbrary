@@ -23,7 +23,7 @@ export const useFolderHandler = () => {
       openModal({
         type: 'alert',
         key: 'getFolderError400',
-        message: `폴더를 가져오는 중 오류가 발생했습니다. 다시 시도해주세요.`,
+        message: `폴더를 가져오는 중 에러가 발생했습니다. 다시 시도해주세요.`,
       });
     }
   }, []);

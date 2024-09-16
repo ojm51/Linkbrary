@@ -44,7 +44,7 @@ export const AddLink = () => {
       openModal({
         type: 'alert',
         key: 'addLinkError_noFolder',
-        message: `아래에서 저장할 폴더를 선택해 주세요.`,
+        message: `아래에서 저장할 폴더를 선택해주세요.`,
       });
       return;
     }

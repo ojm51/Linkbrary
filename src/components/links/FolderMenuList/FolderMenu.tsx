@@ -47,7 +47,7 @@ export const FolderMenu = ({ src, text, modalType }: FolderMenuProps) => {
       openModal({
         type: 'alert',
         key: 'changeFolderNameError400',
-        message: `폴더 이름 변경 중 오류가 발생했습니다. 다시 시도해 주세요.`,
+        message: `폴더 이름 변경 중 에러가 발생했습니다. 다시 시도해주세요.`,
       });
     }
   };
@@ -69,7 +69,7 @@ export const FolderMenu = ({ src, text, modalType }: FolderMenuProps) => {
       openModal({
         type: 'alert',
         key: 'deleteFolderError400',
-        message: `폴더 삭제 중 오류가 발생했습니다. 다시 시도해 주세요.`,
+        message: `폴더 삭제 중 에러가 발생했습니다. 다시 시도해주세요.`,
       });
     }
   };
