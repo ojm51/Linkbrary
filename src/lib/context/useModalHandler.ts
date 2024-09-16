@@ -1,5 +1,5 @@
 import { ModalContentsProps } from '@/components/common/modal/Modal';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 export interface ModalType extends ModalContentsProps {
   key: string;
@@ -22,5 +22,8 @@ export const useModalHandler = () => {
   const closeModal = (modalKey: string) => {
     setModalList((prev) => prev.filter((e) => e.key !== modalKey));
   };
-  return { modalList, openModal, closeModal };
+
+  const modalHanlder = useMemo(() => ({ openModal, closeModal }), []);
+
+  return { modalList, ...modalHanlder };
 };
