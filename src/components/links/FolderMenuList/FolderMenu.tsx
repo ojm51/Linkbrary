@@ -20,14 +20,46 @@ export const FolderMenu = ({ src, text, modalType }: FolderMenuProps) => {
     linksAction: { data: linkData },
   } = useLinksContextSelector();
   const { openModal } = useModal();
-
   const [newFolderName, setNewFolderName] = useState('');
   const getInputValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewFolderName(e.target.value);
   };
 
   const [showModal, setShowModal] = useState<boolean>(false);
-  const handleCloseModal = () => setShowModal((prev) => !prev);
+  const handleCloseModal = () => {
+    let modalTypeText = '';
+    switch (modalType) {
+      case 'share':
+        modalTypeText = '공유';
+        break;
+      case 'changeName':
+        modalTypeText = '변경';
+        break;
+      case 'delete':
+        modalTypeText = '삭제';
+        break;
+      default:
+        modalTypeText = '';
+        break;
+    }
+    if (selectedFolder.id === 0) {
+      openModal({
+        type: 'alert',
+        key: `preventDefaultFolder${modalType}`,
+        message: `전체 폴더는 ${modalTypeText}할 수 없습니다.`,
+      });
+      return null;
+    }
+    if (modalType === 'share' && linkData && linkData.data.totalCount < 1) {
+      openModal({
+        type: 'alert',
+        key: 'preventEmptyFolderShare',
+        message: '폴더가 비어있습니다. 먼저 링크를 추가해주세요 😄',
+      });
+      return null;
+    }
+    setShowModal((prev) => !prev);
+  };
 
   const fetchFolderList = async () => {
     const data = await getFolderList();
