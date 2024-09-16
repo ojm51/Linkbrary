@@ -20,10 +20,8 @@ export const useSNSLogin = ({
       socialLogin({ socialProvider, token }),
     onSuccess(res) {
       if (res) {
-        console.log(res);
         const accessToken = res.data.access_token;
         const { id, email, name, imageSource, createdAt } = res.data.user;
-        console.log(accessToken);
         const newUserInfo: UserInfo = {
           id,
           email,
@@ -32,7 +30,6 @@ export const useSNSLogin = ({
           createdAt,
           accessToken,
         };
-        console.log(newUserInfo);
         updateUserInfo(newUserInfo);
         updateIsLoggedIn(true);
       }

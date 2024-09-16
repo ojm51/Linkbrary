@@ -58,7 +58,6 @@ const CardListPage = ({
           }
           return;
         }
-        console.error('Failed to fetch favorite cards:', error);
         setFetchError(true);
       } finally {
         setLoading(false);
