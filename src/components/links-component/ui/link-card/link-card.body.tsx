@@ -21,8 +21,12 @@ export const CardBody = ({
           <DropBoxComponent id={id} />
         </li>
       </ul>
-      <div>{title}</div>
-      <div>{description}</div>
+      <div className="h-4 whitespace-nowrap overflow-hidden overflow-ellipsis">
+        {title}
+      </div>
+      <div className="h-4 whitespace-nowrap overflow-hidden overflow-ellipsis">
+        {description}
+      </div>
       <div>{createdAt}</div>
     </div>
   );
