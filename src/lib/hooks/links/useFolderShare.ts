@@ -5,8 +5,7 @@ export const useFolderShare = () => {
   const { openModal } = useModal();
   const { selectedFolder } = useFolder();
 
-  /** @TODO 적당한 base url 설정하기 - 배포용 주소로 */
-  const BASE_URL = `http://localhost:3000/`;
+  const BASE_URL = `https://l1nkbrary.netlify.app/`;
   const SHARING_URL = `${BASE_URL}/shared/${selectedFolder.id}`;
 
   const { Kakao, open } = window;
@@ -19,7 +18,6 @@ export const useFolderShare = () => {
     initializeKakao();
   }, [initializeKakao]);
 
-  /** @TODO 폴더 공유 시 보일 디폴트 이미지 추가하기 */
   const kakaoTalkShare = () => {
     if (!window.Kakao || !window.Kakao.isInitialized()) {
       openModal({

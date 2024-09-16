@@ -9,7 +9,6 @@ const addLinkButtonClassName =
 export const AddLink = () => {
   const { url, getInputValue, handleAddLinkButtonClick } = useAddLink();
 
-  /** @TODO 링크가 추가되는 동안 추가하기 버튼에 로딩 스피너 보이기 */
   return (
     <div className="m-auto max-w-[50rem] h-auto px-[0.625rem] py-2 flex justify-between items-center rounded-[15px] bg-white border border-solid border-primary md:px-5 md:py-4 ">
       <div className="w-full flex justify-center items-center gap-3">
