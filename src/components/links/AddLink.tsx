@@ -60,8 +60,12 @@ export const AddLink = () => {
       } as TQueryResponse<TLinksResponse<TLinkDto[]>>;
       queryClient.setQueryData(currentQuerykey, newQueryData);
 
-      /** @TODO 확인 모달 띄우기 */
-      alert('링크가 추가되었습니다!');
+      openModal({
+        type: 'alert',
+        key: 'linkAdded',
+        title: '링크 추가됨 📝',
+        message: '링크가 추가되었습니다.',
+      });
       setUrl('');
     } catch {
       openModal({

@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import ProfileImage from '@/assets/images/profileImage.png';
 import { useLoginAccessibility } from '@/lib/hooks';
 import { useAuth } from '@/lib/context';
-import { useRouter } from 'next/router';
 
 export const ProfileMenu = () => {
   const { logout } = useAuth();
@@ -35,7 +35,6 @@ export const ProfileMenu = () => {
         <Image
           className="mr-[0.375rem]"
           width={28}
-          height={28}
           src={ProfileImage}
           alt="프로필 이미지"
         />

@@ -9,10 +9,9 @@ import { CommonButton } from '@/components';
 export const ShareFolder = () => {
   const { openModal } = useModal();
   const { selectedFolder } = useContext(FolderContext);
-  /** @TODO 적당한 base url 설정하기 - 배포용 주소로 */
-  // const BASE_URL = `https://deploy-preview-40--dev-linkbrary.netlify.app`;
-  const BASE_URL = `http://localhost:3000`;
-  const SHARING_URL = `${BASE_URL}/shared/${selectedFolder.id}`;
+
+  const url = window.location.origin;
+  const SHARING_URL = `${url}/shared/${selectedFolder.id}`;
 
   const { Kakao, open } = window;
   const initializeKakao = useCallback(() => {
@@ -66,8 +65,11 @@ export const ShareFolder = () => {
     navigator.clipboard
       .writeText(SHARING_URL)
       .then(() => {
-        /** @TODO 확인 모달 띄우기 */
-        alert('클립보드에 복사되었습니다.');
+        openModal({
+          type: 'alert',
+          key: 'copyInClipboard',
+          message: '클립보드에 복사되었습니다.',
+        });
       })
       .catch(() => {
         openModal({
