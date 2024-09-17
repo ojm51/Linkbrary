@@ -1,9 +1,10 @@
 import Image from 'next/image';
 import { ComponentType } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
+
+import { LoadingProps, withLoading } from '@/lib/hoc';
 import { useLogin, usePasswordVisuality } from '@/lib/hooks';
 import { CommonButton, CommonInputWithError } from '../common';
-import { LoadingProps, withLoading } from '@/lib/hoc';
 
 export type PasswordVisible = {
   visible: boolean;

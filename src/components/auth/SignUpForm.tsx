@@ -10,11 +10,11 @@ import {
 } from 'react-hook-form';
 
 import { useModal } from '@/lib/context';
+import { LoadingProps, withLoading } from '@/lib/hoc';
 import { usePasswordVisuality, useSignUp, useValidateEmail } from '@/lib/hooks';
 
 import { CommonButton, CommonInputWithError } from '../common';
 import { LoginFormProps, PasswordVisible } from './LoginForm';
-import { LoadingProps, withLoading } from '@/lib/hoc';
 
 type RHFPropertyType = {
   register: UseFormRegister<FieldValues>;

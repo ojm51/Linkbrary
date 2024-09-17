@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import { useRouter } from 'next/router';
 import { ComponentType, useEffect } from 'react';
 import { match } from 'ts-pattern';
 

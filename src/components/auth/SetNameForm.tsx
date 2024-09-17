@@ -1,12 +1,12 @@
+import { useRouter } from 'next/router';
+import { ComponentType } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 
+import { useModal } from '@/lib/context';
+import { Routes } from '@/lib/route';
+import { LoadingProps, withLoading } from '@/lib/hoc';
 import { useSNSSignUp, useSignWithKakao } from '@/lib/hooks';
 import { CommonButton, CommonInputWithError } from '../common';
-import { Routes } from '@/lib/route';
-import { ComponentType } from 'react';
-import { LoadingProps, withLoading } from '@/lib/hoc';
-import { useModal } from '@/lib/context';
-import { useRouter } from 'next/router';
 
 interface SetNameFormProps {
   onSubmit: (v: FieldValues) => void;

@@ -1,12 +1,9 @@
-import { AxiosError } from 'axios';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
 
-import { LoginParams, UserInfoDTO, getUserInfo } from '../api';
+import { UserInfoDTO } from '../api';
 import { getFromStorage, setToStorage } from '../storage';
-import { useLogin } from '../hooks';
 import { Routes } from '../route';
-import { useModal } from './ModalProvider';
 
 export interface UserInfo extends UserInfoDTO {
   accessToken: string;
