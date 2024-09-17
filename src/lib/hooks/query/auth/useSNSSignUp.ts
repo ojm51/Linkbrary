@@ -46,8 +46,9 @@ export const useSNSSignUp = ({
             openModal({
               type: 'alert',
               key: 'SNSSignUpExistError',
-              message: error.response.data.message,
+              message: '이미 등록된 사용자 입니다.',
             });
+            router.push(Routes.LOGIN);
             return;
           }
           openModal({
