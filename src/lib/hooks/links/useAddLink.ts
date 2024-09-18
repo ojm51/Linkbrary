@@ -55,6 +55,7 @@ export const useAddLink = () => {
         },
       } as TQueryResponse<TLinksResponse<TLinkDto[]>>;
       queryClient.setQueryData(currentQuerykey, newQueryData);
+      queryClient.refetchQueries({ queryKey: ['folders', 'all'], stale: true });
 
       openModal({
         type: 'alert',
