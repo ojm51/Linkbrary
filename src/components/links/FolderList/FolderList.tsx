@@ -1,15 +1,13 @@
-import { AxiosError } from 'axios';
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import plusIcon from '@/assets/icons/ic_plus.svg';
 import { CommonModal, ModalRenderer, Folder, CommonButton } from '@/components';
-import { getFolderList, addFolder } from '@/lib/api';
-import { useAuth, useFolder, useModal } from '@/lib/context';
+import { addFolder } from '@/lib/api';
+import { useFolder, useModal } from '@/lib/context';
 import { useHorizontalScroll } from '@/lib/hooks';
 
 export const FolderList = () => {
   const { folderList, setFolderList, setSelectedFolder } = useFolder();
-  const { logout } = useAuth();
   const { openModal } = useModal();
   const listWrapperRef = useHorizontalScroll();
 
