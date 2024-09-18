@@ -54,7 +54,7 @@ export const LinkComponent = ({
     .with({ zeroLength: true }, () => (
       <section className="p-8 flex justify-center">
         <h1 className="text-2xl">
-          데이터가 존재하지 않습니다. 링크를 추가 해 주세요.
+          데이터가 존재하지 않습니다. 링크를 추가해주세요.
         </h1>
       </section>
     ))
