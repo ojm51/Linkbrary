@@ -141,21 +141,30 @@ const config: Config = {
       'custom-footer-height': 'calc(100vh - 250px)',
     },
     keyframes: {
-      shimmer: {
-        '100%': {
-          transform: 'translateX(100%)',
-        },
-      },
-      loadingSpinner: {
-        '100%': {
-          transform: 'rotate(180deg)',
-        },
-      },
       bounce: {
         '100%': {
           top: '-20px',
           textShadow:
             '0 1px 0 #CCC, 0 2px #CCC, 0 3px #CCC, 0 4px #CCC, 0 5px #CCC, 0 6px #CCC, 0 7px #CCC, 0 8px #CCC, 0 9px #CCC, 0 50px 25px rgba(0, 0, 0, .3)',
+        },
+      },
+      cardRotate: {
+        /* 랜딩 페이지 카드 rotate 애니메이션 */
+        '0%': { transform: 'rotateY(0deg)' },
+        '50%': { transform: 'rotateY(360deg)' },
+        '100%': { transform: 'rotateY(360deg)' },
+      },
+      cardScale: {
+        /* 랜딩 페이지 카드 scale애니메이션 */
+        '0%': { transform: 'scale(1)' },
+        '40%': { transform: 'scale(1.4)' },
+        '60%': { transform: 'scale(1.4)' },
+        '80%': { transform: 'scale(1)' },
+        '100%': { transform: 'scale(1)' },
+      },
+      loadingSpinner: {
+        '100%': {
+          transform: 'rotate(360deg)',
         },
       },
       textSlide: {
@@ -178,19 +187,10 @@ const config: Config = {
         '90%': { marginTop: '0' },
         '100%': { marginTop: '0' },
       },
-      cardRotate: {
-        /* 랜딩 페이지 카드 rotate 애니메이션 */
-        '0%': { transform: 'rotateY(0deg)' },
-        '50%': { transform: 'rotateY(360deg)' },
-        '100%': { transform: 'rotateY(360deg)' },
-      },
-      cardScale: {
-        /* 랜딩 페이지 카드 scale애니메이션 */
-        '0%': { transform: 'scale(1)' },
-        '40%': { transform: 'scale(1.4)' },
-        '60%': { transform: 'scale(1.4)' },
-        '80%': { transform: 'scale(1)' },
-        '100%': { transform: 'scale(1)' },
+      shimmer: {
+        '100%': {
+          transform: 'translateX(100%)',
+        },
       },
     },
     animation: {
@@ -203,12 +203,12 @@ const config: Config = {
       bounce70: 'bounce .7s ease infinite alternate 700ms',
       bounce80: 'bounce .7s ease infinite alternate 800ms',
       bounce90: 'bounce .7s ease infinite alternate 900ms',
-      spinner: 'loadingSpinner .2s ease infinite',
-      textSlide: 'textSlide 6s ease-in-out infinite',
-      textSlideMo: 'textSlideMo 6s ease-in-out infinite',
       cardRotate: 'cardRotate 4s ease-in-out infinite',
       cardRotateDelay: 'cardRotate 4s ease-in-out infinite 2s',
       cardScale: 'cardScale 5s linear infinite',
+      textSlide: 'textSlide 6s ease-in-out infinite',
+      textSlideMo: 'textSlideMo 6s ease-in-out infinite',
+      spinner: 'loadingSpinner 1s linear infinite',
     },
   },
   plugins: [require('tailwind-scrollbar-hide')],
