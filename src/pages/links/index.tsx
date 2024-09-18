@@ -1,8 +1,8 @@
 import { AxiosError } from 'axios';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
-  FolderContext,
   FolderProvider,
+  useFolder,
   ModalType,
   useAuth,
   useModal,
@@ -18,7 +18,7 @@ import {
 } from '@/components/links-component';
 
 const MainContent = () => {
-  const { selectedFolder } = useContext(FolderContext);
+  const { selectedFolder, setSelectedFolder } = useFolder();
   const { logout } = useAuth();
   const { openModal } = useModal();
   const [searchText, setSearchText] = useState<string>('');
@@ -67,6 +67,11 @@ const MainContent = () => {
   const searchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSearchValue(searchText);
+    setSelectedFolder({
+      createdAt: '',
+      id: 0,
+      name: '전체',
+    });
   };
 
   const searchOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {

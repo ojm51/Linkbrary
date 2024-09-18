@@ -1,11 +1,9 @@
 import Head from 'next/head';
 
 import { AuthHeader, AuthStyle as S, SetNameForm } from '@/components';
-import { useRedirectionWithAuth } from '@/lib/hooks';
 import { Routes } from '@/lib/route';
 
 const NameSettings = () => {
-  useRedirectionWithAuth();
   return (
     <>
       <Head>
