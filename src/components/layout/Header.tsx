@@ -14,9 +14,10 @@ const Header = () => {
         <h1>
           <Link href="/">
             <Image
-              className="w-[5.563rem] h-4 md:w-[8.313rem] md:h-6"
+              className="w-[5.563rem] h-auto md:w-[8.313rem]"
               src={HeaderLogoImage}
               alt="linkbrary"
+              priority
             />
           </Link>
         </h1>

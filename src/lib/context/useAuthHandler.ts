@@ -1,12 +1,14 @@
 import { AxiosError } from 'axios';
-import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import { useEffect, useMemo, useState } from 'react';
 
 import { LoginParams, UserInfoDTO, getUserInfo } from '../api';
 import { getFromStorage, setToStorage } from '../storage';
 import { useLogin } from '../hooks';
+import { Routes } from '../route';
 import { useModal } from './ModalProvider';
 
-interface UserInfo extends UserInfoDTO {
+export interface UserInfo extends UserInfoDTO {
   accessToken: string;
 }
 
@@ -23,7 +25,7 @@ const localStorageName = 'userInfo';
 
 export const useAuthHandler = () => {
   const { openModal } = useModal();
-
+  const router = useRouter();
   const loginMutate = useLogin();
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const [isLoggedin, setIsLoggedin] = useState<boolean>(false);
@@ -43,6 +45,7 @@ export const useAuthHandler = () => {
                     accessToken,
                   });
                   updateIsLoggedIn(true);
+                  router.push(Routes.HOME);
                 }
               })
               .catch((error) => {
@@ -88,6 +91,7 @@ export const useAuthHandler = () => {
     setUserInfo(null);
     setIsLoggedin(false);
     localStorage.removeItem(localStorageName);
+    router.push(Routes.HOME);
   };
 
   const updateUserInfo = (newInfo: UserInfo) => {
@@ -107,12 +111,15 @@ export const useAuthHandler = () => {
     }
   }, []);
 
-  return {
-    userInfo,
-    isLoggedin,
-    login,
-    logout,
-    updateUserInfo,
-    updateIsLoggedIn,
-  };
+  const providerValue = useMemo(
+    () => ({
+      login,
+      logout,
+      updateUserInfo,
+      updateIsLoggedIn,
+    }),
+    [],
+  );
+
+  return { ...providerValue, userInfo, isLoggedin };
 };

@@ -1,13 +1,15 @@
-import { useState } from 'react';
+import { AxiosError } from 'axios';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import Image from 'next/image';
 import plusIcon from '@/assets/icons/ic_plus.svg';
 import { CommonModal, ModalRenderer, Folder, CommonButton } from '@/components';
-import { addFolder } from '@/lib/api';
-import { useFolder, useModal } from '@/lib/context';
+import { getFolderList, addFolder } from '@/lib/api';
+import { useAuth, useFolder, useModal } from '@/lib/context';
 import { useHorizontalScroll } from '@/lib/hooks';
 
 export const FolderList = () => {
   const { folderList, setFolderList, setSelectedFolder } = useFolder();
+  const { logout } = useAuth();
   const { openModal } = useModal();
   const listWrapperRef = useHorizontalScroll();
 
@@ -24,17 +26,25 @@ export const FolderList = () => {
 
   const handleAddButtonClick = async () => {
     try {
-      const newFolder = await addFolder({ newFolderName });
-      setSelectedFolder(newFolder);
-      setFolderList((prev) => [newFolder, ...prev]);
-      openModal({
-        type: 'alert',
-        key: 'addFolderSuccess',
-        title: '✅ 확인',
-        message: `폴더가 추가되었습니다!`,
-      });
-      setNewFolderName('');
-      toggleModal();
+      if (newFolderName === '전체') {
+        openModal({
+          type: 'alert',
+          key: 'addFolderNameError',
+          message: '"전체" 라는 이름의 폴더는 생성할 수 없습니다.',
+        });
+      } else {
+        const newFolder = await addFolder({ newFolderName });
+        setSelectedFolder(newFolder);
+        setFolderList((prev) => [newFolder, ...prev]);
+        openModal({
+          type: 'alert',
+          key: 'addFolderSuccess',
+          title: '✅ 확인',
+          message: `폴더가 추가되었습니다!`,
+        });
+        setNewFolderName('');
+        toggleModal();
+      }
     } catch {
       openModal({
         type: 'alert',

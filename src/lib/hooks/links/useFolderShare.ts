@@ -5,8 +5,8 @@ export const useFolderShare = () => {
   const { openModal } = useModal();
   const { selectedFolder } = useFolder();
 
-  const BASE_URL = `https://l1nkbrary.netlify.app/`;
-  const SHARING_URL = `${BASE_URL}/shared/${selectedFolder.id}`;
+  const url = window.location.origin;
+  const SHARING_URL = `${url}/shared/${selectedFolder.id}`;
 
   const { Kakao, open } = window;
   const initializeKakao = useCallback(() => {

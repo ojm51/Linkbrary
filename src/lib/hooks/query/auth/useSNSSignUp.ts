@@ -42,6 +42,14 @@ export const useSNSSignUp = ({
     onError(error) {
       if (error instanceof AxiosError) {
         if (error.status === 400) {
+          if (error.response?.data.message) {
+            openModal({
+              type: 'alert',
+              key: 'SNSSignUpExistError',
+              message: error.response.data.message,
+            });
+            return;
+          }
           openModal({
             type: 'alert',
             key: 'SNSSignUpError400',
