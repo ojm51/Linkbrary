@@ -1,21 +1,22 @@
 import Image from 'next/image';
-import { useRouter } from 'next/router';
-import { useSearchParams } from 'next/navigation';
-import { ComponentType, useCallback, useEffect } from 'react';
+import { ComponentType, useEffect } from 'react';
 import { match } from 'ts-pattern';
 
 import googleLogin from '@/assets/icons/sns/ic_google.svg';
 import kakaoLogin from '@/assets/icons/sns/ic_kakao.svg';
 
 import { useModal } from '@/lib/context';
-import { useSNSLogin } from '@/lib/hooks';
+import { useSNSLogin, useSignWithKakao } from '@/lib/hooks';
 import { API_PATH } from '@/lib/api';
 import { Routes } from '@/lib/route';
+import { LoadingProps, withLoading } from '@/lib/hoc';
 
 interface SNSLoginProps {
   handleGoogleLogin: () => void;
   handleKakaoLogin: () => void;
 }
+
+type SNSLoginPropsWithLoading = LoadingProps & SNSLoginProps;
 
 const SNSAuthComponent = ({
   handleGoogleLogin,
@@ -58,22 +59,15 @@ interface SocialLoginProps {
 type SocialLoginType = { type: 'login' } | { type: 'signup' };
 
 const withSocialAuthHandler = (
-  WrappedComponent: ComponentType<SNSLoginProps>,
+  WrappedComponent: ComponentType<SNSLoginPropsWithLoading>,
 ) => {
   return ({ type }: SocialLoginProps) => {
     const { openModal } = useModal();
-    const router = useRouter();
-    const searchParams = useSearchParams();
-    const kakaoCode = searchParams.get('code');
+    const { kakaoCode } = useSignWithKakao(Routes.LOGIN);
     const kakaoMutate = useSNSLogin({
       socialProvider: 'kakao',
     });
     const TSocialLogin: SocialLoginType = { type };
-
-    const handleRedirect = useCallback((token: string) => {
-      kakaoMutate.mutate({ token });
-      router.push(Routes.LOGIN);
-    }, []);
 
     const handleSocialLogin = match(TSocialLogin)
       .with({ type: 'login' }, () => ({
@@ -127,12 +121,19 @@ const withSocialAuthHandler = (
 
     useEffect(() => {
       if (kakaoCode) {
-        handleRedirect(kakaoCode);
+        kakaoMutate.mutate({ token: kakaoCode });
       }
-    }, [kakaoCode, handleRedirect]);
+    }, [kakaoCode]);
 
-    return <WrappedComponent {...handleSocialLogin} />;
+    return (
+      <WrappedComponent
+        isLoading={kakaoMutate.isPending}
+        {...handleSocialLogin}
+      />
+    );
   };
 };
 
-export const SNSAuth = withSocialAuthHandler(SNSAuthComponent);
+export const SNSAuth = withSocialAuthHandler(
+  withLoading<SNSLoginPropsWithLoading>(SNSAuthComponent),
+);

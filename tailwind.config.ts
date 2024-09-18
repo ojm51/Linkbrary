@@ -135,6 +135,7 @@ const config: Config = {
         'card-image': 'url("/images/landingCard3-1.png")',
       },
     },
+
     minHeight: {
       /* 컨텐츠 높이와 상관없이 footer 하단 고정 */
       'custom-footer-height': 'calc(100vh - 250px)',
@@ -143,6 +144,18 @@ const config: Config = {
       shimmer: {
         '100%': {
           transform: 'translateX(100%)',
+        },
+      },
+      loadingSpinner: {
+        '100%': {
+          transform: 'rotate(180deg)',
+        },
+      },
+      bounce: {
+        '100%': {
+          top: '-20px',
+          textShadow:
+            '0 1px 0 #CCC, 0 2px #CCC, 0 3px #CCC, 0 4px #CCC, 0 5px #CCC, 0 6px #CCC, 0 7px #CCC, 0 8px #CCC, 0 9px #CCC, 0 50px 25px rgba(0, 0, 0, .3)',
         },
       },
       textSlide: {
@@ -181,6 +194,16 @@ const config: Config = {
       },
     },
     animation: {
+      bounce10: 'bounce .7s ease infinite alternate 100ms',
+      bounce20: 'bounce .7s ease infinite alternate 200ms',
+      bounce30: 'bounce .7s ease infinite alternate 300ms',
+      bounce40: 'bounce .7s ease infinite alternate 400ms',
+      bounce50: 'bounce .7s ease infinite alternate 500ms',
+      bounce60: 'bounce .7s ease infinite alternate 600ms',
+      bounce70: 'bounce .7s ease infinite alternate 700ms',
+      bounce80: 'bounce .7s ease infinite alternate 800ms',
+      bounce90: 'bounce .7s ease infinite alternate 900ms',
+      spinner: 'loadingSpinner .2s ease infinite',
       textSlide: 'textSlide 6s ease-in-out infinite',
       textSlideMo: 'textSlideMo 6s ease-in-out infinite',
       cardRotate: 'cardRotate 4s ease-in-out infinite',
