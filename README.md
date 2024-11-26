@@ -2,7 +2,10 @@
 
 <div align='center' ><img src='./readmeSource/img/logo@3x.png' alt="로고"/>
 
-나만의 링크 모아두는 저장소 서비스 [Linkbrary에서 Link를 모아보세요](https://l1nkbrary.netlify.app/) ☘️
+나만의 링크 모아두는 저장소 서비스 <br /> Linkbrary에서 Link를 모아보세요 ☘️
+<br /><br />
+> #### 🔗 [배포 사이트](https://es-cape-codeit.vercel.app/)
+> 테스트 계정(아이디/비밀번호) : 1024@test.com / 1024test!
 
 </div>
 
